@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "includes": ["src"],
+  "ignore": [
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

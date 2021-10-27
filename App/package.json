@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "material-kit-react": "^1.10.0"
+    "material-kit-react": "^1.10.0",
+    "mysql": "^2.18.1",
+    "react-router-dom": "^5.3.0"
   },
   "proxy": "http://localhost:5000"
 }
