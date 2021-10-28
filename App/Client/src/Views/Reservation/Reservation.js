@@ -12,16 +12,16 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Reservation from "./Reservation";
 import Payment from "./Payment";
 import Review from "./Review";
+import AddressForm from "./Address";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Manageyourhair
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -32,9 +32,10 @@ function Copyright() {
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
 function getStepContent(step) {
+  console.log(step);
   switch (step) {
     case 0:
-      return <Reservation />;
+      return <AddressForm />;
     case 1:
       return <Payment />;
     case 2:
@@ -71,7 +72,7 @@ export default function Checkout() {
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+            Manageyourhair
           </Typography>
         </Toolbar>
       </AppBar>

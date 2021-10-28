@@ -10,7 +10,7 @@ function Home() {
       <CardHeader title="Home" />
       {/** Link to List.js */}
       <Link to={"./list"}>
-        <Button variant="contained">Hello World</Button>
+        <Button variant="contained">List</Button>
       </Link>
       <Link to={"./mypage"}>
         <Button variant="contained">My Page</Button>

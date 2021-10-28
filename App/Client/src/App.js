@@ -5,9 +5,10 @@ import List from "Views/List";
 import Mypage from "Views/Mypage";
 import NotFound from "Views/NotFound";
 import "App.css";
-import Login from "./Views/Login";
-import SignUp from "./Views/SignUp";
-import Reservation from "./Views/Reservation";
+import Login from "Views/Login";
+import SignUp from "Views/SignUp";
+import Reservation from "Views/Reservation/Reservation";
+import StickyFooter from "Views/Footer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/reservation" component={Reservation} />
         <Route path="*" component={NotFound} />
       </Switch>
+      <StickyFooter />
     </div>
   );
 }
