@@ -6,12 +6,16 @@
         chrome://version/
     2-2. download file
         https://chromedriver.chromium.org/downloads
+3. Download googlemaps
+    pip install -U googlemaps
 '''
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from time import sleep
 import csv
+import json
+import requests
 
 # Cookie Consent
 def consent(driver):
@@ -28,6 +32,10 @@ def scroll_down(driver):
 # Open Google Maps
 keyword = 'dublin+hair+salon'
 url = 'https://google.com/maps/search/?api=1&query=' + keyword
+with open("secrets.json", "r") as f:
+    json_data = json.load(f)
+key = json_data["GoogleAPIKey"]
+
 driver = webdriver.Chrome('./chromedriver.exe')
 driver.maximize_window()
 driver.get(url)
@@ -36,7 +44,7 @@ consent(driver) # initial cookie consent
 # Store Crawling Information
 f = open('hair_data.csv', 'w', newline='', encoding='utf-8')
 writer = csv.writer(f)
-writer.writerow(["Index", "Name", "Address", "Phone", "Open Hours", "Ranking"])
+writer.writerow(["Index", "Name", "Address", "latitude", "longtitude", "Phone", "website", "ranking", "Open Hours"])
 index = 1
 
 while True:
@@ -60,8 +68,16 @@ while True:
             name = driver_detail.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]').text
         try:
             address = driver_detail.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[7]/div[1]/button/div[1]/div[2]/div[1]').text
+            api_url = 'https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}'.format(address, key)
+            response = requests.get(api_url)
+            if response.status_code == 200:
+                json_data = response.json()['results'][0]['geometry']['location']
+                latitude = json_data['lat']
+                longtitude = json_data['lng']
         except:
             address = 'None'
+            latitude = 'None'
+            longtitude = 'None'
         try:
             phone = driver_detail.find_element_by_xpath('//button[@data-tooltip="Copy phone number"]/div[1]/div[2]/div[1]').text
         except:
@@ -82,7 +98,7 @@ while True:
         except:
             openHours = 'None'
 
-        writer.writerow([index, name, address, phone, website, ranking, openHour_list]) # write CSV file
+        writer.writerow([index, name, address, latitude, longtitude, phone, website, ranking, openHour_list]) # write CSV file
         index += 1
 
     driver_detail.close()
