@@ -1,13 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { CardHeader } from "@material-ui/core";
 
 function Home() {
   return (
     <div>
-      <h1>Project Home</h1>
+      <div>Home</div>
+      <CardHeader title="Home" />
       {/** Link to List.js */}
       <Link to={"./list"}>
-        <button>My List</button>
+        <Button variant="contained">Hello World</Button>
+      </Link>
+      <Link to={"./mypage"}>
+        <Button variant="contained">My Page</Button>
+      </Link>
+      <Link to={"./login"}>
+        <Button variant="contained">Login Page</Button>
+      </Link>
+      <Link to={"./reservation"}>
+        <Button variant="contained">Make reservation</Button>
       </Link>
     </div>
   );

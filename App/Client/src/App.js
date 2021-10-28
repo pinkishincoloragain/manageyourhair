@@ -2,7 +2,12 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "Views/Home";
 import List from "Views/List";
-import { NotFound } from "http-errors";
+import Mypage from "Views/Mypage";
+import NotFound from "Views/NotFound";
+import "App.css";
+import Login from "./Views/Login";
+import SignUp from "./Views/SignUp";
+import Reservation from "./Views/Reservation";
 
 function App() {
   return (
@@ -10,7 +15,11 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/list" component={List} />
-        {/* <Route path="*" component={NotFound} /> */}
+        <Route exact path="/mypage" component={Mypage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/reservation" component={Reservation} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </div>
   );

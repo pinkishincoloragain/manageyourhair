@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 function NotFound() {
   return (
     <div>
-      <h1>Project Home</h1>
-      {/** Link to List.js */}
-      <Link to={"./list"}>
-        <button>My List</button>
+      <h1>404 Not found</h1>
+      <Link to={"/"}>
+        <button>Go back to home</button>
       </Link>
     </div>
   );
