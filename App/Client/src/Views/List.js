@@ -9,7 +9,7 @@ function List() {
       <div>fish</div>
       <h1>List from server{"\n"}</h1>
       {data.map((item) => {
-        return <div>{item}</div>;
+        return <div key={item}>{item}</div>;
       })}
     </div>
   );
