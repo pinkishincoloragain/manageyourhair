@@ -13,6 +13,20 @@ app.use(function (req, res, next) {
   next();
 });
 
+var mysql = require("mysql");
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+});
+
+connection.connect();
+
+connection.query("USE MANAGER", function (err, rows, fields) {
+  if (err) throw err;
+  console.log("Now using MANAGER account ");
+});
+
 // An api endpoint that returns a short list of items
 app.get("/api/getList", (req, res) => {
   const list = ["item1", "item2", "item3"];
@@ -24,40 +38,21 @@ app.listen(8000, () => {
   console.log(`listening on port ${8000}`);
 });
 
+// An api endpoint that returns login info
+app.get("/api/Login", (req, res) => {
+  res.json(list);
+  console.log("sent list of items");
+});
+
+app.listen(8000, () => {
+  console.log(`listening on port ${8000}`);
+});
 
 // mysql part
 
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-});
-connection.connect();
-
-connection.query("USE MANAGER", function (err, rows, fields) {
-  if (err) throw err;
-  console.log("Now using MANAGER account ");
-});
-
-
-connection.query("SELECT 1 + 1 AS solution", function (err, rows, fields) {
-  if (err) throw err;
-  console.log("The solution is: ", rows[0].solution);
-});
-
-
-connection.query("SHOW TABLES", function (err, rows, fields) {
-  if (err) throw err;
-  console.log("RESULT FROM SHOW TABLES: ", rows);
-});
-
-connection.query("DESCRIBE BOOKING", function (err, rows, fields) {
-  if (err) throw err;
-  console.log("DESCRIBING BOOKING TABLE", rows);
-});
-
-
-
+// connection.query("SELECT 1 + 1 AS solution", function (err, rows, fields) {
+//   if (err) throw err;
+//   console.log("The solution is: ", rows[0].solution);
+// });
 
 connection.end();
