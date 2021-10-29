@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { CardHeader } from "@material-ui/core";
+import StickyFooter from "./Footer";
 
 function Home() {
   return (
@@ -21,6 +22,7 @@ function Home() {
       <Link to={"./reservation"}>
         <Button variant="contained">Make reservation</Button>
       </Link>
+      <StickyFooter />
     </div>
   );
 }

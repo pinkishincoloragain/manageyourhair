@@ -22,7 +22,6 @@ function App() {
         <Route exact path="/reservation" component={Reservation} />
         <Route path="*" component={NotFound} />
       </Switch>
-      <StickyFooter />
     </div>
   );
 }
