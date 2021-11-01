@@ -2,7 +2,7 @@ import React from "react";
 import { useFetch } from "../utils/Hooks";
 
 function List() {
-  const [data] = useFetch("http://localhost:8000/api/getList");
+  const [data] = useFetch("http://localhost:8001/api/getList");
 
   return (
     <div>

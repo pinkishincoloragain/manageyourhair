@@ -17,21 +17,21 @@ function useFetch(url) {
   return [data];
 }
 
-function useLogin() {
-  const [data, setData] = useState([]);
+// function useLogin() {
+//   const [user, setUser] = useState([]);
 
-  async function fetchUrl() {
-    const response = await fetch();
-    const json = await response.json();
+//   async function fetchUrl() {
+//     const response = await fetch();
+//     const json = await response.json();
 
-    setData(json);
-  }
+//     setData(json);
+//   }
 
-  useEffect(() => {
-    fetchUrl();
-  });
+//   useEffect(() => {
+//     fetchUrl();
+//   });
 
-  return [data];
-}
+//   return [data];
+// }
 
-export { useFetch, useLogin };
+export { useFetch };

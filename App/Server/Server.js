@@ -34,19 +34,23 @@ app.get("/api/getList", (req, res) => {
   console.log("sent list of items");
 });
 
-app.listen(8000, () => {
-  console.log(`listening on port ${8000}`);
+app.listen(8001, () => {
+  console.log(`listening on port ${8001}`);
 });
 
 // An api endpoint that returns login info
-app.get("/api/Login", (req, res) => {
-  res.json(list);
-  console.log("sent list of items");
-});
+// app.get("/api/Login", (req, res) => {
+//   res.json(list);
 
-app.listen(8000, () => {
-  console.log(`listening on port ${8000}`);
-});
+//   // 
+
+//   connection.query()
+
+// });
+
+// app.listen(8123, () => {
+//   console.log(`listening on port ${8123}`);
+// });
 
 // mysql part
 
