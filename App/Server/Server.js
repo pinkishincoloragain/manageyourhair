@@ -18,6 +18,9 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
+  database: "manager",
+  //  socketPath may differ from the default path
+  socketPath: "/tmp/mysql.sock",
 });
 
 connection.connect();
@@ -42,7 +45,7 @@ app.listen(8001, () => {
 // app.get("/api/Login", (req, res) => {
 //   res.json(list);
 
-//   // 
+//   //
 
 //   connection.query()
 
