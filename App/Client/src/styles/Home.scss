@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Geostar&display=swap");
+
+.header {
+  display: flex;
+  background-color: #f5f5f5;
+  align-items: center;
+  text-align: center;
+  font-family: "Geostar", cursive;
+  justify-content: space-between;
+  .Logo {
+    margin-left: 4vw;
+  }
+
+  #Btns {
+    margin-right: 4vw;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  Button {
+    margin-left: 1vw;
+  }
+}
+.Red {
+  width: 100vw;
+}
