@@ -8,6 +8,7 @@ import "App.css";
 import Login from "Views/Login";
 import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
+import Parallax from "Views/Parallex";
 import StickyFooter from "Views/Footer";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/reservation" component={Reservation} />
+        <Route exact path="/Parallax" component={Parallax} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
