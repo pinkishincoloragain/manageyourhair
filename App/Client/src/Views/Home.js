@@ -36,11 +36,11 @@ function Home() {
         <div className="header">
           <div className="Logo">Manageyourhair</div>
           <div className="links">
-            <Link to={"./list"}>
-              <div className="linkBtn">My List</div>
+            <Link to={"./signup"}>
+              <div className="linkBtn">Sign Up</div>
             </Link>
             <Link to={"./login"}>
-              <div className="linkBtn">Login</div>
+              <div className="linkBtn">Sign In</div>
             </Link>
           </div>
         </div>
