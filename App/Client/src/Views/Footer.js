@@ -15,27 +15,25 @@ function Copyright() {
         alignItems: "center",
       }}
     >
-      <Typography variant="body2" color="text.secondary">
-        {"Copyright © "}
-        <Link color="inherit" href="https://mui.com/">
-          Manageyourwebsite
-        </Link>{" "}
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div>
-            <Link color="inherit" href="https://github.com/Angela-OH">
-              Angela OH
-            </Link>
-          </div>
-          &nbsp;
-          <div>
-            <Link color="inherit" href="https://github.com/pinkishincoloragain">
-              Myungbin Son
-            </Link>
-          </div>
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Manageyourwebsite
+      </Link>{" "}
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div>
+          <Link color="inherit" href="https://github.com/Angela-OH">
+            Angela OH
+          </Link>
         </div>
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
+        &nbsp;
+        <div>
+          <Link color="inherit" href="https://github.com/pinkishincoloragain">
+            Myungbin Son
+          </Link>
+        </div>
+      </div>
+      {new Date().getFullYear()}
+      {"."}
     </div>
   );
 }

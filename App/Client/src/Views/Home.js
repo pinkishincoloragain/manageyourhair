@@ -7,7 +7,7 @@ import { logout } from "../actions/auth";
 import StickyFooter from "./Footer";
 
 function Home() {
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   console.log(isLoggedIn);
 
@@ -27,7 +27,7 @@ function Home() {
   };
   const logOut = () => {
     dispatch(logout());
-  }
+  };
 
   let width =
     window.innerWidth ||
@@ -51,7 +51,9 @@ function Home() {
             <Link to={"./login"}>
               <div className="linkBtn">Sign In</div>
             </Link>
-            <button variant="contained" onClick={logOut}>Logout</button>
+            <div className="linkBtn" onClick={logOut}>
+              Logout
+            </div>
           </div>
         </div>
         <div
