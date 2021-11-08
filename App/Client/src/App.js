@@ -8,6 +8,7 @@ import "App.css";
 import Login from "Views/Login";
 import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
+import Parallax from "Views/Parallex";
 import StickyFooter from "Views/Footer";
 import { useDispatch, useSelector } from "react-redux";
 
