@@ -28,15 +28,21 @@ function Home() {
     <div>
       <div className="Home">
         <div className="header">
-          <ThemeProvider theme={theme}>
-            <CardHeader title="Manageyourhair" className="Logo" />
-          </ThemeProvider>
+          <div className="Logo">Manageyourhair</div>
+          <div className="links">
+            <Link to={"./list"}>
+              <div className="linkBtn">My List</div>
+            </Link>
+            <Link to={"./login"}>
+              <div className="linkBtn">Login</div>
+            </Link>
+          </div>
         </div>
         <div
           className="main"
           style={{
             backgroundPositionY: position / 4,
-            opacity: `${1-((position) / 1000)*1.2}`,
+            opacity: `${1 - (position / 1000) * 1.5}`,
           }}
         >
           <div className="context">
@@ -50,27 +56,39 @@ function Home() {
         </div>
       </div>
       <div className="description">
+        <div className="ourservice">
+          <p
+            style={{
+              fontSize: "4rem",
+              opacity: `${((position - 500) * 3) / 500}`,
+              marginLeft: "10vw",
+            }}
+          >
+            Our service is ..
+          </p>
+        </div>
         <div className="description-text">
-          <h1>Place your reservation today!</h1>
           <div>
             <div
               className="Curly"
               style={{
-                transform: `translateX(${(-position / 2)*1.8 + 1000}px)`,
+                transform: `translateX(${(-position / 2) * 1.8 + 1000}px)`,
               }}
             ></div>
-            <p
+            <div
               className="desc"
               style={{
                 transform: `translateX(${-position + 1800}px)`,
-                opacity: `${(position - 1000) / 1000}`,
+                opacity: `${((position - 800) * 3) / 500}`,
+                marginTop: `-200px`,
+                marginBottom: `200px`,
               }}
             >
               Duis aute irure dolor in reprehenderit in voluptate velit esse
               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
               cupidatat non proident, sunt in culpa qui officia deserunt mollit
               anim id est laborum.
-            </p>
+            </div>
           </div>
           <div>
             <div
@@ -84,7 +102,7 @@ function Home() {
               className="desc"
               style={{
                 transform: `translateX(${-position + 1800}px)`,
-                opacity: `${(position - 1000) / 1000}`,
+                opacity: `${(position - 800) / 1000}`,
               }}
             >
               Duis aute irure dolor in reprehenderit in voluptate velit esse
