@@ -6,8 +6,11 @@ import StickyFooter from "./Footer";
 import { theme } from "Components/theme";
 import "styles/Home.scss";
 import Red from "../assets/Red.jpg";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const { isLoggedIn } = useSelector(state => state.auth);
+  console.log(isLoggedIn);
   const handleClick = (e) => {
     console.log("Clicked");
   };

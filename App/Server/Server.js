@@ -10,10 +10,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use(cors({
-  origin: true,
-  credentials: true
-}))
+app.use(cors())
 app.use(cookieParser());
 app.use(
   session({
@@ -27,6 +24,12 @@ app.use(
   })
 )
 
+const corsOptions ={
+  origin:['http://localhost:3000', 'http://localhost:8001'],
+  credentials:true,            //access-control-allow-credentials:true
+}
+app.use(cors(corsOptions));
+
 // middleware for allowing react to fetch() from server
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -39,6 +42,7 @@ app.use(function (req, res, next) {
 });
 
 var mysql = require("mysql");
+const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -77,6 +81,7 @@ app.post("/api/signup", (req, res) => {
   });
   res.end();
 });
+
 app.post('/api/login', (req, res) => {
     const param = [req.body.id, req.body.pw];
     connection.query("SELECT * FROM user where LOGIN_ID=?", param[0], function (err, rows, fields) {

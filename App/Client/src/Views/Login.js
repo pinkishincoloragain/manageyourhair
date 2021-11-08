@@ -13,8 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/auth";
+import { Redirect } from "react-router-dom";
 // import { useLogin } from "utils/Hooks";
 
 function Copyright(props) {
@@ -40,6 +41,8 @@ const theme = createTheme();
 export default function Login(props) {
   // const [login, setLogin] = useLogin([]);
   const [loading, setLoading] = useState(false);
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { user: currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -47,12 +50,12 @@ export default function Login(props) {
     setLoading(true);
     const data = new FormData(e.currentTarget);
     // eslint-disable-next-line no-console
-    
     dispatch(login(
       data.get('email'),
       data.get('password')
     ))
     .then(() => {
+      console.log(isLoggedIn);
       props.history.push("/");
       window.location.reload();
     })
@@ -60,6 +63,10 @@ export default function Login(props) {
       setLoading(false);
     });
   };
+
+  if (isLoggedIn) {
+    return <Redirect to ='/' />;
+  }
 
   return (
     <ThemeProvider theme={theme}>

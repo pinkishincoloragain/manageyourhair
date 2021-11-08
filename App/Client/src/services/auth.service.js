@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+//axios.defaults.withCredentials = true;
 
 const API_URL = "http://localhost:8001/"
 
@@ -11,6 +11,12 @@ const signup = (firstName, lastName, contact, email, password) => {
         contact: contact,
         id: email,
         pw: password
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
     });
 };
 
@@ -24,6 +30,9 @@ const login = (email, password) => {
             localStorage.setItem("User", JSON.stringify(response.data));
         }
         return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
     });
 };
 
