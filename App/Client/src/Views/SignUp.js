@@ -12,6 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signup } from "../actions/auth";
 
 function Copyright(props) {
   return (
@@ -34,14 +37,28 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [successful, setSuccessful] = useState(false);
+
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setSuccessful(false);
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    dispatch(signup(
+      data.get('firstName'), 
+      data.get('lastName'), 
+      data.get('contact'),
+      data.get('email'),
+      data.get('password')))
+      .then(() => {
+        setSuccessful(true);
+      })
+      .catch(() => {
+        setSuccessful(false);
+      });
   };
 
   return (
@@ -88,6 +105,16 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="contact"
+                  label="Contact Number"
+                  name="contact"
+                  autoComplete="contact"
                 />
               </Grid>
               <Grid item xs={12}>
