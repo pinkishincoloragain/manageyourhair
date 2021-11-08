@@ -17,10 +17,10 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "COLCTveCNfY8",
   database: "manager",
   //  socketPath may differ from the default path
-  socketPath: "/tmp/mysql.sock",
+  //socketPath: "/tmp/mysql.sock",
 });
 
 connection.connect();

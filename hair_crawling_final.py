@@ -30,7 +30,7 @@ def scroll_down(driver):
         driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', scroll)
 
 # Open Google Maps
-keyword = 'dublin+hair+salon'
+keyword = 'ireland+hair+salon'
 url = 'https://google.com/maps/search/?api=1&query=' + keyword
 with open("secrets.json", "r") as f:
     json_data = json.load(f)
@@ -63,9 +63,15 @@ while True:
             consent(driver_detail) # initial cookie consent
         try:
             name = driver_detail.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]').text
+
         except:
             consent(driver_detail)
             name = driver_detail.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]').text
+        f2 = open('hair_data.csv', 'r', encoding='utf-8')
+        reader = csv.reader(f2)
+        for row in reader:
+            if name == row[1]:
+                continue
         try:
             address = driver_detail.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[7]/div[1]/button/div[1]/div[2]/div[1]').text
             api_url = 'https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}'.format(address, key)
@@ -105,7 +111,7 @@ while True:
     
     # Go to the next page
     try:
-        next = driver.find_element_by_xpath('//*[@id="ppdPk-Ej1Yeb-LgbsSe-tJiF1e"]')  
+        next = driver.find_element_by_xpath('//*[@id="ppdPk-Ej1Yeb-LgbsSe-tJiF1e"]/img') 
         next.click() 
         sleep(2)
     except:
