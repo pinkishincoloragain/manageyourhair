@@ -6,19 +6,20 @@ import StickyFooter from "./Footer";
 import { theme } from "Components/theme";
 import "styles/Home.scss";
 import Red from "../assets/Red.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 
 function Home() {
   const { isLoggedIn } = useSelector(state => state.auth);
-  
+  const dispatch = useDispatch();
   console.log(isLoggedIn);
+  
   const handleClick = (e) => {
     console.log("Clicked");
   };
   
-  const LogOut = () => {
-    dispatchEvent(logout());
+  const logOut = () => {
+    dispatch(logout());
   }
 
   return (
@@ -39,7 +40,7 @@ function Home() {
           <Link to={"./login"}>
             <Button variant="contained">Login Page</Button>
           </Link>
-          <Button variant="contained" onClick={LogOut}>Logout</Button>
+          <Button variant="contained" onClick={logOut}>Logout</Button>
           <Link to={"./reservation"}>
             <Button variant="contained">Make reservation</Button>
           </Link>
