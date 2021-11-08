@@ -56,6 +56,7 @@ export default function Login(props) {
     ))
     .then(() => {
       console.log(isLoggedIn);
+      console.log(currentUser);
       props.history.push("/");
       window.location.reload();
     })
@@ -64,10 +65,10 @@ export default function Login(props) {
     });
   };
 
-  if (isLoggedIn) {
+if (isLoggedIn) {
     return <Redirect to ='/' />;
-  }
-
+ }
+ 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

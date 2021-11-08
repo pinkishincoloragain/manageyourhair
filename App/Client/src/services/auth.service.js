@@ -26,6 +26,7 @@ const login = (email, password) => {
         pw: password
     })
     .then((response) => {
+        console.log(response);
         if (response.data.accessToken) {
             localStorage.setItem("User", JSON.stringify(response.data));
         }
@@ -36,7 +37,11 @@ const login = (email, password) => {
     });
 };
 
+const logout = () => {
+    localStorage.removeItem("User");
+}
 export default {
     signup,
     login,
+    logout,
 };

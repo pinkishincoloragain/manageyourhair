@@ -7,13 +7,19 @@ import { theme } from "Components/theme";
 import "styles/Home.scss";
 import Red from "../assets/Red.jpg";
 import { useSelector } from "react-redux";
+import { logout } from "../actions/auth";
 
 function Home() {
   const { isLoggedIn } = useSelector(state => state.auth);
+  
   console.log(isLoggedIn);
   const handleClick = (e) => {
     console.log("Clicked");
   };
+  
+  const LogOut = () => {
+    dispatchEvent(logout());
+  }
 
   return (
     <div>
@@ -33,6 +39,7 @@ function Home() {
           <Link to={"./login"}>
             <Button variant="contained">Login Page</Button>
           </Link>
+          <Button variant="contained" onClick={LogOut}>Logout</Button>
           <Link to={"./reservation"}>
             <Button variant="contained">Make reservation</Button>
           </Link>

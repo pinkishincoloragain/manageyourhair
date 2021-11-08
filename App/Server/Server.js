@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+var jwt = require("jsonwebtoken");
 const salt = 10;
 
 const app = express();
@@ -100,6 +101,12 @@ app.post('/api/login', (req, res) => {
         console.log('Login fail');
       }
     });
+    var token = jwt.sign({id: param[0]}, 'secret-key', {
+      expiresIn: 86400
+    });
+    res.status(200).send({
+      accessToken: token
+    })
     res.end();
 })
 
