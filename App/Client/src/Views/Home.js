@@ -7,8 +7,6 @@ import StickyFooter from "./Footer";
 import { theme } from "Components/theme";
 import "styles/Home.scss";
 import PrimarySearchAppBar from "Views/MUI/SearchBar.js";
-import { Transform } from "@mui/icons-material";
-import Parallax from "./Parallex";
 
 function Home() {
   const [position, setPosition] = useState(0);
@@ -34,7 +32,13 @@ function Home() {
             <CardHeader title="Manageyourhair" className="Logo" />
           </ThemeProvider>
         </div>
-        <div className="main" style={{ backgroundPositionY: position / 4 }}>
+        <div
+          className="main"
+          style={{
+            backgroundPositionY: position / 4,
+            opacity: `${1-((position) / 1000)*1.2}`,
+          }}
+        >
           <div className="context">
             <div className="CatchPhrase">
               <h1>Do you want to get a haircut?</h1>
@@ -48,28 +52,50 @@ function Home() {
       <div className="description">
         <div className="description-text">
           <h1>Place your reservation today!</h1>
-          <div
-            className="Curly"
-            style={{
-              transform: `translateX(${-position + 1800}px)`,
-            }}
-          ></div>
-          <p
-            className="desc"
-            style={{
-              transform: `translateX(${-position + 1800}px)`,
-            }}
-          >
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </p>
+          <div>
+            <div
+              className="Curly"
+              style={{
+                transform: `translateX(${(-position / 2)*1.8 + 1000}px)`,
+              }}
+            ></div>
+            <p
+              className="desc"
+              style={{
+                transform: `translateX(${-position + 1800}px)`,
+                opacity: `${(position - 1000) / 1000}`,
+              }}
+            >
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum.
+            </p>
+          </div>
+          <div>
+            <div
+              className="Pink"
+              style={{
+                transform: `translateX(${(position / 2.4 - 300) * 2}px)`,
+                opacity: `${(position - 300) / 1000}`,
+              }}
+            ></div>
+            <p
+              className="desc"
+              style={{
+                transform: `translateX(${-position + 1800}px)`,
+                opacity: `${(position - 1000) / 1000}`,
+              }}
+            >
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum.
+            </p>
+          </div>
         </div>
       </div>
-      <div>
-        <Parallax />
-      </div>
+      <div></div>
     </div>
   );
 }

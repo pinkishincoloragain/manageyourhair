@@ -73,24 +73,30 @@
 
 .description {
   margin-top: -40vh;
-  padding-top: 60vh;
+  padding-top: 0vh;
   background-color: #f5f5f5;
   background-color: transparent;
-  height: 100vh;
+  height: 140vh;
   width: 100vw;
   overflow: hidden;
 
   .Curly {
-    width: 50vw;
+    width: 30vw;
     height: 40vh;
     background-size: cover;
     background-image: url("../assets/Curly.jpg");
+  }
+  .Pink {
+    width: 30vw;
+    height: 40vh;
+    background-size: cover;
+    background-image: url("../assets/Pink.jpg");
   }
   // overflow: hidden;
   .desc {
     // display: flex;
     font-weight: bold;
-    font-size: 60px;
+    font-size: 2rem;
     color: rgb(70, 70, 223);
     right: 50%;
   }
