@@ -10,6 +10,7 @@ import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
 import Parallax from "Views/Parallex";
 import StickyFooter from "Views/Footer";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   return (
@@ -21,11 +22,14 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/reservation" component={Reservation} />
+<<<<<<< HEAD
         <Route exact path="/Parallax" component={Parallax} />
         <Route path="*" component={NotFound} />
+=======
+>>>>>>> 9ab4d36d5ee1abbb3cecc1c3b0cb14dc41b99a79
       </Switch>
     </div>
   );
 }
-
+//<Route path="*" component={NotFound} />
 export default App;
