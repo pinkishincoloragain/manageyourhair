@@ -1,11 +1,31 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const cors = require("cors");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const salt = 10;
 
 const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+app.use(cors({
+  origin: true,
+  credentials: true
+}))
+app.use(cookieParser());
+app.use(
+  session({
+    key: "login", // 분리할 것
+    secret: "Secret", // 분리할 것
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60*60*24,
+    }
+  })
+)
 
 // middleware for allowing react to fetch() from server
 app.use(function (req, res, next) {
@@ -22,8 +42,8 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  // password: "COLCTveCNfY8",
-  password: "root",
+  password: "COLCTveCNfY8",
+  // password: "root",
   database: "manager",
   //  socketPath may differ from the default path
   //socketPath: "/tmp/mysql.sock",
@@ -43,7 +63,7 @@ app.get("/api/getList", (req, res) => {
   console.log("sent list of items");
 });
 
-// An api endpoint for signup
+// An api endpoint for authentication
 app.post("/api/signup", (req, res) => {
   const param = [req.body.firstName, req.body.lastName, req.body.contact, req.body.id, req.body.pw];
   // encryption for user password
@@ -56,7 +76,28 @@ app.post("/api/signup", (req, res) => {
     });
   });
   res.end();
+});
+app.post('/api/login', (req, res) => {
+    const param = [req.body.id, req.body.pw];
+    connection.query("SELECT * FROM user where LOGIN_ID=?", param[0], function (err, rows, fields) {
+      if (err) throw err;
+      // id exists
+      if (rows.length > 0) {
+        bcrypt.compare(param[1], rows[0].LOGIN_PW, (error, result) => {
+          if (result) {
+            console.log('Login success');
+          }
+          else
+            console.log('Login fail');
+        })
+      }
+      else {
+        console.log('Login fail');
+      }
+    });
+    res.end();
 })
+
 app.listen(8001, () => {
   console.log(`listening on port ${8001}`);
 });
