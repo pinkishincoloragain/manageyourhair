@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "styles/Home.scss";
-<<<<<<< HEAD
 import StickyFooter from "./Footer";
 
 function Home() {
@@ -17,23 +16,13 @@ function Home() {
     };
   }, []);
 
-=======
-import Red from "../assets/Red.jpg";
-import { useSelector } from "react-redux";
-import { logout } from "../actions/auth";
-
-function Home() {
-  const { isLoggedIn } = useSelector(state => state.auth);
-  
-  console.log(isLoggedIn);
->>>>>>> 9ab4d36d5ee1abbb3cecc1c3b0cb14dc41b99a79
   const handleClick = (e) => {
     console.log("Clicked");
   };
   
-  const LogOut = () => {
-    dispatchEvent(logout());
-  }
+  // const LogOut = () => {
+  //   dispatchEvent(logout());
+  // }
 
   let width =
     window.innerWidth ||
@@ -47,7 +36,6 @@ function Home() {
 
   return (
     <div>
-<<<<<<< HEAD
       <div className="Home">
         <div className="header">
           <div className="Logo">Manageyourhair</div>
@@ -59,28 +47,6 @@ function Home() {
               <div className="linkBtn">Sign In</div>
             </Link>
           </div>
-=======
-      <div className="header">
-        <ThemeProvider theme={theme}>
-          <CardHeader title="Manageyourhair" fontFamily="Geostar" className="Logo" />
-        </ThemeProvider>{" "}
-        <div id="Btns">
-          <Link to={"./list"}>
-            <Button variant="contained" onClick={handleClick}>
-              List
-            </Button>
-          </Link>
-          <Link to={"./mypage"}>
-            <Button variant="contained">My Page</Button>
-          </Link>
-          <Link to={"./login"}>
-            <Button variant="contained">Login Page</Button>
-          </Link>
-          <Button variant="contained" onClick={LogOut}>Logout</Button>
-          <Link to={"./reservation"}>
-            <Button variant="contained">Make reservation</Button>
-          </Link>
->>>>>>> 9ab4d36d5ee1abbb3cecc1c3b0cb14dc41b99a79
         </div>
         <div
           className="main"

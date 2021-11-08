@@ -22,11 +22,6 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/reservation" component={Reservation} />
-<<<<<<< HEAD
-        <Route exact path="/Parallax" component={Parallax} />
-        <Route path="*" component={NotFound} />
-=======
->>>>>>> 9ab4d36d5ee1abbb3cecc1c3b0cb14dc41b99a79
       </Switch>
     </div>
   );
