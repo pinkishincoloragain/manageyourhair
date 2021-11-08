@@ -1,12 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
-import { Button, ThemeProvider } from "@material-ui/core";
-import { CardHeader } from "@material-ui/core";
-import StickyFooter from "./Footer";
-import { theme } from "Components/theme";
+import { useState, useEffect } from "react";
 import "styles/Home.scss";
-import PrimarySearchAppBar from "Views/MUI/SearchBar.js";
+import StickyFooter from "./Footer";
 
 function Home() {
   const [position, setPosition] = useState(0);
@@ -23,6 +19,16 @@ function Home() {
   const handleClick = (e) => {
     console.log("Clicked");
   };
+
+  let width =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+
+  let height =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
 
   return (
     <div>
@@ -42,15 +48,15 @@ function Home() {
           className="main"
           style={{
             backgroundPositionY: position / 4,
-            opacity: `${1 - (position / 1000) * 1.5}`,
+            opacity: `${1 - (position / width) * 1.5}`,
           }}
         >
           <div className="context">
             <div className="CatchPhrase">
               <h1>Do you want to get a haircut?</h1>
             </div>
-            <div className="searchB">
-              <PrimarySearchAppBar Color="black" />
+            <div className="SearchBar">
+              <div>Search Bar</div>
             </div>
           </div>
         </div>
@@ -60,7 +66,7 @@ function Home() {
           <p
             style={{
               fontSize: "4rem",
-              opacity: `${((position - 500) * 3) / 500}`,
+              opacity: `${((position - height / 2) * 3) / (height / 2)}`,
               marginLeft: "10vw",
             }}
           >
@@ -72,48 +78,55 @@ function Home() {
             <div
               className="Curly"
               style={{
-                transform: `translateX(${(-position / 2) * 1.8 + 1000}px)`,
+                transform: `translateX(
+                  ${Math.max((-position / 2) * 1.8 + height, 150)}px
+                  )`,
               }}
             ></div>
             <div
               className="desc"
               style={{
-                transform: `translateX(${-position + 1800}px)`,
+                transform: `translateX(${-position + width * 1.1}px)`,
                 opacity: `${((position - 800) * 3) / 500}`,
                 marginTop: `-200px`,
                 marginBottom: `200px`,
               }}
             >
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
+              Duis aute irure dolor in cillum dolore eu fugiat <br />
+              cupidatat non proident, anim id est laborum.
             </div>
           </div>
           <div>
             <div
               className="Pink"
               style={{
-                transform: `translateX(${(position / 2.4 - 300) * 2}px)`,
+                transform: `translateX(${Math.min(
+                  (position / 2.4 - 300) * 2,
+                  540
+                )}px)`,
                 opacity: `${(position - 300) / 1000}`,
               }}
             ></div>
-            <p
-              className="desc"
+            <div
+              className="desc2"
               style={{
                 transform: `translateX(${-position + 1800}px)`,
                 opacity: `${(position - 800) / 1000}`,
               }}
             >
               Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              <br />
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat{" "}
+              <br />
               cupidatat non proident, sunt in culpa qui officia deserunt mollit
               anim id est laborum.
-            </p>
+            </div>
           </div>
         </div>
       </div>
-      <div></div>
+      <div>
+        <StickyFooter />
+      </div>
     </div>
   );
 }

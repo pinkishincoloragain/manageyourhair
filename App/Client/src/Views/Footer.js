@@ -7,14 +7,36 @@ import Link from "@mui/material/Link";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <div
+      style={{
+        display: "flex",
+        margin: "auto",
+        alignContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="body2" color="text.secondary">
+        {"Copyright © "}
+        <Link color="inherit" href="https://mui.com/">
+          Manageyourwebsite
+        </Link>{" "}
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div>
+            <Link color="inherit" href="https://github.com/Angela-OH">
+              Angela OH
+            </Link>
+          </div>
+          &nbsp;
+          <div>
+            <Link color="inherit" href="https://github.com/pinkishincoloragain">
+              Myungbin Son
+            </Link>
+          </div>
+        </div>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </div>
   );
 }
 
@@ -28,7 +50,7 @@ export default function StickyFooter() {
       }}
     >
       <CssBaseline />
-      {/* <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
           Sticky footer
         </Typography>
@@ -37,7 +59,7 @@ export default function StickyFooter() {
           {"The footer will move as the main element of the page grows."}
         </Typography>
         <Typography variant="body1">Sticky footer placeholder.</Typography>
-      </Container> */}
+      </Container>
       <Box
         component="footer"
         sx={{
@@ -50,10 +72,8 @@ export default function StickyFooter() {
               : theme.palette.grey[800],
         }}
       >
-        <Container maxWidth="sm">
-          <Typography variant="body1">
-            My sticky footer can be found here.
-          </Typography>
+        <Container>
+          <div>Manage your hair.</div>
           <Copyright />
         </Container>
       </Box>
