@@ -13,8 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../actions/auth";
+import { Redirect } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,9 +37,10 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
   const [successful, setSuccessful] = useState(false);
-
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { user: currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -55,11 +57,21 @@ export default function SignUp() {
       data.get('password')))
       .then(() => {
         setSuccessful(true);
+        console.log('signup');
+        /*console.log('signup');
+        console.log(isLoggedIn);
+        console.log(currentUser);
+        props.history.push("/");
+        window.location.reload();*/
       })
       .catch(() => {
         setSuccessful(false);
       });
   };
+  console.log(isLoggedIn);
+  if (isLoggedIn) {
+    return <Redirect to ='/' />;
+ }
 
   return (
     <ThemeProvider theme={theme}>

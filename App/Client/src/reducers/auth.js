@@ -6,7 +6,7 @@ import {
     LOGOUT,
   } from "../actions/types";
   
-  const user = JSON.parse(localStorage.getItem("User"));
+  const user = JSON.parse(localStorage.getItem("user"));
   
   const initialState = user
     ? { isLoggedIn: true, user }
@@ -19,7 +19,7 @@ import {
       case REGISTER_SUCCESS:
         return {
           ...state,
-          isLoggedIn: false,
+          isLoggedIn: true,
         };
       case REGISTER_FAIL:
         return {

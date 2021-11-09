@@ -44,6 +44,7 @@ app.use(function (req, res, next) {
 
 var mysql = require("mysql");
 const { json } = require("body-parser");
+//const { isColString } = require("sequelize/types/lib/utils");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -77,10 +78,16 @@ app.post("/api/signup", (req, res) => {
     param[4] = hash;
     connection.query("INSERT INTO USER (`CUSTOMER_FIRST_NAME`, `CUSTOMER_LAST_NAME`, `CONTACT_NO`, `LOGIN_ID`, `LOGIN_PW`) VALUES (?, ?, ?, ?, ?)", param, function (err, rows, fields) {
       if (err) throw err;
-      console.log('sign up new user');
+      var token = jwt.sign({id: param[3]}, 'secret-key', {
+        expiresIn: 86400
+      });
+      res.status(200).send({
+        accessToken: token
+      });
     });
+    console.log('sign up new user');
   });
-  res.end();
+  //res.end();
 });
 
 app.post('/api/login', (req, res) => {
@@ -92,6 +99,12 @@ app.post('/api/login', (req, res) => {
         bcrypt.compare(param[1], rows[0].LOGIN_PW, (error, result) => {
           if (result) {
             console.log('Login success');
+            var token = jwt.sign({id: param[0]}, 'secret-key', {
+              expiresIn: 86400
+            });
+            res.status(200).send({
+              accessToken: token
+            });
           }
           else
             console.log('Login fail');
@@ -101,13 +114,7 @@ app.post('/api/login', (req, res) => {
         console.log('Login fail');
       }
     });
-    var token = jwt.sign({id: param[0]}, 'secret-key', {
-      expiresIn: 86400
-    });
-    res.status(200).send({
-      accessToken: token
-    })
-    res.end();
+    //res.end();
 })
 
 app.listen(8001, () => {

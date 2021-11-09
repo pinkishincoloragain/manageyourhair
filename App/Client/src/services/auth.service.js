@@ -14,6 +14,10 @@ const signup = (firstName, lastName, contact, email, password) => {
     })
     .then((response) => {
         console.log(response);
+        if (response.data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(response.data));
+        };
+        return response.data
     })
     .catch((error) => {
         console.log(error);
@@ -26,10 +30,12 @@ const login = (email, password) => {
         pw: password
     })
     .then((response) => {
-        console.log(response);
+        console.log("response");
+        console.log(response.data);
         if (response.data.accessToken) {
-            localStorage.setItem("User", JSON.stringify(response.data));
-        }
+            console.log('success');
+            localStorage.setItem("user", JSON.stringify(response.data));
+        };
         return response.data;
     })
     .catch((error) => {
@@ -38,7 +44,7 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-    localStorage.removeItem("User");
+    localStorage.removeItem("user");
 }
 export default {
     signup,

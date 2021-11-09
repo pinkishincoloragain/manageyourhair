@@ -7,9 +7,8 @@ import { logout } from "../actions/auth";
 import StickyFooter from "./Footer";
 
 function Home() {
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { user: currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  console.log(isLoggedIn);
 
   const [position, setPosition] = useState(0);
   function onScroll() {

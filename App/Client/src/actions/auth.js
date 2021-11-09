@@ -13,6 +13,7 @@ import {
           (response) => {
               dispatch({
                   type: REGISTER_SUCCESS,
+                  payload: { user: response },
               });
               dispatch({
                   type: SET_MESSAGE,
