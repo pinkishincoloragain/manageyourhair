@@ -12,6 +12,7 @@ function Home() {
   console.log(isLoggedIn);
 
   const [position, setPosition] = useState(0);
+  const [searchInput, setSearchInput] = useState("");
   function onScroll() {
     setPosition(window.scrollY);
   }
@@ -28,6 +29,8 @@ function Home() {
   const logOut = () => {
     dispatch(logout());
   };
+
+  const handleChange = () => {};
 
   let width =
     window.innerWidth ||
@@ -69,6 +72,12 @@ function Home() {
             </div>
             <div className="SearchBar">
               <div>Search Bar</div>
+              <input
+                type="textarea"
+                name="textValue"
+                onChange={handleChange}
+                className="searchInput"
+              />
             </div>
           </div>
         </div>
@@ -80,6 +89,7 @@ function Home() {
               fontSize: "4rem",
               opacity: `${((position - height / 2) * 3) / (height / 2)}`,
               marginLeft: "10vw",
+              fontWeight: "bold",
             }}
           >
             Our service is ..
