@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFetch } from "../utils/Hooks";
+import { useLocation } from "react-router-dom";
 
-function List() {
+function List(){
+  const location = useLocation();
   const [data] = useFetch("http://localhost:8001/api/getList");
+
+  useEffect((data) => {
+    console.log(location);
+  }, [location]);
 
   return (
     <div>
@@ -13,6 +19,6 @@ function List() {
       })}
     </div>
   );
-}
+};
 
 export default List;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import "styles/Home.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
@@ -11,11 +12,14 @@ function Home() {
   const dispatch = useDispatch();
   console.log(isLoggedIn);
 
+
   const [position, setPosition] = useState(0);
   const [searchInput, setSearchInput] = useState("");
+
   function onScroll() {
     setPosition(window.scrollY);
   }
+
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => {
@@ -30,7 +34,18 @@ function Home() {
     dispatch(logout());
   };
 
-  const handleChange = () => {};
+  // let history = useHistory();
+  // let location = useLocation();
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
+    console.log("searchInput", searchInput);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("searchInput", searchInput);
+  };
 
   let width =
     window.innerWidth ||
@@ -46,9 +61,11 @@ function Home() {
     <div>
       <div className="Home">
         <div className="header">
-          <div className="Logo">Manageyourhair</div>
+          <Link to="/" className="Logo">
+            <div>Manageyourhair</div>
+          </Link>
           <div className="links">
-            <Link to={"./signup"}>
+            <Link to={"./signup"} style={{ textDecoration: "none" }}>
               <div className="linkBtn">Sign Up</div>
             </Link>
             <Link to={"./login"}>
@@ -68,16 +85,22 @@ function Home() {
         >
           <div className="context">
             <div className="CatchPhrase">
-              <h1>Do you want to get a haircut?</h1>
+              <h1>Do you need a haircut?</h1>
             </div>
-            <div className="SearchBar">
-              <div>Search Bar</div>
-              <input
-                type="textarea"
-                name="textValue"
-                onChange={handleChange}
-                className="searchInput"
-              />
+            <div className="SearchWrapper">
+              <div className="searchBar">
+                <input
+                  autoFocus={true}
+                  type="textarea"
+                  value={searchInput}
+                  onChange={handleChange}
+                  className="searchInput"
+                  placeholder="Search for a stylist / place"
+                />
+                <button className="submitBtn" onClick={handleSubmit}>
+                  Search
+                </button>
+              </div>
             </div>
           </div>
         </div>

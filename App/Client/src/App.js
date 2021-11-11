@@ -1,5 +1,8 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import {
+  Route,
+  Switch,
+} from "react-router-dom";
 import Home from "Views/Home";
 import List from "Views/List";
 import Mypage from "Views/Mypage";
@@ -22,9 +25,9 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/reservation" component={Reservation} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </div>
   );
 }
-//<Route path="*" component={NotFound} />
 export default App;
