@@ -12,10 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../actions/auth";
 import { Redirect } from "react-router-dom";
+import { isEmail } from "validator";
 
 function Copyright(props) {
   return (
@@ -38,37 +39,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp(props) {
+
   const [successful, setSuccessful] = useState(false);
   const { isLoggedIn } = useSelector(state => state.auth);
-  const { user: currentUser } = useSelector(state => state.auth);
+  const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setSuccessful(false);
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-
-    dispatch(signup(
-      data.get('firstName'), 
-      data.get('lastName'), 
-      data.get('contact'),
-      data.get('email'),
-      data.get('password')))
+      dispatch(signup(
+        data.get('firstName'), 
+        data.get('lastName'), 
+        data.get('contact'),
+        data.get('email'),
+        data.get('password'),
+        data.get('password2')))
       .then(() => {
         setSuccessful(true);
-        console.log('signup');
-        /*console.log('signup');
-        console.log(isLoggedIn);
-        console.log(currentUser);
         props.history.push("/");
-        window.location.reload();*/
+        window.location.reload();
       })
       .catch(() => {
         setSuccessful(false);
       });
   };
-  console.log(isLoggedIn);
+ 
   if (isLoggedIn) {
     return <Redirect to ='/' />;
  }
@@ -93,7 +90,6 @@ export default function SignUp(props) {
           </Typography>
           <Box
             component="form"
-            noValidate
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
@@ -102,7 +98,7 @@ export default function SignUp(props) {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  required
+                  
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -111,7 +107,7 @@ export default function SignUp(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
+                  
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -121,7 +117,7 @@ export default function SignUp(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  
                   fullWidth
                   id="contact"
                   label="Contact Number"
@@ -131,7 +127,7 @@ export default function SignUp(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -141,12 +137,23 @@ export default function SignUp(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  
                   fullWidth
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  
+                  fullWidth
+                  name="password2"
+                  label="Password Check"
+                  type="password"
+                  id="password2"
                   autoComplete="new-password"
                 />
               </Grid>
@@ -159,6 +166,13 @@ export default function SignUp(props) {
                 />
               </Grid>
             </Grid>
+            {message && (
+            <Grid container justifyContent="center">
+            <Grid item>
+              {message}
+            </Grid>
+            </Grid>
+            )}
             <Button
               type="submit"
               fullWidth

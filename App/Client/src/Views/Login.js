@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/auth";
 import { Redirect } from "react-router-dom";
+import { isEmail } from "validator";
 // import { useLogin } from "utils/Hooks";
 
 function Copyright(props) {
@@ -39,26 +40,25 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login(props) {
-  // const [login, setLogin] = useLogin([]);
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector(state => state.auth);
-  const { user: currentUser } = useSelector(state => state.auth);
+  const { email: validEmail } = useSelector(state => state.auth);
+  const { message } = useSelector(state => state.message);
+ 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     const data = new FormData(e.currentTarget);
-    // eslint-disable-next-line no-console
+    
     dispatch(login(
       data.get('email'),
       data.get('password')
     ))
     .then(() => {
-      console.log(isLoggedIn);
-      console.log(currentUser);
-      props.history.push("/");
-      window.location.reload();
+        props.history.push("/");
+        window.location.reload();
     })
     .catch(() => {
       setLoading(false);
@@ -68,7 +68,7 @@ export default function Login(props) {
 if (isLoggedIn) {
     return <Redirect to ='/' />;
  }
- 
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -90,7 +90,6 @@ if (isLoggedIn) {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
             sx={{ mt: 1 }}
           >
             <TextField
@@ -113,10 +112,17 @@ if (isLoggedIn) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            <FormControlLabel id = "check"
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            {message && (
+            <Grid container justifyContent="center">
+            <Grid item>
+              {message}
+            </Grid>
+            </Grid>
+            )}
             <Button
               type="submit"
               fullWidth

@@ -4,16 +4,16 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8001/"
 
-const signup = (firstName, lastName, contact, email, password) => {
+const signup = (firstName, lastName, contact, email, password, password2) => {
     return axios.post(API_URL + 'api/signup', {
         firstName: firstName,
         lastName: lastName,
         contact: contact,
         id: email,
-        pw: password
+        pw: password,
+        pw2: password2,
     })
     .then((response) => {
-        console.log(response);
         if (response.data.accessToken) {
             localStorage.setItem("user", JSON.stringify(response.data));
         };
@@ -30,12 +30,16 @@ const login = (email, password) => {
         pw: password
     })
     .then((response) => {
-        console.log("response");
-        console.log(response.data);
+        // login success
         if (response.data.accessToken) {
             console.log('success');
             localStorage.setItem("user", JSON.stringify(response.data));
         };
+    
+        // login fail - validation fail
+        if (response.data.errors) {
+            console.log('validation Fail');
+        }
         return response.data;
     })
     .catch((error) => {

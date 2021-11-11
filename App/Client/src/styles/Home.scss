@@ -35,15 +35,17 @@
     flex-direction: row;
 
     .linkBtn {
-      font-size: min(3rem, 2vw);
+      font-size: min(2rem, 1.5vw);
       color: #000;
+      width: 7vw;
       text-decoration: none;
-      padding: 0.5rem;
       // border: 3px solid #000;
       border-radius: 5px;
+      padding: 0.5rem;
+      margin-top: 1vh;
       transition: all 0.3s ease-in-out;
       cursor: pointer;
-      margin-left: 4vw;
+      margin-left: 2vw;
 
       &:hover {
         background-color: #000;
@@ -110,7 +112,7 @@
   width: 100vw;
   overflow: hidden;
 
-  .ourservice{
+  .ourservice {
     margin-bottom: 5vh;
   }
 
@@ -137,7 +139,7 @@
 
   .desc2 {
     // display: flex;
-    margin-top:5vh;
+    margin-top: 5vh;
     font-weight: bold;
     font-size: 2rem;
     color: rgb(62, 204, 192);

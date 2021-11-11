@@ -9,7 +9,6 @@ import StickyFooter from "./Footer";
 function Home() {
   const { user: currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-
   const [position, setPosition] = useState(0);
   function onScroll() {
     setPosition(window.scrollY);
@@ -26,7 +25,7 @@ function Home() {
   };
   const logOut = () => {
     dispatch(logout());
-  }
+  };
 
   let width =
     window.innerWidth ||
@@ -43,15 +42,25 @@ function Home() {
       <div className="Home">
         <div className="header">
           <div className="Logo">Manageyourhair</div>
-          <div className="links">
-            <Link to={"./signup"}>
-              <div className="linkBtn">Sign Up</div>
-            </Link>
-            <Link to={"./login"}>
-              <div className="linkBtn">Sign In</div>
-            </Link>
-            <button variant="contained" onClick={logOut}>Logout</button>
-          </div>
+          { !currentUser ? (
+            <div className="links"> 
+              <Link to={"./signup"}>
+                <div className="linkBtn">Sign Up</div>
+              </Link>
+              <Link to={"./login"}>
+                <div className="linkBtn">Sign In</div>
+              </Link>
+            </div>
+            ) : (
+            <div className="links">
+              <Link to={"./mypage"}>
+                <div className="linkBtn">My Page</div>
+              </Link>
+              <div className="linkBtn" onClick={logOut}>
+                Logout
+              </div>
+            </div>
+            )}
         </div>
         <div
           className="main"

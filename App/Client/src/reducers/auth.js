@@ -4,6 +4,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
+    VALIDATION_FAIL,
   } from "../actions/types";
   
   const user = JSON.parse(localStorage.getItem("user"));
@@ -20,6 +21,7 @@ import {
         return {
           ...state,
           isLoggedIn: true,
+          user: payload.user,
         };
       case REGISTER_FAIL:
         return {
@@ -38,6 +40,12 @@ import {
           isLoggedIn: false,
           user: null,
         };
+      case VALIDATION_FAIL:
+        return {
+          ...state,
+          isLoggedIn: false,
+          user: null,
+        }
       case LOGOUT:
         return {
           ...state,
