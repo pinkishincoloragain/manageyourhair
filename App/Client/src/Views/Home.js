@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "styles/Home.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
-import StickyFooter from "./Footer";
+import StickyFooter from "../Components/Footer";
 import { UserContext, SearchContext } from "utils/UserContext";
 
 function Home() {
@@ -13,9 +13,6 @@ function Home() {
   console.log(isLoggedIn);
 
   const [position, setPosition] = useState(0);
-  const [textInput, setTextInput] = useState("");
-  const {user,setUser} = useContext(UserContext);
-  const {searchValue,setSearchValue} = useContext(SearchContext);
 
   function onScroll() {
     setPosition(window.scrollY);
@@ -30,19 +27,6 @@ function Home() {
 
   const logOut = () => {
     dispatch(logout());
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setTextInput(e.target.value);
-    console.log("searchInput", textInput);
-
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSearchValue(textInput);
-    console.log("searchValue", textInput);
   };
 
   let width =
@@ -86,19 +70,7 @@ function Home() {
               <h1>Do you need a haircut?</h1>
             </div>
             <div className="SearchWrapper">
-              <div className="searchBar">
-                <input
-                  autoFocus={true}
-                  type="textarea"
-                  value={textInput}
-                  onChange={handleChange}
-                  className="searchInput"
-                  placeholder="Search for a stylist / place"
-                />
-                <button className="submitBtn" onClick={handleSubmit}>
-                  Search
-                </button>
-              </div>
+              <SearchBar />
             </div>
           </div>
         </div>
@@ -174,4 +146,48 @@ function Home() {
   );
 }
 
+function SearchBar() {
+  const [textInput, setTextInput] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const inputRef = useRef();
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setTextInput(e.target.value);
+    setSearchValue(textInput);
+    // console.log("searchInput", textInput);
+  };
+
+  useEffect(() => {
+    console.log(searchValue);
+  }, [searchValue]);
+
+  const handleSubmit = (e) => {
+    setSearchValue(textInput);
+    setSearchValue(inputRef.current.value);
+    console.log("searchValue", searchValue);
+  };
+
+  return (
+    <div className="searchBar">
+      <input
+        ref={inputRef}
+        autoFocus={true}
+        type="textarea"
+        value={textInput}
+        onChange={handleChange}
+        className="searchInput"
+        placeholder="Search for a stylist / place"
+      />
+      <Link to={"./list"}>
+        <button className="submitBtn" onClick={handleSubmit}>
+          Search
+        </button>
+      </Link>
+    </div>
+  );
+}
+
 export default Home;
+export { SearchBar };

@@ -8,7 +8,7 @@ import "App.css";
 import Login from "Views/Login";
 import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
-import StickyFooter from "Views/Footer";
+import StickyFooter from "Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContext, UserContext } from "utils/UserContext";
 
@@ -25,7 +25,7 @@ function App() {
     <div>
       <UserContext.Provider value={{ user, setUser }}>
         <Switch>
-          <SearchContext.Provider value={(searchValue, setSearchValue)}>
+          <SearchContext.Provider value={{searchValue, setSearchValue}}>
             <Route exact path="/" component={Home} />
             <Route exact path="/list" component={List} />
             <Route exact path="/reservation" component={Reservation} />

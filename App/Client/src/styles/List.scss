@@ -1,0 +1,51 @@
+.List {
+  .searchBar {
+    width: 70%;
+    height: 10vh;
+    flex-direction: row;
+    display: flex;
+
+    .searchInput {
+      height: 6vh;
+      font-size: 2rem;
+      background-color: transparent;
+      border: 0px solid #000;
+      border-bottom: 0.15rem solid #000;
+      flex: 6;
+      color: white;
+      transition: 0.2s;
+      &:focus {
+        outline: none;
+        border-bottom: 0.3rem solid #000;
+        transition: 0.2s;
+      }
+    }
+    .searchInput::placeholder {
+      color: white;
+    }
+
+    .submitBtn {
+      margin-left: 1vw;
+      height: 6vh;
+      font-size: 2rem;
+      flex: 1;
+      color: black;
+      background-color: transparent;
+      border: 0.3rem solid #000;
+      transition: 0.2s;
+      border-radius: 0.3rem;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #000;
+        color: white;
+        transition: 0.2s;
+      }
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

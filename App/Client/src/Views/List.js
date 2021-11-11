@@ -1,24 +1,26 @@
 import React, { useEffect } from "react";
 import { useFetch } from "../utils/Hooks";
-import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { SearchContext } from "utils/UserContext";
+import MediaCard from "Components/MediaCard";
+import "styles/List.scss";
+import { SearchBar } from "./Home";
 
-function List(){
-  const location = useLocation();
+function List() {
   const [data] = useFetch("http://localhost:8001/api/getList");
-
-  useEffect((data) => {
-    console.log(location);
-  }, [location]);
+  const { searchValue, setSearchValue } = useContext(SearchContext);
 
   return (
-    <div>
-      <div>fish</div>
+    <div className="List">
+      <SearchBar />
+      <MediaCard />
+      <div>{searchValue}</div>
       <h1>List from server{"\n"}</h1>
       {data.map((item) => {
         return <div key={item}>{item}</div>;
       })}
     </div>
   );
-};
+}
 
 export default List;
