@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
 import "styles/Home.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 import StickyFooter from "./Footer";
+import { UserContext, SearchContext } from "utils/UserContext";
 
 function Home() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   console.log(isLoggedIn);
 
-
   const [position, setPosition] = useState(0);
-  const [searchInput, setSearchInput] = useState("");
+  const [textInput, setTextInput] = useState("");
+  const {user,setUser} = useContext(UserContext);
+  const {searchValue,setSearchValue} = useContext(SearchContext);
 
   function onScroll() {
     setPosition(window.scrollY);
@@ -27,24 +28,21 @@ function Home() {
     };
   }, []);
 
-  const handleClick = (e) => {
-    console.log("Clicked");
-  };
   const logOut = () => {
     dispatch(logout());
   };
 
-  // let history = useHistory();
-  // let location = useLocation();
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchInput(e.target.value);
-    console.log("searchInput", searchInput);
+    setTextInput(e.target.value);
+    console.log("searchInput", textInput);
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("searchInput", searchInput);
+    setSearchValue(textInput);
+    console.log("searchValue", textInput);
   };
 
   let width =
@@ -92,7 +90,7 @@ function Home() {
                 <input
                   autoFocus={true}
                   type="textarea"
-                  value={searchInput}
+                  value={textInput}
                   onChange={handleChange}
                   className="searchInput"
                   placeholder="Search for a stylist / place"
