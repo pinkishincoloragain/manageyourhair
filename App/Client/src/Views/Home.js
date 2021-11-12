@@ -70,7 +70,7 @@ function Home() {
               <h1>Do you need a haircut?</h1>
             </div>
             <div className="SearchWrapper">
-              <SearchBar />
+              <SearchBar placeholder="City Centre / Drumcondra"/>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ function Home() {
   );
 }
 
-function SearchBar() {
+function SearchBar(props) {
   const [textInput, setTextInput] = useState("");
   const { user, setUser } = useContext(UserContext);
   const { searchValue, setSearchValue } = useContext(SearchContext);
@@ -160,28 +160,40 @@ function SearchBar() {
   };
 
   useEffect(() => {
-    console.log(searchValue);
+    // console.log(searchValue);
   }, [searchValue]);
 
   const handleSubmit = (e) => {
     setSearchValue(textInput);
     setSearchValue(inputRef.current.value);
-    console.log("searchValue", searchValue);
+    // console.log("searchValue", searchValue);
   };
+
+  useEffect(() => {
+    document
+      .getElementById("searchInputId")
+      .addEventListener("keydown", function (event) {
+        if (event.code === "Enter" || event.code === "NumpadEnter") {
+          event.preventDefault();
+          document.getElementById("submitBtnId").click();
+        }
+      });
+  }, []);
 
   return (
     <div className="searchBar">
       <input
+        id="searchInputId"
         ref={inputRef}
         autoFocus={true}
         type="textarea"
         value={textInput}
         onChange={handleChange}
         className="searchInput"
-        placeholder="Search for a stylist / place"
+        placeholder={props.placeholder}
       />
       <Link to={"./list"}>
-        <button className="submitBtn" onClick={handleSubmit}>
+        <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
           Search
         </button>
       </Link>

@@ -101,10 +101,12 @@
         height: 10vh;
         flex-direction: row;
         display: flex;
+        text-align: center;
 
         .searchInput {
           height: 6vh;
           font-size: 2rem;
+          text-align: center;
           background-color: transparent;
           border: 0px solid #000;
           border-bottom: 0.15rem solid #000;
