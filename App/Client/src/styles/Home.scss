@@ -24,32 +24,39 @@
   .Logo {
     margin-left: 2vw;
     font-size: min(4rem, 3vw);
+    color: black;
+    text-decoration: underline black;
+    &:hover {
+      cursor: pointer;
+      color: rebeccapurple;
+      text-decoration: none;
+    }
   }
 
   .links {
-    margin-left: 20vw;
+    margin-left: 18vw;
     padding-top: 1vh;
+    margin-top: 1vh;
     font: 1.5rem "Roboto", sans-serif;
     align-items: space-between;
     display: flex;
     flex-direction: row;
 
     .linkBtn {
+      display: flex;
       font-size: min(2rem, 1.5vw);
       color: #000;
       width: 7vw;
-      text-decoration: none;
       // border: 3px solid #000;
       border-radius: 5px;
       padding: 0.5rem;
-      margin-top: 1vh;
       transition: all 0.3s ease-in-out;
       cursor: pointer;
       margin-left: 2vw;
+      text-decoration: underline black;
 
       &:hover {
-        background-color: #000;
-        color: #fff;
+        color: rgb(158, 68, 68);
       }
     }
   }
@@ -78,17 +85,63 @@
 
   .context {
     margin-top: 8vh;
+    width: 60vw;
     // margin-left: 40vw;
 
-    .searchBar {
+    .SearchWrapper {
+      margin-top: 8vw;
       display: flex;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin: auto;
-      width: 30vw;
-      height: 20vh;
-      background-color: white;
-      z-index: 10;
+      font: 1.5rem "Roboto", sans-serif;
+
+      .searchBar {
+        width: 70%;
+        height: 10vh;
+        flex-direction: row;
+        display: flex;
+        text-align: center;
+
+        .searchInput {
+          height: 6vh;
+          font-size: 2rem;
+          text-align: center;
+          background-color: transparent;
+          border: 0px solid #000;
+          border-bottom: 0.15rem solid #000;
+          flex: 6;
+          color: white;
+          transition: 0.2s;
+          &:focus {
+            outline: none;
+            border-bottom: 0.3rem solid #000;
+            transition: 0.2s;
+          }
+        }
+        .searchInput::placeholder {
+          color: white;
+        }
+
+        .submitBtn {
+          margin-left: 1vw;
+          height: 6vh;
+          font-size: 2rem;
+          flex: 1;
+          color: black;
+          background-color: transparent;
+          border: 0.3rem solid #000;
+          transition: 0.2s;
+          border-radius: 0.3rem;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #000;
+            color: white;
+            transition: 0.2s;
+          }
+        }
+      }
     }
   }
 

@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "styles/Home.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
-import StickyFooter from "./Footer";
+import StickyFooter from "../Components/Footer";
+import { UserContext, SearchContext } from "utils/UserContext";
 
 function Home() {
-  const { user: currentUser } = useSelector(state => state.auth);
+  const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
+
   function onScroll() {
     setPosition(window.scrollY);
   }
+
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => {
@@ -20,9 +23,6 @@ function Home() {
     };
   }, []);
 
-  const handleClick = (e) => {
-    console.log("Clicked");
-  };
   const logOut = () => {
     dispatch(logout());
   };
@@ -42,8 +42,8 @@ function Home() {
       <div className="Home">
         <div className="header">
           <div className="Logo">Manageyourhair</div>
-          { !currentUser ? (
-            <div className="links"> 
+          {!currentUser ? (
+            <div className="links">
               <Link to={"./signup"}>
                 <div className="linkBtn">Sign Up</div>
               </Link>
@@ -51,7 +51,7 @@ function Home() {
                 <div className="linkBtn">Sign In</div>
               </Link>
             </div>
-            ) : (
+          ) : (
             <div className="links">
               <Link to={"./mypage"}>
                 <div className="linkBtn">My Page</div>
@@ -60,7 +60,7 @@ function Home() {
                 Logout
               </div>
             </div>
-            )}
+          )}
         </div>
         <div
           className="main"
@@ -71,10 +71,10 @@ function Home() {
         >
           <div className="context">
             <div className="CatchPhrase">
-              <h1>Do you want to get a haircut?</h1>
+              <h1>Do you need a haircut?</h1>
             </div>
-            <div className="SearchBar">
-              <div>Search Bar</div>
+            <div className="SearchWrapper">
+              <SearchBar placeholder="City Centre / Drumcondra" />
             </div>
           </div>
         </div>
@@ -86,6 +86,7 @@ function Home() {
               fontSize: "4rem",
               opacity: `${((position - height / 2) * 3) / (height / 2)}`,
               marginLeft: "10vw",
+              fontWeight: "bold",
             }}
           >
             Our service is ..
@@ -149,4 +150,60 @@ function Home() {
   );
 }
 
+function SearchBar(props) {
+  const [textInput, setTextInput] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const inputRef = useRef();
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setTextInput(e.target.value);
+    setSearchValue(textInput);
+    // console.log("searchInput", textInput);
+  };
+
+  useEffect(() => {
+    // console.log(searchValue);
+  }, [searchValue]);
+
+  const handleSubmit = (e) => {
+    setSearchValue(textInput);
+    setSearchValue(inputRef.current.value);
+    // console.log("searchValue", searchValue);
+  };
+
+  useEffect(() => {
+    document
+      .getElementById("searchInputId")
+      .addEventListener("keydown", function (event) {
+        if (event.code === "Enter" || event.code === "NumpadEnter") {
+          event.preventDefault();
+          document.getElementById("submitBtnId").click();
+        }
+      });
+  }, []);
+
+  return (
+    <div className="searchBar">
+      <input
+        id="searchInputId"
+        ref={inputRef}
+        autoFocus={true}
+        type="textarea"
+        value={textInput}
+        onChange={handleChange}
+        className="searchInput"
+        placeholder={props.placeholder}
+      />
+      <Link to={"./list"}>
+        <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
+          Search
+        </button>
+      </Link>
+    </div>
+  );
+}
+
 export default Home;
+export { SearchBar };

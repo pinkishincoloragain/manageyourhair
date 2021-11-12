@@ -9,10 +9,10 @@ const salt = 10;
 
 const app = express();
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors())
+app.use(cors());
 app.use(cookieParser());
 app.use(
   session({
@@ -21,15 +21,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60*60*24,
-    }
+      expires: 60 * 60 * 24,
+    },
   })
-)
+);
 
-const corsOptions ={
-  origin:['http://localhost:3000', 'http://localhost:8001'],
-  credentials:true,            //access-control-allow-credentials:true
-}
+const corsOptions = {
+  origin: ["http://localhost:3000", "http://localhost:8001"],
+  credentials: true, //access-control-allow-credentials:true
+};
 app.use(cors(corsOptions));
 
 // middleware for allowing react to fetch() from server
@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "COLCTveCNfY8",
-  // password: "root",
+  // password: "COLCTveCNfY8",
+  password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  //socketPath: "/tmp/mysql.sock",
+  socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -68,6 +68,14 @@ app.get("/api/getList", (req, res) => {
   const list = ["item1", "item2", "item3"];
   res.json(list);
   console.log("sent list of items");
+
+  // const list = connection.query(
+  //   "SELECT * FROM hairshopF",
+  //   function (err, rows, fields) {
+  //     if (err) throw err;
+  //     console.log("get list of items");
+  //   }
+  // );
 });
 
 // An api endpoint for authentication

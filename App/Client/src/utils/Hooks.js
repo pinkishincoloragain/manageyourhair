@@ -17,6 +17,23 @@ function useFetch(url) {
   return [data];
 }
 
+function useFetchWithParams(url, params) {
+  const [data, setData] = useState([]);
+
+  async function fetchUrl() {
+    const response = await fetch(url, params);
+    const json = await response.json();
+
+    setData(json);
+  }
+
+  useEffect(() => {
+    fetchUrl();
+  });
+
+  return [data];
+}
+
 // function useLogin() {
 //   const [user, setUser] = useState([]);
 
@@ -34,4 +51,4 @@ function useFetch(url) {
 //   return [data];
 // }
 
-export { useFetch };
+export { useFetch, useFetchWithParams };

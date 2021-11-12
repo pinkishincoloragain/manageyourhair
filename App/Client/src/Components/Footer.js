@@ -8,6 +8,7 @@ import Link from "@mui/material/Link";
 function Copyright() {
   return (
     <div
+      id="bottom"
       style={{
         display: "flex",
         margin: "auto",
@@ -19,14 +20,30 @@ function Copyright() {
       <Link color="inherit" href="https://mui.com/">
         Manageyourwebsite
       </Link>{" "}
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <div>
+      <div
+        style={{
+          marginLeft: "1vw",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <div
+          style={{
+            marginLeft: "0.1rem",
+            marginRight: "0.1rem",
+          }}
+        >
           <Link color="inherit" href="https://github.com/Angela-OH">
             Angela OH
           </Link>
         </div>
         &nbsp;
-        <div>
+        <div
+          style={{
+            marginRight: "0.2rem",
+          }}
+        >
+          {" "}
           <Link color="inherit" href="https://github.com/pinkishincoloragain">
             Myungbin Son
           </Link>

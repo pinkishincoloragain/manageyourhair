@@ -8,10 +8,10 @@ import store from "./store";
 import theme from "Components/theme";
 
 render(
-    <BrowserRouter>
-    <Provider store = {store}>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
     </Provider>
-    </BrowserRouter>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
