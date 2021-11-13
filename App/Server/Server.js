@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  // password: "COLCTveCNfY8",
-  password: "root",
+  password: "COLCTveCNfY8",
+  // password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  socketPath: "/tmp/mysql.sock",
+  //socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();

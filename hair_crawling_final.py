@@ -44,7 +44,7 @@ consent(driver) # initial cookie consent
 # Store Crawling Information
 f = open('hair_data.csv', 'w', newline='', encoding='utf-8')
 writer = csv.writer(f)
-writer.writerow(["Index", "Name", "Address", "latitude", "longtitude", "Phone", "website", "ranking", "Open Hours"])
+writer.writerow(["Index", "Name", "Address", "latitude", "longtitude", "Phone", "Website", "Ranking", "Open Hours", "Images"])
 index = 1
 
 while True:
@@ -103,8 +103,12 @@ while True:
                 openHour_list.append(hours.get_attribute('textContent'))
         except:
             openHours = 'None'
+        try:
+            images = driver_detail.find_elements_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[1]/div[1]/button/img')[0].get_attribute('src')
+        except:
+            images = 'None'
 
-        writer.writerow([index, name, address, latitude, longtitude, phone, website, ranking, openHour_list]) # write CSV file
+        writer.writerow([index, name, address, latitude, longtitude, phone, website, ranking, openHour_list, images]) # write CSV file
         index += 1
 
     driver_detail.close()
