@@ -112,8 +112,8 @@ function Home() {
                 marginBottom: `200px`,
               }}
             >
-              Duis aute irure dolor in cillum dolore eu fugiat <br />
-              cupidatat non proident, anim id est laborum.
+              We help you find closest hairshop. <br />
+              Not only that, we also help you to make a reservation.
             </div>
           </div>
           <div>
@@ -134,12 +134,11 @@ function Home() {
                 opacity: `${(position - 800) / 1000}`,
               }}
             >
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              Your hair looks dirty.
               <br />
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat{" "}
+              Get some haircut right now.
               <br />
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
+              Click your location and find the nearest hairshop.
             </div>
           </div>
         </div>

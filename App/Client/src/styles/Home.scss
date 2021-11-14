@@ -68,6 +68,9 @@
   width: 80vw;
   min-height: 50vh;
   background-image: url("../assets/Red.jpg");
+  -moz-box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+  box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
   // background-repeat: no-repeat;
   background-size: cover;
   background-position: 53% 10%;
@@ -105,7 +108,7 @@
 
         .searchInput {
           height: 6vh;
-          font-size: 30vw;
+          font-size: 3vw;
           text-align: center;
           background-color: transparent;
           border: 0px solid #000;
@@ -174,12 +177,16 @@
     height: 40vh;
     background-size: cover;
     background-image: url("../assets/Curly.jpg");
+    box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+
   }
   .Pink {
     width: 30vw;
     height: 40vh;
     background-size: cover;
     background-image: url("../assets/Pink.jpg");
+    box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+
   }
   // overflow: hidden;
   .desc {
@@ -188,6 +195,7 @@
     font-size: 2rem;
     color: rgb(70, 70, 223);
     right: 50%;
+
   }
 
   .desc2 {

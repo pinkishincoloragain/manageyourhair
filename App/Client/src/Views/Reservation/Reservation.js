@@ -20,8 +20,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://google.com/">
-        Manageyourhair
+      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
+        manageyourhair
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -29,7 +29,7 @@ function Copyright() {
   );
 }
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["User info", "Payment details", "Review your reservation"];
 
 function getStepContent(step) {
   console.log(step);
@@ -82,7 +82,7 @@ export default function Checkout() {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            Reservation
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -98,9 +98,7 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Your order number is #2001539. Thank you for making reservation with us.
                 </Typography>
               </React.Fragment>
             ) : (

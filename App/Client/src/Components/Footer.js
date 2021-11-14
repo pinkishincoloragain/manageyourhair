@@ -17,8 +17,8 @@ function Copyright() {
       }}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Manageyourwebsite
+      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
+        Manageyourhair
       </Link>{" "}
       <div
         style={{
@@ -65,15 +65,15 @@ export default function StickyFooter() {
       }}
     >
       <CssBaseline />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+      <Container component="main" sx={{ mt: 2, mb: 1 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-          Sticky footer
+          Manage your hair
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
           {"Pin a footer to the bottom of the viewport."}
           {"The footer will move as the main element of the page grows."}
         </Typography>
-        <Typography variant="body1">Sticky footer placeholder.</Typography>
+        <Typography variant="body1">Manage your hair.</Typography>
       </Container>
       <Box
         component="footer"
@@ -88,7 +88,7 @@ export default function StickyFooter() {
         }}
       >
         <Container>
-          <div>Manage your hair.</div>
+          <div>Manageyourhair.</div>
           <Copyright />
         </Container>
       </Box>
