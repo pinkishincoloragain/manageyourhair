@@ -23,7 +23,10 @@ for line in rd:
         index += 1
         continue
     
-    check_sql = 'select * from hairshop where name = "{}"'.format(line[1])
+    if line[3]!='None' and line[4]!='None':
+        check_sql = 'select * from hairshop where name = "{}" and loc_x={} and loc_y={}'.format(line[1], line[3], line[4])
+    else:
+        check_sql = 'select * from hairshop where name = "{}"'.format(line[1])
     if curs.execute(check_sql):
         continue
 
@@ -36,8 +39,8 @@ for line in rd:
         if line[i] == 'None':
             line[i] = 'NULL'
 
-    sql = '''insert into hairshop (shop_id, name, login_id, login_pw, address, loc_x, loc_y, score, website, contact, open_hour) 
-    values ({}, "{}", "{}", "{}", "{}", {}, {}, {}, "{}", "{}", "{}")'''.format(line[0], line[1], id, password, line[2], line[3], line[4], line[7], line[6], line[5], line[8])
+    sql = '''insert into hairshop (shop_id, name, login_id, login_pw, address, loc_x, loc_y, score, website, contact, open_hour, photo_link) 
+    values ({}, "{}", "{}", "{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}")'''.format(line[0], line[1], id, password, line[2], line[3], line[4], line[7], line[6], line[5], line[8], line[9])
     print(sql)
     curs.execute(sql)
 conn.commit()
