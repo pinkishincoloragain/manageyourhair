@@ -8,19 +8,18 @@ export default function Stars(props) {
     let i = 0;
     for (i = 0; i < score - 1; i++) {
         items.push(<img src={Star} alt="star"
-            style={{ width: "1vw" }} />)
+            style={{ width: "1vw" }}
+            key={props.contact + i.toString()} />)
     }
     items.push(<img src={Star} alt="star"
         style={{
             objectFit: "cover", width: `${score - (Math.floor(score))}vw`
         }}
-        key={i++} />)
+        key={props.contact + i.toString()} />)
 
     return (
         <div>
-            <div>
-                {items}
-            </div>
+            {items}
         </div>
     )
 }

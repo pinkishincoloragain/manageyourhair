@@ -13,6 +13,10 @@
     padding: 20px;
     flex-direction: column;
 
+    .CurrentSearch{
+      text-align: left;
+      font-size: 6vw;
+    }
     .CardList {
       display: flex;
       justify-content: space-evenly;

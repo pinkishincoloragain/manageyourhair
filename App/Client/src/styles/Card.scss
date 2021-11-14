@@ -2,7 +2,7 @@
   margin: 2vw;
   width: 20%;
   min-width: 300px;
-  height: 45vh;
+  height: 50vh;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -18,13 +18,15 @@
       height: 18vh;
       border-radius: 5px;
       object-fit: cover;
+      transition: 0.5s;
     }
 
     .CardPara {
       border-radius: 5px;
       background-color: #f1f1f1;
       height: 100%;
-      margin-top:10%;
+      margin-top: 10%;
+      transition: 0.5s;
 
       .CardTitle {
         margin-top: 1vh;
@@ -54,31 +56,85 @@
         text-align: center;
         padding: 1vw;
         .CardAddress {
-          font-size: max(1.5vh,10px);
+          font-size: max(1.5vh, 10px);
           color: #3f3f3f;
-          height: 6vh;
+          height: 5vh;
         }
         .CardContact {
-          font-size: max(1.5vh,10px);
+          font-size: max(1.5vh, 10px);
           color: #3f3f3f;
+          height: 4vh;
+
         }
-        .CardDist{
-          font-size: max(1.5vh,10px);
+        .CardDist {
+          font-size: max(1.5vh, 10px);
           color: #3f3f3f;
         }
       }
     }
   }
 
-  &:hover{
+  &:hover {
     width: 30vw;
-    height:50vh;
+    height: 55vh;
     transition: 0.3s;
     cursor: pointer;
-    .Card{
+    .Card {
       width: 100%;
     }
   }
-  transition: 0.3s;
+  transition: 0.5s;
+}
 
+.CardButtons {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1vh;
+  text-align: center;
+  margin: auto;
+  margin-top: 1vh;
+  
+
+  .Reserve {
+    height: 3vh;
+    // background-color: aqua;
+    flex: 1;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 3px;
+  }
+  .Detail {
+    height: 3vh;
+    // background-color: red;
+    flex: 1;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 3px;
+  }
+  .Review {
+    height: 3vh;
+    // background-color: bisque;
+    flex: 1;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 3px;
+  }
+  .icnBtn {
+    transition: 0.1s;
+    margin-bottom: 5px;
+    &:hover {
+      width: 5vw;
+      transform: scale(1.5);
+    }
+  }
 }

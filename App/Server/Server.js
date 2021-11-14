@@ -69,7 +69,7 @@ app.get("/api/getList", (req, res) => {
   // res.json(list);
 
   connection.query(
-    "SELECT * FROM hairshop",
+    "SELECT * FROM hairshop order by score desc",
     function (err, rows, fields) {
       if (err) throw err;
       res.json(rows)
