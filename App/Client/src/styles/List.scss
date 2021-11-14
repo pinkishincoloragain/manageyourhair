@@ -1,7 +1,8 @@
+@import "Card.scss";
+
 .List {
   .ListWrap {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 80vw;
@@ -10,13 +11,15 @@
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    flex-direction: column;
+
+    .CardList {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: column;
+    }
   }
 
-  .CardList {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
   .searchBar {
     width: 70%;
     height: 10vh;

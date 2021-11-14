@@ -1,0 +1,50 @@
+.CardWrapper {
+  margin: 2vw;
+  width: 60vw;
+  height: 20vh;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+
+  .Card {
+    display: flex;
+    padding: 1vh;
+    flex-direction: row;
+    align-content: space-between;
+
+    .CardImage {
+      width: 16vw;
+      height: 18vh;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    .CardPara {
+      margin-left: 1vw;
+      border-radius: 5px;
+      width: 42vw;
+      background-color: #d6d6d6;
+
+      .CardTitle {
+        font-size: 1.5vw;
+        font-weight: bold;
+        color: #3f3f3f;
+      }
+
+      .CardContact {
+        font-size: 1.2vw;
+        color: #3f3f3f;
+      }
+      .CardScore {
+        font-size: 1.2vw;
+        color: #3f3f3f;
+      }
+      .CardOpenHour {
+        font-size: 1.2vw;
+        color: #3f3f3f;
+      }
+
+    }
+  }
+}

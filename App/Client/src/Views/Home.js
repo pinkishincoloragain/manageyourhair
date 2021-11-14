@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 import StickyFooter from "../Components/Footer";
 import { UserContext, SearchContext } from "utils/UserContext";
+import SearchBar from "Components/SearchBar";
 
 function Home() {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -150,60 +151,4 @@ function Home() {
   );
 }
 
-function SearchBar(props) {
-  const [textInput, setTextInput] = useState("");
-  const { user, setUser } = useContext(UserContext);
-  const { searchValue, setSearchValue } = useContext(SearchContext);
-  const inputRef = useRef();
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setTextInput(e.target.value);
-    setSearchValue(textInput);
-    // console.log("searchInput", textInput);
-  };
-
-  useEffect(() => {
-    // console.log(searchValue);
-  }, [searchValue]);
-
-  const handleSubmit = (e) => {
-    setSearchValue(textInput);
-    setSearchValue(inputRef.current.value);
-    // console.log("searchValue", searchValue);
-  };
-
-  useEffect(() => {
-    document
-      .getElementById("searchInputId")
-      .addEventListener("keydown", function (event) {
-        if (event.code === "Enter" || event.code === "NumpadEnter") {
-          event.preventDefault();
-          document.getElementById("submitBtnId").click();
-        }
-      });
-  }, []);
-
-  return (
-    <div className="searchBar">
-      <input
-        id="searchInputId"
-        ref={inputRef}
-        autoFocus={true}
-        type="textarea"
-        value={textInput}
-        onChange={handleChange}
-        className="searchInput"
-        placeholder={props.placeholder}
-      />
-      <Link to={"./list"}>
-        <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
-          Search
-        </button>
-      </Link>
-    </div>
-  );
-}
-
 export default Home;
-export { SearchBar };

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "Views/Home";
 import List from "Views/List";
@@ -8,19 +8,13 @@ import "App.css";
 import Login from "Views/Login";
 import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
-import StickyFooter from "Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContext, UserContext } from "utils/UserContext";
 
 function App() {
   const [user, setUser] = useState(null);
   const [searchValue, setSearchValue] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-  const value2 = useMemo(
-    () => ({ searchValue, setSearchValue }),
-    [searchValue, setSearchValue]
-  );
-
+  
   return (
     <div>
       <UserContext.Provider value={{ user, setUser }}>
