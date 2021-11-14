@@ -24,7 +24,7 @@ function List() {
     photo_link: ''
   }])
 
-  const [userLoc, setUserLoc] = useState([53.3429,-6.26099]);
+  const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
   useEffect(async () => {
     try {
@@ -36,13 +36,14 @@ function List() {
         idx: rowData.SHOP_ID,
         name: rowData.NAME,
         address: rowData.ADDRESS,
-        distance : Math.pow(Math.pow((userLoc[0] - rowData.LOC_X),2)+ Math.pow((userLoc[1] - rowData.LOC_Y),2),1/2),
+        distance: Math.pow(Math.pow((userLoc[0] - rowData.LOC_X), 2) + Math.pow((userLoc[1] - rowData.LOC_Y), 2), 1 / 2),
         // loc_x: rowData.LOC_X,
         // loc_y: rowData.LOC_Y,
         score: rowData.SCORE,
         contact: rowData.CONTACT,
         open_hour: rowData.OPEN_HOUR,
-        photo_link: rowData.PHOTO_LINK
+        photo_link: rowData.PHOTO_LINK,
+        website: rowData.WEBSITE
       })
       )
       // 선언된 _inputData 를 최초 선언한 inputData 에 concat 으로 추가
@@ -63,6 +64,7 @@ function List() {
 
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [list, setList] = useState([]);
+  const [isHover, setHover] = useState(false);
 
   // useEffect(() => {
   //   if (searchValue) {
@@ -74,12 +76,14 @@ function List() {
 
   return (
     <div className="List">
-      <div className="ListWrap">
+      <div className="stickyHeader" >
         <SearchBar placeholder={searchValue} />
+      </div>
+      <div className="ListWrap">
         <div>{searchValue}</div>
         <div className="CardList">
           {inputData.map((inputData) => {
-            if(inputData.idx != 0 && (inputData.open_hour).length > 3)
+            if (inputData.idx != 0 && (inputData.open_hour).length > 3)
               return (
                 <Card className="Card"
                   image={Curly}
@@ -88,6 +92,7 @@ function List() {
                   open_hour={inputData.open_hour}
                   contact={inputData.contact}
                   score={inputData.score}
+                  website={inputData.website}
                   address={inputData.address}
                   dist={inputData.distance}
                   loc_x={inputData.loc_x}
@@ -97,7 +102,7 @@ function List() {
                 >
                 </Card>
               );
-            })}
+          })}
           <div className="Card"></div>
         </div>
       </div>
