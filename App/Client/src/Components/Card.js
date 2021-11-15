@@ -21,6 +21,10 @@ export default function Card(props) {
     setDetailed(!detailed);
   }
 
+  const handleWebsite = () => {
+    if (props.website != null)
+      window.open("https://" + props.website, '_blank');
+  }
 
   let tel = props.contact;
   let telLink = "tel:" + tel;
@@ -30,10 +34,13 @@ export default function Card(props) {
       <div className="Card"
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
-        style={{width: "500px"}}>
-        <img src={props.image} alt={props.name} className="CardImage" />
+        style={{ width: "500px" }}>
+        <img src={props.image} alt={props.name} className="CardImage"
+        />
         <div className="CardPara">
-          <div className="CardTitle">{props.name}</div>
+          <div className="CardTitle"
+            onClick={() => handleWebsite()}
+          >{props.name}</div>
           <div className="CardStars">
             <Stars score={props.score} /> &nbsp;({props.score}/5)
           </div>
@@ -47,7 +54,10 @@ export default function Card(props) {
             {/* <div className="CardDist">{props.dist}</div> */}
           </div>
           <div className="CardButtons" onClick={() => handleReserve()}>
-            {detailed ? null : <Link to={"./reservation"} className="Reserve" style={{textDecoration:"none", color:"black"}}>
+            {detailed ? null : <Link to={{
+              pathname: "./reservation",
+              state: { shop_id: props.shop_id }
+            }} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
               <div className="Reserve">
                 <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
                 {hover ? "Reservation" : null}

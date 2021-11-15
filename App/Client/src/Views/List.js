@@ -8,11 +8,12 @@ import SearchBar from "Components/SearchBar";
 import Curly from "assets/Curly.jpg"
 import { json } from "body-parser";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function List() {
   // const [data] = useFetch("http://localhost:8001/api/getList");
   const [inputData, setInputData] = useState([{
-    idx: '',
+    shop_id: '',
     name: '',
     image: '',
     loc_x: '',
@@ -31,7 +32,7 @@ function List() {
       try {
         const res = await axios.get('http://localhost:8001/api/getList')
         const _inputData = await res.data.map((rowData) => ({
-          idx: rowData.SHOP_ID,
+          shop_id: rowData.SHOP_ID,
           name: rowData.NAME,
           address: rowData.ADDRESS,
           distance: Math.pow(Math.pow((userLoc[0] - rowData.LOC_X), 2) + Math.pow((userLoc[1] - rowData.LOC_Y), 2), 1 / 2),
@@ -60,20 +61,28 @@ function List() {
   return (
     <div className="List">
       <div className="stickyHeader" >
-        <SearchBar placeholder={searchValue} />
+        <div className="Bar">
+          <Link to={"./"} className="Logo">
+            <div className="Logo">Manageyourhair</div>
+          </Link>
+          <SearchBar placeholder={searchValue} className="SearchBar" />
+          <div className="Blank"></div>
+        </div>
         <div className="CurrentSearch">Current search value: {searchValue}</div>
-
       </div>
       <div className="ListWrap">
         <div className="CurrentSearch">Search using keyword "{searchValue}"</div>
         <div className="CardList">
           {inputData.map((inputData) => {
-            if (inputData.idx != 0 && (inputData.open_hour).length > 3 && (inputData.name).toLowerCase().includes(searchValue.toLowerCase()))
+            if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
+              && (inputData.name.toLowerCase().includes(searchValue.toLowerCase())
+                || inputData.address.toLowerCase().includes(searchValue.toLowerCase())))
               return (
                 <Card className="Card"
                   image={Curly}
-                  key={inputData.idx.toString() + Math.random()}
+                  key={inputData.shop_id.toString() + Math.random()}
                   name={inputData.name}
+                  shop_id={inputData.shop_id}
                   open_hour={inputData.open_hour}
                   contact={inputData.contact}
                   score={inputData.score}

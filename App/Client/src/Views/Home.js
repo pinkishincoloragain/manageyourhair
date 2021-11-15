@@ -42,7 +42,9 @@ function Home() {
     <div>
       <div className="Home">
         <div className="header">
-          <div className="Logo">Manageyourhair</div>
+          <Link to={"./"}>
+            <div className="Logo">Manageyourhair</div>
+          </Link>
           {!currentUser ? (
             <div className="links">
               <Link to={"./signup"}>

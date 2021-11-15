@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Payment from "./Payment";
 import Review from "./Review";
 import AddressForm from "./Address";
+import { useLocation } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -49,6 +50,9 @@ const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const location = useLocation();
+  const { shop_id } = location.state;
+  console.log(shop_id);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -61,7 +65,7 @@ export default function Checkout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="absolute"
         color="default"
         elevation={0}
@@ -75,7 +79,7 @@ export default function Checkout() {
             Manageyourhair
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"

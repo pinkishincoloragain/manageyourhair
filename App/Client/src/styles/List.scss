@@ -38,6 +38,26 @@
     // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     flex-direction: column;
+
+    .Bar {
+      display: flex;
+      justify-content: space-between;
+
+      .Logo {
+        display: flex;
+        font-family: "Geostar", cursive;
+        text-align: center;
+        align-items: center;
+        font-size: 2vw;
+        color: black;
+        // text-shadow: 2px 2px #000000;
+        text-decoration: none;
+        top: 0;
+        z-index: 1;
+        position: sticky;
+        margin-right: 10vw;
+      }
+    }
   }
 
   display: flex;
