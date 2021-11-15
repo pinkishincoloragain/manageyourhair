@@ -9,10 +9,11 @@ import Curly from "assets/Curly.jpg"
 import { json } from "body-parser";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Sad from "assets/sad.png"
 
 function List() {
   // const [data] = useFetch("http://localhost:8001/api/getList");
-  const [inputData, setInputData] = useState([{
+  const [shopData, setShopData] = useState([{
     shop_id: '',
     name: '',
     image: '',
@@ -28,10 +29,10 @@ function List() {
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
   useEffect(() => {
-    async function getUserLoc() {
+    async function fetchData() {
       try {
         const res = await axios.get('http://localhost:8001/api/getList')
-        const _inputData = await res.data.map((rowData) => ({
+        const fetched = await res.data.map((rowData) => ({
           shop_id: rowData.SHOP_ID,
           name: rowData.NAME,
           address: rowData.ADDRESS,
@@ -43,20 +44,26 @@ function List() {
           website: rowData.WEBSITE
         })
         )
-        setInputData(inputData.concat(_inputData))
+        setShopData(shopData.concat(fetched))
       } catch (e) {
         console.error("error!", e.message)
       }
     }
-    getUserLoc();
-  }, [setInputData])
+    fetchData();
+    if (searchValue != null)
+      setSearchInput(searchValue);
+    else
+      setSearchInput("");
+  }, [setShopData])
 
   const { searchValue, setSearchValue } = useContext(SearchContext);
-  const [list, setList] = useState([]);
-  const [isHover, setHover] = useState(false);
+  const [searchInput, setSearchInput] = useState(searchValue);
+  // const [list, setList] = useState([]);
+  // const [isHover, setHover] = useState(false);
 
   const placeHolderRef = useRef(searchValue);
   console.log("searchVal in List", searchValue);
+  let cnt = 0;
 
   return (
     <div className="List">
@@ -65,7 +72,7 @@ function List() {
           <Link to={"./"} className="Logo">
             <div className="Logo">Manageyourhair</div>
           </Link>
-          <SearchBar placeholder={searchValue} className="SearchBar" />
+          <SearchBar placeholder={searchValue} className="SearchBar" callback={setSearchInput}/>
           <div className="Blank"></div>
         </div>
         <div className="CurrentSearch">Current search value: {searchValue}</div>
@@ -73,10 +80,12 @@ function List() {
       <div className="ListWrap">
         <div className="CurrentSearch">Search using keyword "{searchValue}"</div>
         <div className="CardList">
-          {inputData.map((inputData) => {
+          {shopData.map((inputData) => {
             if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
-              && (inputData.name.toLowerCase().includes(searchValue.toLowerCase())
-                || inputData.address.toLowerCase().includes(searchValue.toLowerCase())))
+              && (inputData.name.toLowerCase().includes(searchInput.toLowerCase())
+                || inputData.address.toLowerCase().includes(searchInput.toLowerCase()))) {
+              cnt++;
+              console.log(cnt);
               return (
                 <Card className="Card"
                   image={Curly}
@@ -94,13 +103,18 @@ function List() {
                 >
                 </Card>
               );
+            }
             else {
               if (searchValue === null) {
                 setSearchValue(" ");
               }
-              console.log(searchValue, inputData.name);
+              // console.log(searchValue, inputData.name);
             }
+
           })}
+          {cnt === 0 && <div className="NoResult">
+            <img src={Sad} style={{ width: "10vh", height: "10vh" }} />
+            No result found</div>}
           <div className="Card"></div>
         </div>
       </div>

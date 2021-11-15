@@ -13,6 +13,9 @@ function SearchBar(props) {
     const handleChange = (e) => {
         e.preventDefault();
         setTextInput(e.target.value);
+        if (props.callback != undefined)
+            props.callback(e.target.value);
+        setSearchValue(e.target.value);
         // console.log("searchInput", textInput);
     };
 
@@ -25,11 +28,17 @@ function SearchBar(props) {
         //   setSearchValue(textInput);
         // }, 10);
         console.log("textInput", textInput);
-        setSearchValue(textInput);
+        if (textInput.length > 0)
+            setSearchValue(textInput);
+        else {
+            setSearchValue(searchValue);
+            if (searchValue === null) {
+                setSearchValue(" ");
+            }
+        }
         console.log("searchValue", searchValue);
         // setSearchValue(inputRef.current.value);
 
-        // console.log("searchValue", searchValue);
     };
 
     useEffect(() => {
@@ -54,6 +63,7 @@ function SearchBar(props) {
                 onChange={handleChange}
                 className="searchInput"
                 placeholder={props.placeholder}
+                style={{ color: props.color }}
             />
             <Link to={"./list"}>
                 <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>

@@ -24,7 +24,7 @@ export default function AddressForm() {
       <Grid item xs={12}>
         <FormControlLabel
           control={
-            <Switch color="secondary" name="saveSelf" value="yes" defaultChecked="no" />
+            <Switch color="secondary" name="saveSelf" value="yes" defaultChecked={true}/>
           }
           onClick={() => { handleControl(); }}
           label={hairCutLabel}

@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Payment from "./Payment";
 import Review from "./Review";
 import AddressForm from "./Address";
-import { useLocation } from "react-router-dom";
+import {Link as RLink} from "react-router-dom";
 
 function Copyright() {
   return (
@@ -48,11 +48,12 @@ function getStepContent(step) {
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Checkout(props) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const location = useLocation();
-  const { shop_id } = location.state;
+  const shop_id = props.match.params.shop_id
+  const shop_name = props.match.params.name
   console.log(shop_id);
+  console.log(shop_name);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -65,21 +66,17 @@ export default function Checkout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: "relative",
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Manageyourhair
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
+      <RLink to={"../../"} className="Logo" style={{
+        textDecoration: "none",
+      }}>
+        <div className="Logo"
+          style={{
+            fontFamily: "Geostar, cursive",
+            fontSize: "3.5vw",
+            textAlign: "center",
+            color: "black",
+          }}>Manageyourhair</div>
+      </RLink>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"

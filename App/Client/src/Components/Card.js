@@ -36,7 +36,7 @@ export default function Card(props) {
         onMouseOut={() => setHover(false)}
         style={{ width: "500px" }}>
         <img src={props.image} alt={props.name} className="CardImage"
-        />
+         />
         <div className="CardPara">
           <div className="CardTitle"
             onClick={() => handleWebsite()}
@@ -54,10 +54,7 @@ export default function Card(props) {
             {/* <div className="CardDist">{props.dist}</div> */}
           </div>
           <div className="CardButtons" onClick={() => handleReserve()}>
-            {detailed ? null : <Link to={{
-              pathname: "./reservation",
-              state: { shop_id: props.shop_id }
-            }} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
+            {detailed ? null : <Link to={`./reservation/${props.shop_id}/${props.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
               <div className="Reserve">
                 <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
                 {hover ? "Reservation" : null}
