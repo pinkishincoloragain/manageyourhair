@@ -19,7 +19,10 @@
     border-radius: 10px;
 
     .CardImage {
+      align-items: center;
+      margin: auto;
       height: 18vh;
+      width: 18vw;
       border-radius: 5px;
       object-fit: cover;
       transition: 0.5s;
@@ -41,7 +44,7 @@
         font-weight: bold;
         color: #3f3f3f;
         text-align: center;
-        &:hover{
+        &:hover {
           color: rgb(158, 68, 68);
         }
       }

@@ -88,7 +88,7 @@ function List() {
               // console.log(cnt);
               return (
                 <Card className="Card"
-                  image={Curly}
+                  image={inputData.photo_link}
                   key={inputData.shop_id.toString() + Math.random()}
                   name={inputData.name}
                   shop_id={inputData.shop_id}

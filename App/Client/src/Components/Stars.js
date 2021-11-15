@@ -6,7 +6,7 @@ export default function Stars(props) {
     const score = props.score;
     const items = []
     let i = 0;
-    for (i = 0; i < score - 1; i++) {
+    for (i = 0; i <= score - 1; i++) {
         items.push(<img src={Star} alt="star"
             style={{ width: "1vw" }}
             key={props.contact + i.toString()} />)
