@@ -48,7 +48,6 @@ function SearchBar(props) {
         <div className="searchBar">
             <input
                 id="searchInputId"
-                ref={inputRef}
                 autoFocus={true}
                 type="textarea"
                 value={textInput}

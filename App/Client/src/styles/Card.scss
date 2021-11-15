@@ -2,7 +2,7 @@
   margin: 2vw;
   width: 20%;
   min-width: 300px;
-  height: 50vh;
+  height: 55vh;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,9 @@
       border-radius: 5px;
       object-fit: cover;
       transition: 0.5s;
-      
+      &:hover {
+        height: 22vh;
+      }
     }
 
     .CardPara {
@@ -35,7 +37,7 @@
 
       .CardTitle {
         margin-top: 1vh;
-        font-size: max(0.5vw, 1rem);
+        font-size: max(1vw, 1.3rem);
         font-weight: bold;
         color: #3f3f3f;
         text-align: center;
@@ -74,6 +76,12 @@
           font-size: max(1.5vh, 10px);
           color: #3f3f3f;
         }
+      }
+      &:hover {
+        margin-top: 4%;
+        -moz-box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
+        box-shadow: 1vw 2vw 3vw rgba(0, 0, 0, 0.5);
       }
     }
   }
@@ -120,6 +128,12 @@
     justify-content: center;
     flex-direction: column;
     margin: 3px;
+
+    .DetailPage {
+      width: 30vw;
+      height: 10vh;
+      transition: 0.3s;
+    }
   }
   .Review {
     height: 3vh;
@@ -135,7 +149,7 @@
   .icnBtn {
     transition: 0.1s;
     margin-bottom: 5px;
-    
+
     &:hover {
       width: 5vw;
       transform: scale(1.5);

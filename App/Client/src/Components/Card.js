@@ -12,6 +12,16 @@ export default function Card(props) {
   const [detailClick, setDetailClicked] = useState(false);
   const [reviewClick, setReviewClicked] = useState(false);
 
+  const [detailed, setDetailed] = useState(false);
+
+  const handleReserve = () => {
+
+  }
+  const handleDetail = () => {
+    setDetailed(!detailed);
+  }
+
+
   let tel = props.contact;
   let telLink = "tel:" + tel;
 
@@ -19,7 +29,8 @@ export default function Card(props) {
     <div className="CardWrapper">
       <div className="Card"
         onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}>
+        onMouseOut={() => setHover(false)}
+        style={{width: "500px"}}>
         <img src={props.image} alt={props.name} className="CardImage" />
         <div className="CardPara">
           <div className="CardTitle">{props.name}</div>
@@ -35,8 +46,25 @@ export default function Card(props) {
             {/* <div className="CardOpenHour">{props.open_hour}</div> */}
             {/* <div className="CardDist">{props.dist}</div> */}
           </div>
-          <Buttons hover={hover} />
-          <div>
+          <div className="CardButtons" onClick={() => handleReserve()}>
+            {detailed ? null : <Link to={"./reservation"} className="Reserve" style={{textDecoration:"none", color:"black"}}>
+              <div className="Reserve">
+                <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
+                {hover ? "Reservation" : null}
+              </div>
+            </Link>}
+
+            <div className="Detail" onClick={() => handleDetail()}>
+              <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
+              {hover ? "Detail" : null}
+              {detailed ? <div className="DetailPage"></div> : null}
+            </div>
+
+            {detailed ? null : <div className="Review">
+              <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
+              {hover ? "Review" : null}
+            </div>
+            }
           </div>
         </div>
       </div>
@@ -45,29 +73,29 @@ export default function Card(props) {
 }
 
 
-function Buttons(props) {
+// function Buttons(props) {
 
-  const handleReserve = () => {
 
-  }
-  return (
-    <div className="CardButtons" onClick={() => handleReserve()}>
-      <Link to={"./reservation"} className="Reserve">
-        <div className="Reserve">
-          <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
-          {props.hover ? "Reservation" : null}
-        </div>
-      </Link>
+//   return (
+//     <div className="CardButtons" onClick={() => handleReserve()}>
+//       {detailed ? null : <Link to={"./reservation"} className="Reserve">
+//         <div className="Reserve">
+//           <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
+//           {props.hover ? "Reservation" : null}
+//         </div>
+//       </Link>}
 
-      <div className="Detail">
-        <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
-        {props.hover ? "Detail" : null}
-      </div>
+//       <div className="Detail" onClick={() => handleDetail()}>
+//         <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
+//         {props.hover ? "Detail" : null}
+//         {detailed ? <div className="DetailPage"></div> : null}
+//       </div>
 
-      <div className="Review">
-        <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
-        {props.hover ? "Review" : null}
-      </div>
-    </div>
-  );
-}
+//       {detailed ? null : <div className="Review">
+//         <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
+//         {props.hover ? "Review" : null}
+//       </div>
+//       }
+//     </div>
+//   );
+// }

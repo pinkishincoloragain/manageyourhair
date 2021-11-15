@@ -29,17 +29,12 @@ function List() {
   useEffect(() => {
     async function getUserLoc() {
       try {
-        // 데이터를 받아오는 동안 await 로 대기
         const res = await axios.get('http://localhost:8001/api/getList')
-        // 받아온 데이터로 다음 작업을 진행하기 위해 await 로 대기
-        // 받아온 데이터를 map 해주어 rowData 별로 _inputData 선언
         const _inputData = await res.data.map((rowData) => ({
           idx: rowData.SHOP_ID,
           name: rowData.NAME,
           address: rowData.ADDRESS,
           distance: Math.pow(Math.pow((userLoc[0] - rowData.LOC_X), 2) + Math.pow((userLoc[1] - rowData.LOC_Y), 2), 1 / 2),
-          // loc_x: rowData.LOC_X,
-          // loc_y: rowData.LOC_Y,
           score: rowData.SCORE,
           contact: rowData.CONTACT,
           open_hour: rowData.OPEN_HOUR,
@@ -47,7 +42,6 @@ function List() {
           website: rowData.WEBSITE
         })
         )
-        // 선언된 _inputData 를 최초 선언한 inputData 에 concat 으로 추가
         setInputData(inputData.concat(_inputData))
       } catch (e) {
         console.error("error!", e.message)
@@ -56,41 +50,29 @@ function List() {
     getUserLoc();
   }, [setInputData])
 
-  console.log('App :: inputData :: ', inputData)
-
-
-  // console.log("data in lists", data);
-  // let res = JSON.stringify(data);
-  // var result = res.split(',')[0].slice(1);
-  // console.log("result", result);
-
-
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [list, setList] = useState([]);
   const [isHover, setHover] = useState(false);
 
-  // useEffect(() => {
-  //   if (searchValue) {
-  //     setSearchValue("");
-  //   }
-  // }, [searchValue]);
-
   const placeHolderRef = useRef(searchValue);
+  console.log("searchVal in List", searchValue);
 
   return (
     <div className="List">
       <div className="stickyHeader" >
         <SearchBar placeholder={searchValue} />
+        <div className="CurrentSearch">Current search value: {searchValue}</div>
+
       </div>
       <div className="ListWrap">
-        <div className="CurrentSearch">Current search value: {searchValue}</div>
+        <div className="CurrentSearch">Search using keyword "{searchValue}"</div>
         <div className="CardList">
           {inputData.map((inputData) => {
-            if (inputData.idx != 0 && (inputData.open_hour).length > 3)
+            if (inputData.idx != 0 && (inputData.open_hour).length > 3 && (inputData.name).toLowerCase().includes(searchValue.toLowerCase()))
               return (
                 <Card className="Card"
                   image={Curly}
-                  key={inputData.idx}
+                  key={inputData.idx.toString() + Math.random()}
                   name={inputData.name}
                   open_hour={inputData.open_hour}
                   contact={inputData.contact}
@@ -100,11 +82,15 @@ function List() {
                   dist={inputData.distance}
                   loc_x={inputData.loc_x}
                   loc_y={inputData.loc_y}
-
-                // image={}
                 >
                 </Card>
               );
+            else {
+              if (searchValue === null) {
+                setSearchValue(" ");
+              }
+              console.log(searchValue, inputData.name);
+            }
           })}
           <div className="Card"></div>
         </div>
