@@ -62,7 +62,7 @@ function List() {
   // const [isHover, setHover] = useState(false);
 
   const placeHolderRef = useRef(searchValue);
-  console.log("searchVal in List", searchValue);
+  // console.log("searchVal in List", searchValue);
   let cnt = 0;
 
   return (
@@ -85,7 +85,7 @@ function List() {
               && (inputData.name.toLowerCase().includes(searchInput.toLowerCase())
                 || inputData.address.toLowerCase().includes(searchInput.toLowerCase()))) {
               cnt++;
-              console.log(cnt);
+              // console.log(cnt);
               return (
                 <Card className="Card"
                   image={Curly}

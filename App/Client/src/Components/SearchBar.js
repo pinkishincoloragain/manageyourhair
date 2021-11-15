@@ -36,7 +36,7 @@ function SearchBar(props) {
                 setSearchValue(" ");
             }
         }
-        console.log("searchValue", searchValue);
+        // console.log("searchValue", searchValue);
         // setSearchValue(inputRef.current.value);
 
     };
