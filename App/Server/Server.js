@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  // password: "COLCTveCNfY8",
-  password: "root",
+  password: "COLCTveCNfY8",
+  // password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  socketPath: "/tmp/mysql.sock",
+  // socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -75,7 +75,6 @@ app.get("/api/getList", (req, res) => {
       res.json(rows)
     }
   );
-
 });
 
 app.post("/api/getList", (req, res) => {
@@ -122,7 +121,8 @@ body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().e
             expiresIn: 86400
           });
           res.status(200).send({
-            accessToken: token
+            accessToken: token,
+            id: param[3]
           });
         });
         console.log('sign up new user');
@@ -149,7 +149,8 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
               expiresIn: 86400
             });
             res.status(200).send({
-              accessToken: token
+              accessToken: token,
+              id: rows[0].LOGIN_ID,
             });
           }
         })
@@ -159,7 +160,17 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
       }
     });
 })
-
+app.get("/api/mypage", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query("SELECT * FROM user where LOGIN_ID=?", decoded.id, function (err, rows) {
+      if (err) throw err;
+      else {
+        res.send(rows);
+      }
+    });
+  })
+});
 
 app.listen(8001, () => {
   console.log(`listening on port ${8001}`);
