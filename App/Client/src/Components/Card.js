@@ -7,18 +7,70 @@ import { Link } from 'react-router-dom';
 
 export default function Card(props) {
 
+  let tel = props.contact;
+  let telLink = "tel:" + tel;
+  let detailFlag = true;
+
+  // const open_hour = props.open_hour;
+  let days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+
   const [hover, setHover] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [detailClick, setDetailClicked] = useState(false);
   const [reviewClick, setReviewClicked] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [detailed, setDetailed] = useState(false);
 
-  const handleReserve = () => {
+  const convertHours = () => {
+    let sep_hours;
+    let i = 0;
+    let open_hours = props.open_hour.replace('[', '').replace(']', '').split(',');
+    if (open_hours.length == 7) {
+      sep_hours = Array.from(open_hours, x => x.replaceAll("'", "").replaceAll('"', "").replaceAll(' ', "").replaceAll('.', ''));
 
+      let current_day = new Date().getDay();
+      let current_time = new Date().getHours();
+      for (let i = 0; i < sep_hours.length; i++) {
+        sep_hours[i] = days[i] + ": " + sep_hours[i].toUpperCase();
+        if (i == current_day && sep_hours[i] != "CLOSED") {
+          console.log("today",days[current_day])
+          // sep_hours[i].replace("") 
+          let start_time, end_time;
+          if (sep_hours[i].includes("AM")) {
+            start_time = sep_hours[i].slice(sep_hours[i].indexOf(" "), sep_hours[i].indexOf("AM"));
+            console.log("start_time",start_time.trim());
+          }
+          if (sep_hours[i].includes("PM")) {
+            end_time = sep_hours[i].slice(sep_hours[i].indexOf("-"), sep_hours[i].indexOf("PM"));
+            end_time = end_time + 12;
+            console.log("end_time",end_time.trim());
+          }
+          else {
+            // Open 24 hours
+            setOpen(true);
+          }
+          console.log(start_time, end_time);
+        }
+      }
+    }
+    else {
+      detailFlag = false;
+    }
+
+    sep_hours[7] = sep_hours[0];
+    sep_hours.splice(0, 1);
+
+    return sep_hours;
   }
+
+  const handleReserve = () => {
+  }
+
   const handleDetail = () => {
-    setDetailed(!detailed);
+
+    let hours = convertHours();
+
+    console.log(hours);
   }
 
   const handleWebsite = () => {
@@ -26,8 +78,6 @@ export default function Card(props) {
       window.open("https://" + props.website, '_blank');
   }
 
-  let tel = props.contact;
-  let telLink = "tel:" + tel;
 
   return (
     <div className="CardWrapper">
@@ -36,7 +86,7 @@ export default function Card(props) {
         onMouseOut={() => setHover(false)}
         style={{ width: "500px" }}>
         <img src={props.image} alt={props.name} className="CardImage"
-         />
+        />
         <div className="CardPara">
           <div className="CardTitle"
             onClick={() => handleWebsite()}
@@ -50,7 +100,6 @@ export default function Card(props) {
               <div className="CardContact">{props.contact}</div>
             </a>}
 
-            {/* <div className="CardOpenHour">{props.open_hour}</div> */}
             {/* <div className="CardDist">{props.dist}</div> */}
           </div>
           <div className="CardButtons" onClick={() => handleReserve()}>
@@ -64,7 +113,8 @@ export default function Card(props) {
             <div className="Detail" onClick={() => handleDetail()}>
               <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
               {hover ? "Detail" : null}
-              {detailed ? <div className="DetailPage"></div> : null}
+              {detailed ? <div className="CardOpenHour">{props.open_hour}</div>
+                : null}
             </div>
 
             {detailed ? null : <div className="Review">
@@ -78,31 +128,3 @@ export default function Card(props) {
     </ div>
   );
 }
-
-
-// function Buttons(props) {
-
-
-//   return (
-//     <div className="CardButtons" onClick={() => handleReserve()}>
-//       {detailed ? null : <Link to={"./reservation"} className="Reserve">
-//         <div className="Reserve">
-//           <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
-//           {props.hover ? "Reservation" : null}
-//         </div>
-//       </Link>}
-
-//       <div className="Detail" onClick={() => handleDetail()}>
-//         <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
-//         {props.hover ? "Detail" : null}
-//         {detailed ? <div className="DetailPage"></div> : null}
-//       </div>
-
-//       {detailed ? null : <div className="Review">
-//         <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
-//         {props.hover ? "Review" : null}
-//       </div>
-//       }
-//     </div>
-//   );
-// }
