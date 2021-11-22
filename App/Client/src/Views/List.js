@@ -72,7 +72,8 @@ function List() {
           <Link to={"./"} className="Logo">
             <div className="Logo">Manageyourhair</div>
           </Link>
-          <SearchBar placeholder={searchValue} className="SearchBar" callback={setSearchInput}/>
+          <SearchBar placeholder={searchValue} className="SearchBar" callback={setSearchInput}
+            style={{ placeHolder: "black" }} />
           <div className="Blank"></div>
         </div>
         <div className="CurrentSearch">Current search value: {searchValue}</div>
@@ -106,7 +107,7 @@ function List() {
             }
             else {
               if (searchValue === null) {
-                setSearchValue(" ");
+                // setSearchValue(" ");
               }
               // console.log(searchValue, inputData.name);
             }
