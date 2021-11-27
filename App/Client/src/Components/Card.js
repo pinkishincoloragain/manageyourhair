@@ -76,10 +76,18 @@ export default function Card(props) {
   }
 
   const handleDetail = () => {
-    let hours = convertHours();
+    console.log(props.open_hour);
+    let hours;
 
+    if (props.open_hour.length > 10) {
+      hours = convertHours();
+    }
+
+    else {
+      return null;
+    }
+    
     setDetailed(!detailed);
-    console.log(hours);
   }
 
   const handleWebsite = () => {
@@ -90,7 +98,8 @@ export default function Card(props) {
 
   return (
     <>{detailed ?
-      <Detail hours={convertHours()}
+      <Detail
+        hours={convertHours()}
         callback={setDetailed}
         // name={props.name} 
         card={props}

@@ -18,9 +18,9 @@
     flex-direction: row;
     position: fixed;
     z-index: 5;
-    top: 13vh;
-    left: 20vw;
-    width: 60vw;
+    top: 11vh;
+    left: 10vw;
+    width: 80vw;
     font-size: 4vw;
     align-items: center;
     justify-content: center;
@@ -34,11 +34,12 @@
     position: fixed;
     z-index: 4;
     width: 60vw;
-    height: 30vh;
+    height: 40vh;
     top: 20vh;
     left: 20vw;
     overflow: hidden;
-    box-shadow: 1vw 1vw 1vw 1vw rgba(0, 0, 0, 0);
+    padding: 1vh;
+    box-shadow: 1vw 1vw 0.3vw rgb(68, 68, 68);
     border: 1vh solid black;
 
     border-radius: 10px;
@@ -55,29 +56,45 @@
 
     .Image {
         height: 100%;
-        border-radius: 3vw;
+        border-radius: 0.5vw;
     }
 }
 
 .buttons {
     z-index: 4;
-    box-shadow: 1vw 1vw 1vw 1vw rgba(0, 0, 0, 0);
     position: fixed;
     border: transparent 1vh solid;
     width: 60vw;
     height: 20vh;
-    top: 60vh;
+    top: 63vh;
     left: 20vw;
     display: flex;
     flex-direction: row;
     margin: auto;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     .btnHolder {
-        border: 0.3vh solid black;
-        border-radius: 0.3vh;
+        display: flex;
+        flex-direction: column;
+        border: 0.8vh solid black;
+        border-radius: 0.5vh;
+        width: 6vw;
+        margin: 2vh;
+        margin-left: 4vh;
+        margin-right: 4vh;
         padding: 2vh;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 1vw 1vw 0.3vw rgb(68, 68, 68);
+
+        .Link {
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            flex-direction: column;
+            font-size: 1.2vw;
+        }
     }
 }
 
@@ -94,7 +111,7 @@
             margin: 0.7vh;
             text-align: left;
             color: black;
-            font-size: 2vh;
+            font-size: 3vh;
         }
     }
 }

@@ -42,7 +42,7 @@ export default function Detail(props) {
                         <div className="detailHeader">
                         </div>
                         <div className="daysWrapper">
-                            {props.hours}
+                            {props.hours.length > 10 ? null : props.hours}
                         </div>
                         <div className="CardButtons" onClick={() => handleReserve()}>
 
@@ -52,18 +52,23 @@ export default function Detail(props) {
                 </div>
                 <div className="buttons">
                     <div className="btnHolder">
-                        <Link to={`./reservation/${props.card.shop_id}/${props.card.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
-                            <div className="Reserve">
-                                <img src={Reservation} style={{ width: "4vw" }} className="icnBtn" />
-                                "Reservation"
-                            </div>
+                        <Link to={`./reservation/${props.card.shop_id}/${props.card.name.toString()}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
+                            <img src={Reservation} style={{ width: "4vw" }} className="icnBtn" />
                         </Link>
+                        <div>Reservation</div>
+
                     </div>
                     <div className="btnHolder">
-                        <div className="Review">
+                        <Link to={`./review/${props.card.shop_id}/${props.card.name.toString()}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
                             <img src={Review} style={{ width: "4vw" }} className="icnBtn" />
-                            "Review"
-                        </div>
+                        </Link>
+                        <div>Review</div>
+                    </div>
+                    <div className="btnHolder">
+                        <a href={props.card.website}>
+                            <img src={Review} style={{ width: "4vw" }} className="icnBtn" />
+                        </a>
+                        <div>Review</div>
                     </div>
                 </div>
             </div>
