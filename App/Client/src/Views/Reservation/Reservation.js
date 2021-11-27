@@ -15,7 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Payment from "./Payment";
 import Review from "./Review";
 import AddressForm from "./Address";
-import {Link as RLink} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link as RLink } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -49,9 +50,11 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const shop_id = props.match.params.shop_id
   const shop_name = props.match.params.name
+  const [isloggedIn, setIsLoggedIn] = useState(false);
+  
   console.log(shop_id);
   console.log(shop_name);
 
@@ -62,6 +65,14 @@ export default function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  // useEffect(() => {
+  //   if (props.userInfo != null)
+  //     setIsLoggedIn(true)
+  //   if (!isloggedIn) {
+  //     window.location = "/login";
+  //   }
+  // }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +94,7 @@ export default function Checkout(props) {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Reservation
+            {shop_name}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
