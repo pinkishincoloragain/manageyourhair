@@ -31,8 +31,10 @@ export default function DatePick(props) {
       props.setTimeChecked(false);
       return false;
     }
-    else
+    else {
+      alert("Time confirmed");
       return true;
+    }
 
   }
 

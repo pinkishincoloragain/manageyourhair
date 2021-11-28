@@ -11,7 +11,7 @@ export default function Review(props) {
   let products = [
     {
       name: props.shop_name,
-      desc: props.reservationTime.toDateString(),
+      desc: props.reservationTime.toLocaleString(),
       price: "Pay at the place",
     }
   ];

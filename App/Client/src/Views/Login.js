@@ -28,8 +28,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="../../">
+        manageyourhair
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -44,30 +44,30 @@ export default function Login(props) {
   const { isLoggedIn } = useSelector(state => state.auth);
   const { email: validEmail } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
- 
+
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     const data = new FormData(e.currentTarget);
-    
+
     dispatch(login(
       data.get('email'),
       data.get('password')
     ))
-    .then(() => {
+      .then(() => {
         props.history.push("/");
         window.location.reload();
-    })
-    .catch(() => {
-      setLoading(false);
-    });
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
 
-if (isLoggedIn) {
-    return <Redirect to ='/' />;
- }
+  if (isLoggedIn) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,16 +112,16 @@ if (isLoggedIn) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel id = "check"
+            <FormControlLabel id="check"
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             {message && (
-            <Grid container justifyContent="center">
-            <Grid item>
-              {message}
-            </Grid>
-            </Grid>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  {message}
+                </Grid>
+              </Grid>
             )}
             <Button
               type="submit"

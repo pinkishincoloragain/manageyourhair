@@ -17,6 +17,10 @@ import Review from "./Review";
 import AddressForm from "./Address";
 import { useState, useEffect } from "react";
 import { Link as RLink } from "react-router-dom";
+import axios from "axios";
+import authHeader from "services/auth-header";
+import { textAlign } from "@mui/material/node_modules/@mui/system";
+import { useSelector } from "react-redux";
 
 
 
@@ -53,16 +57,20 @@ function GetStepContent(props) {
   }
 }
 
+
 const theme = createTheme();
 
 export default function Checkout(props) {
 
-  const shop_id = props.match.params.shop_id
-  const shop_name = props.match.params.name
+  const shop_id = props.match.params.shop_id;
+  const shop_name = props.match.params.name;
+  const [userData, setUserData] = useState("");
 
   const [activeStep, setActiveStep] = useState(0);
   const [isloggedIn, setIsLoggedIn] = useState(false);
   const [timeChecked, setTimeChecked] = useState(false);
+  const { user: currentUser } = useSelector((state) => state.auth);
+  console.log(currentUser);
 
   const handleNext = () => {
     console.log(timeChecked);
@@ -78,13 +86,28 @@ export default function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
 
-  // useEffect(() => {
-  //   if (props.userInfo != null)
-  //     setIsLoggedIn(true)
-  //   if (!isloggedIn) {
-  //     window.location = "/login";
-  //   }
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get('http://localhost:8001/api/mypage',
+          { headers: authHeader() })
+        console.log(res.data);
+
+        const fetched = await res.data.map((rowData) => ({
+          id: rowData.LOGIN_ID,
+          first_name: rowData.CUSTOMER_FIRST_NAME,
+          last_name: rowData.CUSTOMER_LAST_NAME,
+          contact: rowData.CONTACT_NO
+        })
+        )
+        //const fetched = await res.data()
+        setUserData(fetched)
+      } catch (e) {
+        console.error("error!", e.message)
+      }
+    }
+    fetchData();
+  }, [setUserData])
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,8 +145,12 @@ export default function Checkout(props) {
                   Thank you for making reservation with us.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. Thank you for making reservation with us.
+                  Your order number is #2001539.
                 </Typography>
+                <p></p>
+                <RLink to="/" >
+                  Go back to home
+                </RLink>
               </React.Fragment>
             ) : (
               <React.Fragment>
