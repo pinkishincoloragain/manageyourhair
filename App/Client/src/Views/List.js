@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useFetch, useFetchWithParams } from "utils/Hooks";
 import { useContext, useState } from "react";
 import { SearchContext } from "utils/UserContext";
 import Card from "Components/Card";
@@ -28,6 +27,7 @@ function List() {
 
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
+  const [searchMode,  setSearchMode] = useState("score");
 
   useEffect(() => {
 
@@ -46,7 +46,7 @@ function List() {
 
     async function fetchData() {
       try {
-        const res = await axios.get('http://localhost:8001/api/getList')
+        const res = await axios.get('http://localhost:8001/api/getListByScore')
         const fetched = await res.data.map((rowData) => ({
           shop_id: rowData.SHOP_ID,
           name: rowData.NAME,

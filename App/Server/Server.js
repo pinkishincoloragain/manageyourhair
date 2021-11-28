@@ -64,7 +64,7 @@ connection.query("USE MANAGER", function (err, rows, fields) {
 });
 
 // An api endpoint that returns a short list of items
-app.get("/api/getList", (req, res) => {
+app.get("/api/getListByScore", (req, res) => {
   // const list = ["item1", "item2", "item3"];
   // res.json(list);
 
@@ -77,19 +77,32 @@ app.get("/api/getList", (req, res) => {
   );
 });
 
-app.post("/api/getList", (req, res) => {
-  let sql = "SELECT * FROM reple_ ";
+app.get("/api/getListByComment", (req, res) => {
+  // const list = ["item1", "item2", "item3"];
+  // res.json(list);
 
-  connection.query(sql, function (err, rows, result) {
-    //연결!
-    if (err) throw err;
-    else {
-      // console.log(rows);
-      // console.log(result);
-      res.send(rows);
+  connection.query(
+    "SELECT * FROM hairshop order by COUNT(COMMENT) desc",
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows)
     }
-  });
+  );
 });
+
+// app.post("/api/getList", (req, res) => {
+//   let sql = "SELECT * FROM reple_ ";
+
+//   connection.query(sql, function (err, rows, result) {
+//     //연결!
+//     if (err) throw err;
+//     else {
+//       // console.log(rows);
+//       // console.log(result);
+//       res.send(rows);
+//     }
+//   });
+// });
 
 
 // An api endpoint for authentication

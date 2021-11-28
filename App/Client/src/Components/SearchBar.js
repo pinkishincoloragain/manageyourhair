@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState, useEffect, useRef } from "react";
 import { UserContext, SearchContext } from "utils/UserContext";
 import { Link } from "react-router-dom";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 
 function SearchBar(props) {
@@ -10,6 +11,7 @@ function SearchBar(props) {
     const { searchValue, setSearchValue } = useContext(SearchContext);
     const inputRef = useRef();
 
+
     const handleChange = (e) => {
         e.preventDefault();
         setTextInput(e.target.value);
@@ -17,6 +19,11 @@ function SearchBar(props) {
             props.callback(e.target.value);
         setSearchValue(e.target.value);
         // console.log("searchInput", textInput);
+    };
+
+    const [mode, setMode] = useState("score");
+    const handleModeChange = (e) => {
+        setMode(e.target.value);
     };
 
     useEffect(() => {
@@ -65,11 +72,19 @@ function SearchBar(props) {
                 placeholder={props.placeholder}
                 style={{ color: props.color }}
             />
-            <Link to={"./list"}>
-                <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
-                    Search
-                </button>
-            </Link>
+            <div style={{ marginLeft: "4vw", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FormControl component="fieldset">
+                    <RadioGroup row aria-label="mode" name="row-radio-buttons-group">
+                        <FormControlLabel value="score"
+                            control={<Radio onChange={handleModeChange} checked={mode === 'score'}
+
+                            />} label="score" />
+                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={handleModeChange} />} label="Male" />
+                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={handleModeChange} />} label="Other" />
+                    </RadioGroup>
+                </FormControl>
+            </div>
+
         </div>
     );
 }
