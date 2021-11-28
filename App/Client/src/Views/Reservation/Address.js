@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -7,24 +7,42 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Switch } from "@mui/material";
 
-export default function AddressForm() {
+export default function AddressForm(props) {
 
   const [self, setSelf] = useState(true);
   const [hairCutLabel, setHairCutLabel] = useState("I will get a haircut");
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    setFirstName(props.cutInfo[0]);
+    setLastName(props.cutInfo[1]);
+    setGender(props.cutInfo[2]);
+    setDescription(props.cutInfo[3]);
+  }, []);
+
+  const handleChange = () => {
+    props.setCutInfo([firstName, lastName, gender, description]);
+  }
+
   const handleControl = () => {
     setSelf(!self);
-    setHairCutLabel(!self ? "I will get a haircut." : "I am making reservation instead of someone.");
+    props.setSelfCut(!self);
+    setHairCutLabel(!self ? "I will get a haircut." : "I am making reservation for someone else.");
   };
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutter Bottom>
         User information
       </Typography>
       <Grid item xs={12}>
         <FormControlLabel
           control={
-            <Switch color="secondary" name="saveSelf" value="yes" defaultChecked={true}/>
+            <Switch color="secondary" name="saveSelf" value="yes" defaultChecked={true} />
           }
           onClick={() => { handleControl(); }}
           label={hairCutLabel}
@@ -40,7 +58,10 @@ export default function AddressForm() {
             label="First name"
             fullWidth
             autoComplete="given-name"
+            placeholder={firstName}
             variant="standard"
+            value={firstName}
+            onChange={(e) => { setFirstName(e.target.value); handleChange(); }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -52,20 +73,34 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            value={lastName}
+            onChange={(e) => { setLastName(e.target.value); handleChange(); }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
-            id="country"
-            name="country"
+            id="gender"
+            name="gender"
             label="Gender"
             fullWidth
-            autoComplete="shipping country"
+            autoComplete="Gender"
             variant="standard"
+            value={gender}
+            onChange={(e) => { setGender(e.target.value); handleChange(); }}
           />
         </Grid>
-
+        <Grid item xs={12} sm={12}>
+          <TextField
+            id="description"
+            name="description"
+            label="description"
+            fullWidth
+            autoComplete="description"
+            variant="standard"
+            value={description}
+            onChange={(e) => { setDescription(e.target.value); handleChange(); }}
+          />
+        </Grid>
       </Grid>}
 
     </React.Fragment>

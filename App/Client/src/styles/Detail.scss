@@ -96,6 +96,12 @@
             font-size: 1.2vw;
         }
     }
+
+    :hover {
+        background-color: #fff;
+        transition: 0.3s;
+        cursor: pointer;
+    }
 }
 
 .daysWrapper {

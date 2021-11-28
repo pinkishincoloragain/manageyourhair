@@ -10,6 +10,9 @@ import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContext, UserContext } from "utils/UserContext";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,19 +20,21 @@ function App() {
 
   return (
     <div>
-      <UserContext.Provider value={{ user, setUser }}>
-        <Switch>
-          <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/list" component={List} />
-            <Route exact path="/reservation/:shop_id/:name" component={Reservation} />
-            <Route exact path="/mypage" component={Mypage} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-          </SearchContext.Provider>
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </UserContext.Provider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Switch>
+            <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/list" component={List} />
+              <Route exact path="/reservation/:shop_id/:name" component={Reservation} />
+              <Route exact path="/mypage" component={Mypage} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={SignUp} />
+            </SearchContext.Provider>
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </UserContext.Provider>
+      </LocalizationProvider>
     </div>
   );
 }

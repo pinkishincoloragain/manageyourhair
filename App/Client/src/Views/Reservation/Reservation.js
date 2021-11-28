@@ -12,35 +12,35 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Payment from "./Payment";
+import Payment from "./Datepick";
 import Review from "./Review";
 import AddressForm from "./Address";
-import {Link as RLink} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link as RLink } from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
-        manageyourhair
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
-const steps = ["User info", "Payment details", "Review your reservation"];
 
-function getStepContent(step) {
-  console.log(step);
-  switch (step) {
+const steps = ["User info", "Reservation date", "Review your reservation"];
+
+function GetStepContent(props) {
+  console.log(props);
+
+  const [cutInfo, setCutInfo] = useState(["", "", "", ""]);
+  const [selfCut, setSelfCut] = useState(true);
+
+  const [reservationTime, setReservationTime] = useState(null);
+
+  console.log(cutInfo);
+  console.log(selfCut);
+  console.log(reservationTime);
+
+  switch (props.step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
     case 1:
-      return <Payment />;
+      return <Payment setReservationTime={setReservationTime} />;
     case 2:
-      return <Review />;
+      return <Review props={props, cutInfo, reservationTime} />;
     default:
       throw new Error("Unknown step");
   }
@@ -49,11 +49,12 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
+
   const shop_id = props.match.params.shop_id
   const shop_name = props.match.params.name
-  console.log(shop_id);
-  console.log(shop_name);
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [isloggedIn, setIsLoggedIn] = useState(false);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -62,6 +63,14 @@ export default function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  // useEffect(() => {
+  //   if (props.userInfo != null)
+  //     setIsLoggedIn(true)
+  //   if (!isloggedIn) {
+  //     window.location = "/login";
+  //   }
+  // }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +92,7 @@ export default function Checkout(props) {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Reservation
+            {shop_name}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -96,7 +105,7 @@ export default function Checkout(props) {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you for your reser.
                 </Typography>
                 <Typography variant="subtitle1">
                   Your order number is #2001539. Thank you for making reservation with us.
@@ -104,7 +113,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -127,5 +136,18 @@ export default function Checkout(props) {
         <Copyright />
       </Container>
     </ThemeProvider>
+  );
+}
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
+        manageyourhair
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }

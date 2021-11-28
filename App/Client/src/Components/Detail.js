@@ -64,12 +64,12 @@ export default function Detail(props) {
                         </Link>
                         <div>Review</div>
                     </div>
-                    <div className="btnHolder">
+                    {/* <div className="btnHolder">
                         <a href={props.card.website}>
                             <img src={Review} style={{ width: "4vw" }} className="icnBtn" />
                         </a>
                         <div>Review</div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
