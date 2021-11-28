@@ -8,6 +8,8 @@ import "App.css";
 import Login from "Views/Login";
 import SignUp from "Views/SignUp";
 import Reservation from "Views/Reservation/Reservation";
+import Review from "Views/Review";
+import ReviewList from "Views/ReviewList";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContext, UserContext } from "utils/UserContext";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -27,6 +29,8 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/list" component={List} />
               <Route exact path="/reservation/:shop_id/:name" component={Reservation} />
+              <Route exact path="/review/:shop_id/:name" component={Review} />
+              <Route exact path="/review_list/:shop_id/:name" component={ReviewList} />
               <Route exact path="/mypage" component={Mypage} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />

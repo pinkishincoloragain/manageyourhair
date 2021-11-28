@@ -150,7 +150,8 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
             });
             res.status(200).send({
               accessToken: token,
-              id: rows[0].LOGIN_ID,
+              login_id: rows[0].LOGIN_ID,
+              customer_id: rows[0].CUSTOMER_ID
             });
           }
         })
@@ -172,6 +173,24 @@ app.get("/api/mypage", (req, res) => {
   })
 });
 
+app.post("/api/review", (req, res) => {
+  const param = [req.body.booking_id, req.body.customer_id, req.body.shop_id, req.body.booking_date,
+   req.body.comment, req.body.rating];
+  connection.query("INSERT INTO COMMENT (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `COMMENT_TEXT`, `SCORE`) VALUES (?, ?, ?, ?, ?, ?)", param, function (err, rows, fields) {
+    if (err) throw err;
+    });
+  res.send();
+})
+
+app.get("/api/getReview/", (req, res) => {
+  connection.query(
+    "SELECT * FROM comment join user using(customer_id) where SHOP_ID=?", req.query.shop_id,
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows)
+    }
+  );
+})
 app.listen(8001, () => {
   console.log(`listening on port ${8001}`);
 })
