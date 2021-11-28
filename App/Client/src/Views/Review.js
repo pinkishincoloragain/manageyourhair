@@ -68,7 +68,14 @@ function Review(props) {
                 <div className="stickyHeader" >
                     <div className="Bar">
                         <Link to={"/"} className="Logo">
-                            <div className="Logo">Manageyourhair</div>
+                            <div className="Logo"
+                                style={{
+                                    fontFamily: "Geostar, cursive",
+                                    fontSize: "3.5vw",
+                                    textAlign: "center",
+                                    color: "black",
+                                    textDecoration: "none"
+                                }}>Manageyourhair</div>
                         </Link>
                     </div>
                 </div>
@@ -87,7 +94,10 @@ function Review(props) {
                     <Box
                         component="form"
                         onSubmit={handleSubmit}
-                        sx={{ mt: 1 }}
+                        sx={{
+                            mt: 1,
+                            width: "40%",
+                        }}
                     >
                         <TextField
                             id="filled-read-only-input"
@@ -96,6 +106,9 @@ function Review(props) {
                             defaultValue={currentUser['login_id']}
                             InputProps={{
                                 readOnly: true,
+                            }}
+                            sx={{
+                                width: "100%",
                             }}
                             variant="filled"
                         />
@@ -108,6 +121,9 @@ function Review(props) {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            sx={{
+                                width: "100%",
+                            }}
                             variant="filled"
                         />
                         <br />
@@ -119,6 +135,9 @@ function Review(props) {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            sx={{
+                                width: "100%",
+                            }}
                             variant="filled"
                         />
                         <br />
@@ -128,6 +147,9 @@ function Review(props) {
                             defaultValue={shop_name}
                             InputProps={{
                                 readOnly: true,
+                            }}
+                            sx={{
+                                width: "100%",
                             }}
                             variant="filled"
                         />
@@ -140,6 +162,9 @@ function Review(props) {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            sx={{
+                                width: "100%",
+                            }}
                             variant="filled"
                         />
                         <br />
@@ -147,6 +172,10 @@ function Review(props) {
                             name="rating"
                             onChange={(event, newValue) => {
                                 setValue(newValue);
+                            }}
+                            sx={{
+                                width: "100%",
+                                height: "3vh"
                             }}
                             value={value}
                         />
@@ -157,6 +186,9 @@ function Review(props) {
                             label="Comment"
                             multiline
                             rows={4}
+                            sx={{
+                                width: "100%",
+                            }}
                             placeholder="Share your experience"
                         />
                         <Button

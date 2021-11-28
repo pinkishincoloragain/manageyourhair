@@ -14,143 +14,201 @@ import Typography from "@mui/material/Typography";
 
 function ReviewList(props) {
     const { user: currentUser } = useSelector((state) => state.auth);
-    const [ value, setValue ] = useState(0);
+    const [value, setValue] = useState(0);
     const dispatch = useDispatch();
     const shop_id = props.match.params.shop_id;
     const shop_name = props.match.params.name;
     const [reviewData, setReviewData] = useState([{
-        login_id: '',
-        comment_id: '',
-        score: 0,
-        comment: ''
-      }])
+        login_id: 'admin',
+        comment_id: '0',
+        score: 5,
+        comment: 'This is a really good hairshop. I strongly recommend it to you.',
+        comment_date: '2021-11-27'
+    }])
+
+    console.log(reviewData[0].comment_date);
 
     useEffect(() => {
         async function fetchData() {
             try {
-            const res = await axios.get('http://localhost:8001/api/getReview/', { params: { shop_id: shop_id} });
-            const fetched = await res.data.map((rowData) => ({
-                login_id: rowData.LOGIN_ID,
-                comment_id: rowData.COMMENT_ID,
-                score: rowData.SCORE,
-                comment: rowData.COMMENT_TEXT
-            })
-            )
-            setReviewData(reviewData.concat(fetched))
+                const res = await axios.get('http://localhost:8001/api/getReview/', { params: { shop_id: shop_id } });
+                const fetched = await res.data.map((rowData) => ({
+                    login_id: rowData.LOGIN_ID,
+                    comment_id: rowData.COMMENT_ID,
+                    score: rowData.SCORE,
+                    comment: rowData.COMMENT_TEXT,
+                    comment_date: rowData.COMMENT_DATE
+                })
+                )
+                console.log(fetched);
+                setReviewData(reviewData.concat(fetched));
             } catch (e) {
-            console.error("error!", e.message)
+                console.error("error!", e.message);
             }
         }
         fetchData();
     }, [setReviewData])
 
     let width =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
 
     let height =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight;
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
 
+    // reviewData
     return (
-    <div>
-        <div className="Review">
-            <div className="stickyHeader" >
-            <div className="Bar">
-            <Link to={"/"} className="Logo">
-                <div className="Logo">Manageyourhair</div>
-            </Link>
-            </div>
-            </div>
-          
-            <Box
-            sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
-            >
-          <Typography component="h1" variant="h5">
-            Comment
-          </Typography>
-          {reviewData.map((inputData) => {
-              return (
-                <Box
-                sx={{ mt: 1}}
-                >
-                <TextField
-                    id="filled-read-only-input"
-                    label="ID"
-                    defaultValue={inputData.login_id}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    variant="filled"
-                />
-                <br />
-                <TextField
-                    id="filled-read-only-input"
-                    label="Comment ID"
-                    defaultValue={inputData.comment_id}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    variant="filled"
-                />
-                <br />
-                <TextField
-                    id="filled-read-only-input"
-                    label="Score"
-                    defaultValue={inputData.score}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    variant="filled"
-                />
-                <br />
-                <Rating 
-                    name="rating"
-                    value={inputData.score} 
-                    readOnly
-                />
-                <br />
-                <TextField
-                    id="filled-read-only-input"
-                    label="Comment"
-                    defaultValue={inputData.comment}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    variant="filled"
-                />
-                {currentUser['login_id'] == inputData.login_id && (
-                    <div>
-                        <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Modify
-                    </Button>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Delete
-                    </Button>
+        <div>
+            <div className="Review">
+                <div className="stickyHeader" >
+                    <div className="Bar">
+                        <Link to={"../../"} className="Logo" style={{
+                            textDecoration: "none",
+                        }}>
+                            <div className="Logo"
+                                style={{
+                                    fontFamily: "Geostar, cursive",
+                                    fontSize: "3.5vw",
+                                    textAlign: "center",
+                                    color: "black",
+                                }}>Manageyourhair</div>
+                        </Link>
                     </div>
-                )}
-                <hr />
+                </div>
+
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    <Typography component="h1" variant="h5">
+                        {shop_name}
+                    </Typography>
+                    <div style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}>
+                        {reviewData.map((inputData, idx) => {
+                            return (
+                                <Box
+                                    sx={{
+                                        mt: 1,
+                                        mr: 1,
+                                        ml: 1,
+                                        mb: 1,
+                                        minWidth: "30vh",
+                                        flexWrap: "wrap",
+                                        width: "20%",
+                                        border: "2px solid black",
+                                        padding: "1vh",
+                                        borderRadius: "10px",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        display: "flex",
+                                    }}
+                                    key={inputData.comment_id}
+                                >
+                                    <div style={{ display: "flex" }}>Comment# {inputData.comment_id}</div>
+                                    <TextField
+                                        id="filled-read-only-input"
+                                        label="ID"
+                                        defaultValue={inputData.login_id}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+
+                                        sx={{
+                                            width: "100%",
+                                        }}
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        id="filled-read-only-input"
+                                        label="Commented date"
+                                        defaultValue={reviewData[idx].comment_date ?
+                                            reviewData[idx].comment_date.slice(0, 10) : "No date"}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        sx={{
+                                            width: "100%",
+                                        }}
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        id="filled-read-only-input"
+                                        label="Score"
+                                        defaultValue={inputData.score}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        sx={{
+                                            width: "100%",
+                                        }}
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <Rating
+                                        name="rating"
+                                        value={inputData.score}
+                                        readOnly
+                                    />
+                                    <br />
+                                    <TextField
+                                        id="filled-read-only-input"
+                                        label="Comment"
+                                        defaultValue={inputData.comment}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        sx={{
+                                            width: "100%",
+                                            height: "10vh",
+                                        }}
+                                        variant="filled"
+                                        multiline
+                                        rows={2}
+
+                                    />
+                                    {currentUser['login_id'] == inputData.login_id && (
+                                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
+                                            <Button
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ ml: 7 }}
+                                            >
+                                                Modify
+                                            </Button>
+                                            <Button
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{
+                                                    ml: 6
+                                                }}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </div>
+                                    )
+                                    }
+                                    <hr />
+                                </Box>
+                            );
+                        })}
+                    </div>
                 </Box>
-              );
-          })}
-        </Box>
-        </div>
-    </div>
+            </div >
+        </div >
     );
 }
 
