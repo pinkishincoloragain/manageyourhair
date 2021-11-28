@@ -108,7 +108,6 @@ export default function Card(props) {
       <div className="CardWrapper"
         ref={cardStyle}
       >
-        {props.distance}
 
         <div className="Card"
           onMouseOver={() => setHover(true)}
@@ -125,11 +124,11 @@ export default function Card(props) {
             </div>
             <div className="CardDescription">
               <div className="CardAddress">{props.address}</div>
+              <div className="CardDist">Approximately {props.dist/1000} km</div>
               {props.contact == 'None' ? null : <a href={telLink}>
                 <div className="CardContact">{props.contact}</div>
               </a>}
 
-              {/* <div className="CardDist">{props.dist}</div> */}
             </div>
             <div className="CardButtons" onClick={() => handleReserve()}>
               {detailed ? null :
