@@ -108,6 +108,8 @@ export default function Card(props) {
       <div className="CardWrapper"
         ref={cardStyle}
       >
+        {props.distance}
+
         <div className="Card"
           onMouseOver={() => setHover(true)}
           onMouseOut={() => setHover(false)}
@@ -130,12 +132,14 @@ export default function Card(props) {
               {/* <div className="CardDist">{props.dist}</div> */}
             </div>
             <div className="CardButtons" onClick={() => handleReserve()}>
-              {detailed ? null : <Link to={`./reservation/${props.shop_id}/${props.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
-                <div className="Reserve">
-                  <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
-                  {hover ? "Reservation" : null}
-                </div>
-              </Link>}
+              {detailed ? null :
+                <Link to={`./reservation/${props.shop_id}/${props.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
+                  <div className="Reserve">
+                    <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
+                    {hover ? "Reservation" : null}
+                  </div>
+                </Link>
+              }
 
               <div className="Detail" onClick={() => handleDetail()}>
                 <img src={Details} style={{ width: "2.3vw" }} className="icnBtn" />
@@ -144,11 +148,16 @@ export default function Card(props) {
                   : null}
               </div>
 
-              {detailed ? null : <div className="Review">
-                <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
-                {hover ? "Review" : null}
-              </div>
+              {detailed ? null :
+                <Link to={`./review/${props.shop_id}/${props.name.toString()}`} className="Review" style={{ textDecoration: "none", color: "black" }}>
+                  <div className="Reserve">
+                    <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
+                    {hover ? "review" : null}
+                  </div>
+                </Link>
               }
+              <div>
+              </div>
             </div>
           </div>
         </div>

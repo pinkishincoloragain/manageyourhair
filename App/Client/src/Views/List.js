@@ -10,9 +10,9 @@ import { json } from "body-parser";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Sad from "assets/sad.png"
+import { convertDistance, getPreciseDistance } from 'geolib'
 
 function List() {
-  // const [data] = useFetch("http://localhost:8001/api/getList");
   const [shopData, setShopData] = useState([{
     shop_id: '',
     name: '',
@@ -28,7 +28,23 @@ function List() {
 
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
+
   useEffect(() => {
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+
+      setUserLoc([position.coords.latitude, position.coords.longitude]);
+    });
+
+    console.log(userLoc);
+
+    // let distance = getDistance(
+    //   { latitude: userLoc[0], longitude: userLoc[1] },
+    //   { latitude: shopData.loc_x, longitude: shopData.loc_y }
+    // )
+
+    // console.log(distance);
+
     async function fetchData() {
       try {
         const res = await axios.get('http://localhost:8001/api/getList')
@@ -36,7 +52,12 @@ function List() {
           shop_id: rowData.SHOP_ID,
           name: rowData.NAME,
           address: rowData.ADDRESS,
-          distance: Math.pow(Math.pow((userLoc[0] - rowData.LOC_X), 2) + Math.pow((userLoc[1] - rowData.LOC_Y), 2), 1 / 2),
+          loc_x: rowData.LOC_X,
+          loc_y: rowData.LOC_Y,
+          distance: getPreciseDistance(
+            { latitude: userLoc[0], longitude: userLoc[1] },
+            { latitude: parseFloat(rowData.LOC_X), longitude: parseFloat(rowData.LOC_Y) }
+            , 1),
           score: rowData.SCORE,
           contact: rowData.CONTACT,
           open_hour: rowData.OPEN_HOUR,
@@ -101,6 +122,7 @@ function List() {
                   dist={inputData.distance}
                   loc_x={inputData.loc_x}
                   loc_y={inputData.loc_y}
+                  distance={inputData.distance}
                 >
                 </Card>
               );
