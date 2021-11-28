@@ -36,7 +36,7 @@ export default function AddressForm(props) {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutter Bottom>
+      <Typography variant="h6" gutterBottom>
         User information
       </Typography>
       <Grid item xs={12}>

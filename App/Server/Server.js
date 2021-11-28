@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "COLCTveCNfY8",
-  // password: "root",
+  // password: "COLCTveCNfY8",
+  password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  // socketPath: "/tmp/mysql.sock",
+  socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -97,27 +97,27 @@ app.post("/api/signup", [body('firstName').not().isEmpty().trim().escape(), body
 body('contact').not().isEmpty().trim().escape(), body('id').not().isEmpty().isEmail().normalizeEmail(),
 body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().escape()], (req, res) => {
   const validation_error = validationResult(req);
-    if (!validation_error.isEmpty())
-      return res.status(200).json({validation_error: validation_error.array()});
+  if (!validation_error.isEmpty())
+    return res.status(200).json({ validation_error: validation_error.array() });
   const param = [req.body.firstName, req.body.lastName, req.body.contact, req.body.id, req.body.pw, req.body.pw2];
 
   // check password
   if (param[4] != param[5]) {
-    return res.status(200).send({password_error: 'signup failed'});
+    return res.status(200).send({ password_error: 'signup failed' });
   }
 
   // duplicate check
   connection.query("SELECT * FROM user where LOGIN_ID=?", param[3], function (err, rows, fields) {
     if (err) throw err;
-    
+
     if (rows.length == 0) { // no same user id
-    // encryption for user password
+      // encryption for user password
       bcrypt.hash(param[4], salt, (error, hash) => {
         if (error) throw error;
         param[4] = hash;
         connection.query("INSERT INTO USER (`CUSTOMER_FIRST_NAME`, `CUSTOMER_LAST_NAME`, `CONTACT_NO`, `LOGIN_ID`, `LOGIN_PW`) VALUES (?, ?, ?, ?, ?)", param, function (err, rows, fields) {
           if (err) throw err;
-          var token = jwt.sign({id: param[3]}, 'secret-key', {
+          var token = jwt.sign({ id: param[3] }, 'secret-key', {
             expiresIn: 86400
           });
           res.status(200).send({
@@ -129,36 +129,36 @@ body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().e
       });
     }
     else {
-      return res.status(200).send({signup_error: 'signup failed'});
+      return res.status(200).send({ signup_error: 'signup failed' });
     }
   });
 });
 app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().isEmpty().trim().escape()], (req, res) => {
-    const validation_error = validationResult(req);
-    if (!validation_error.isEmpty())
-      return res.status(200).json({validation_error: validation_error.array()});
-    const param = [req.body.id, req.body.pw];
-    connection.query("SELECT * FROM user where LOGIN_ID=?", param[0], function (err, rows, fields) {
-      if (err) throw err;
-      // id exists
-      if (rows.length > 0) {
-        bcrypt.compare(param[1], rows[0].LOGIN_PW, (error, result) => {
-          if (result) {
-            console.log('Login success');
-            var token = jwt.sign({id: param[0]}, 'secret-key', {
-              expiresIn: 86400
-            });
-            res.status(200).send({
-              accessToken: token,
-              id: rows[0].LOGIN_ID,
-            });
-          }
-        })
-      }
-      else {
-        res.status(200).send({login_error: 'login failed'});
-      }
-    });
+  const validation_error = validationResult(req);
+  if (!validation_error.isEmpty())
+    return res.status(200).json({ validation_error: validation_error.array() });
+  const param = [req.body.id, req.body.pw];
+  connection.query("SELECT * FROM user where LOGIN_ID=?", param[0], function (err, rows, fields) {
+    if (err) throw err;
+    // id exists
+    if (rows.length > 0) {
+      bcrypt.compare(param[1], rows[0].LOGIN_PW, (error, result) => {
+        if (result) {
+          console.log('Login success');
+          var token = jwt.sign({ id: param[0] }, 'secret-key', {
+            expiresIn: 86400
+          });
+          res.status(200).send({
+            accessToken: token,
+            id: rows[0].LOGIN_ID,
+          });
+        }
+      })
+    }
+    else {
+      res.status(200).send({ login_error: 'login failed' });
+    }
+  });
 })
 app.get("/api/mypage", (req, res) => {
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {

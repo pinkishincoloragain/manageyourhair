@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Payment from "./Datepick";
+import DatePick from "./Datepick";
 import Review from "./Review";
 import AddressForm from "./Address";
 import { useState, useEffect } from "react";
@@ -38,9 +38,9 @@ function GetStepContent(props) {
     case 0:
       return <AddressForm setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
     case 1:
-      return <Payment setReservationTime={setReservationTime} />;
+      return <DatePick reservationTime={reservationTime} setReservationTime={setReservationTime} />;
     case 2:
-      return <Review props={props, cutInfo, reservationTime} />;
+      return <Review props={props, selfCut, cutInfo, reservationTime} />;
     default:
       throw new Error("Unknown step");
   }
