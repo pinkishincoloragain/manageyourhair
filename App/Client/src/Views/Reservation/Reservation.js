@@ -25,6 +25,7 @@ const steps = ["User info", "Reservation date", "Review your reservation"];
 function GetStepContent(props) {
   console.log(props);
 
+  // firstName, lastName, gender, description
   const [cutInfo, setCutInfo] = useState(["", "", "", ""]);
   const [selfCut, setSelfCut] = useState(true);
 
@@ -38,9 +39,15 @@ function GetStepContent(props) {
     case 0:
       return <AddressForm setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
     case 1:
-      return <DatePick reservationTime={reservationTime} setReservationTime={setReservationTime} />;
+      return <DatePick setTimeChecked={props.setTimeChecked} reservationTime={reservationTime} setReservationTime={setReservationTime} />;
     case 2:
-      return <Review props={props, selfCut, cutInfo, reservationTime} />;
+      return <Review
+        selfCut={selfCut}
+        cutInfo={cutInfo}
+        shop_id={props.shop_id}
+        shop_name={props.shop_name}
+        reservationTime={reservationTime}
+      />;
     default:
       throw new Error("Unknown step");
   }
@@ -55,9 +62,16 @@ export default function Checkout(props) {
 
   const [activeStep, setActiveStep] = useState(0);
   const [isloggedIn, setIsLoggedIn] = useState(false);
+  const [timeChecked, setTimeChecked] = useState(false);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    console.log(timeChecked);
+
+    if (activeStep === 0 || timeChecked)
+      setActiveStep(activeStep + 1);
+
+    else
+      alert("Please check your reservation time.");
   };
 
   const handleBack = () => {
@@ -105,7 +119,7 @@ export default function Checkout(props) {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your reser.
+                  Thank you for making reservation with us.
                 </Typography>
                 <Typography variant="subtitle1">
                   Your order number is #2001539. Thank you for making reservation with us.
@@ -113,7 +127,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} />
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -126,7 +140,7 @@ export default function Checkout(props) {
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1 ? "Place reservation" : "Next"}
                   </Button>
                 </Box>
               </React.Fragment>

@@ -28,7 +28,7 @@ export default function DatePick(props) {
     if (hours < 9 || hours > 20) {
 
       alert("Sorry, we are not open at this time.");
-      setValue(Date.parse("25 Dec 2021 14:00:00 GMT"));
+      props.setTimeChecked(false);
       return false;
     }
     else
@@ -67,6 +67,8 @@ export default function DatePick(props) {
             if (checkValue(value)) {
               setValue(value);
               props.setReservationTime(value);
+              props.setTimeChecked(true);
+              console.log(props.reservationTime);
             }
           }} >
           Confirm

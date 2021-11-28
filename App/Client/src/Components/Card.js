@@ -86,7 +86,7 @@ export default function Card(props) {
     else {
       return null;
     }
-    
+
     setDetailed(!detailed);
   }
 
