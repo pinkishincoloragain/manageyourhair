@@ -29,6 +29,8 @@ const steps = ["User info", "Reservation date", "Review your reservation"];
 function GetStepContent(props) {
   console.log(props);
 
+  const [userData, setUserData] = useState();
+
   // firstName, lastName, gender, description
   const [cutInfo, setCutInfo] = useState(["", "", "", ""]);
   const [selfCut, setSelfCut] = useState(true);
@@ -38,6 +40,30 @@ function GetStepContent(props) {
   console.log(cutInfo);
   console.log(selfCut);
   console.log(reservationTime);
+  let fetched;
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get('http://localhost:8001/api/mypage',
+          { headers: authHeader() })
+        console.log(res.data);
+
+        const fetched = await res.data.map((rowData) => ({
+          id: rowData.LOGIN_ID,
+          first_name: rowData.CUSTOMER_FIRST_NAME,
+          last_name: rowData.CUSTOMER_LAST_NAME,
+          contact: rowData.CONTACT_NO
+        })
+        )
+        setUserData(fetched[0]);
+
+      } catch (e) {
+        console.error("error!", e.message)
+      }
+    }
+    fetchData();
+  }, [setUserData])
 
   switch (props.step) {
     case 0:
@@ -51,6 +77,7 @@ function GetStepContent(props) {
         shop_id={props.shop_id}
         shop_name={props.shop_name}
         reservationTime={reservationTime}
+        userData={userData}
       />;
     default:
       throw new Error("Unknown step");
@@ -70,7 +97,15 @@ export default function Checkout(props) {
   const [isloggedIn, setIsLoggedIn] = useState(false);
   const [timeChecked, setTimeChecked] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
+
+
   console.log(currentUser);
+  useEffect(() => {
+    if (!currentUser) {
+      alert("Please Login first");
+      window.location.href = "/login";
+    }
+  }, [currentUser]);
 
   const handleNext = () => {
     console.log(timeChecked);
@@ -86,28 +121,6 @@ export default function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios.get('http://localhost:8001/api/mypage',
-          { headers: authHeader() })
-        console.log(res.data);
-
-        const fetched = await res.data.map((rowData) => ({
-          id: rowData.LOGIN_ID,
-          first_name: rowData.CUSTOMER_FIRST_NAME,
-          last_name: rowData.CUSTOMER_LAST_NAME,
-          contact: rowData.CONTACT_NO
-        })
-        )
-        //const fetched = await res.data()
-        setUserData(fetched)
-      } catch (e) {
-        console.error("error!", e.message)
-      }
-    }
-    fetchData();
-  }, [setUserData])
 
   return (
     <ThemeProvider theme={theme}>
@@ -162,13 +175,19 @@ export default function Checkout(props) {
                     </Button>
                   )}
 
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    {activeStep === steps.length - 1 ? "Place reservation" : "Next"}
-                  </Button>
+
+                  {activeStep === steps.length - 1 ?
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >Place reservation                  </Button>
+
+                    : <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >Next</Button>}
                 </Box>
               </React.Fragment>
             )}

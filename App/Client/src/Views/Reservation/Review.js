@@ -6,7 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 
 
-export default function Review(props) {
+export default function reservationReview(props) {
   console.log(props.reservarionTime);
   let products = [
     {
@@ -17,8 +17,8 @@ export default function Review(props) {
   ];
 
   let payments = [
-    { name: "First name", detail: "user" },
-    { name: "Last name", detail: "user" },
+    { name: "name", detail: props.userData.first_name + " " + props.userData.last_name },
+    { name: "contact", detail: props.userData.contact },
     // { name: "description", detail: "desc"},
     // { name: "gender", detail: "gender" },
   ];

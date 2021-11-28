@@ -124,7 +124,7 @@ export default function Card(props) {
             </div>
             <div className="CardDescription">
               <div className="CardAddress">{props.address}</div>
-              <div className="CardDist">Approximately {props.dist/1000} km</div>
+              <div className="CardDist">Approximately {props.dist / 1000} km</div>
               {props.contact == 'None' ? null : <a href={telLink}>
                 <div className="CardContact">{props.contact}</div>
               </a>}
@@ -146,15 +146,6 @@ export default function Card(props) {
                 {detailed ? <div className="CardOpenHour">{props.open_hour}</div>
                   : null}
               </div>
-
-              {detailed ? null :
-                <Link to={`./review/${props.shop_id}/${props.name.toString()}`} className="Review" style={{ textDecoration: "none", color: "black" }}>
-                  <div className="Reserve">
-                    <img src={Review} style={{ width: "2.3vw" }} className="icnBtn" />
-                    {hover ? "review" : null}
-                  </div>
-                </Link>
-              }
               <div>
               </div>
             </div>
