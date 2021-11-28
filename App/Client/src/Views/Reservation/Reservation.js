@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Payment from "./Payment";
+import Payment from "./Datepick";
 import Review from "./Review";
 import AddressForm from "./Address";
 import { useState, useEffect } from "react";
@@ -28,9 +28,11 @@ function GetStepContent(props) {
   const [cutInfo, setCutInfo] = useState(["", "", "", ""]);
   const [selfCut, setSelfCut] = useState(true);
 
+  const [reservationTime, setReservationTime] = useState(null);
+
   console.log(cutInfo);
   console.log(selfCut);
-  const [reservationTime, setReservationTime] = useState(null);
+  console.log(reservationTime);
 
   switch (props.step) {
     case 0:

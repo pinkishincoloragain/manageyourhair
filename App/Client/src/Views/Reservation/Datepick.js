@@ -9,7 +9,7 @@ import { Switch } from "@mui/material";
 import DateTimePicker from '@mui/lab/DateTimePicker';
 
 
-export default function PaymentForm() {
+export default function DatePick(props) {
 
   const [self, setSelf] = useState(true);
   const [hairCutLabel, setHairCutLabel] = useState("I will pay on the spot.");
@@ -30,7 +30,7 @@ export default function PaymentForm() {
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
-          console.log(value);
+          props.setReservationTime(newValue);
         }}
         minDate={new Date()}
       />
