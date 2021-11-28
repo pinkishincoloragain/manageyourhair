@@ -4,7 +4,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
-import { KeyboardDatePicker } from '@material-ui/pickers'
 
 const products = [
   {
@@ -39,7 +38,7 @@ export default function Review(props) {
       <Grid container spacing={2}>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
+            Reservation date
           </Typography>
           <Grid container>
             {payments.map((payment) => (

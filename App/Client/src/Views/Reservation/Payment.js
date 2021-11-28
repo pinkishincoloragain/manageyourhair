@@ -6,13 +6,14 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Switch } from "@mui/material";
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 
 export default function PaymentForm() {
 
   const [self, setSelf] = useState(true);
   const [hairCutLabel, setHairCutLabel] = useState("I will pay on the spot.");
-  const [date, changeDate] = useState(new Date());
+  const [value, setValue] = React.useState(new Date());
 
   const handleControl = () => {
     setSelf(!self);
@@ -24,6 +25,15 @@ export default function PaymentForm() {
         Reservation date
       </Typography>
 
+      <DateTimePicker
+        renderInput={(props) => <TextField {...props} />}
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+          console.log(value);
+        }}
+        minDate={new Date()}
+      />
     </React.Fragment>
   );
 }

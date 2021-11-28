@@ -18,30 +18,27 @@ import AddressForm from "./Address";
 import { useState, useEffect } from "react";
 import { Link as RLink } from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
-        manageyourhair
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
-const steps = ["User info", "Payment details", "Review your reservation"];
 
-function getStepContent(step) {
-  console.log(step);
-  switch (step) {
+const steps = ["User info", "Reservation date", "Review your reservation"];
+
+function GetStepContent(props) {
+  console.log(props);
+
+  const [cutInfo, setCutInfo] = useState(["", "", "", ""]);
+  const [selfCut, setSelfCut] = useState(true);
+
+  console.log(cutInfo);
+  console.log(selfCut);
+  const [reservationTime, setReservationTime] = useState(null);
+
+  switch (props.step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
     case 1:
-      return <Payment />;
+      return <Payment setReservationTime={setReservationTime} />;
     case 2:
-      return <Review />;
+      return <Review props={props, cutInfo, reservationTime} />;
     default:
       throw new Error("Unknown step");
   }
@@ -50,13 +47,12 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout(props) {
-  const [activeStep, setActiveStep] = useState(0);
+
   const shop_id = props.match.params.shop_id
   const shop_name = props.match.params.name
+
+  const [activeStep, setActiveStep] = useState(0);
   const [isloggedIn, setIsLoggedIn] = useState(false);
-  
-  console.log(shop_id);
-  console.log(shop_name);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -107,7 +103,7 @@ export default function Checkout(props) {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you for your reser.
                 </Typography>
                 <Typography variant="subtitle1">
                   Your order number is #2001539. Thank you for making reservation with us.
@@ -115,7 +111,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -138,5 +134,18 @@ export default function Checkout(props) {
         <Copyright />
       </Container>
     </ThemeProvider>
+  );
+}
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://github.com/pinkishincoloragain/manageyourhair">
+        manageyourhair
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
