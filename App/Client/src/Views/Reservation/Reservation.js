@@ -39,8 +39,10 @@ function GetStepContent(props) {
 
   console.log(cutInfo);
   console.log(selfCut);
-  console.log(reservationTime);
-  let fetched;
+
+  useEffect(() => {
+    props.setReservationTime(reservationTime);
+  }, [reservationTime]);
 
   useEffect(() => {
     async function fetchData() {
@@ -93,6 +95,7 @@ export default function Checkout(props) {
   const shop_name = props.match.params.name;
   const [userData, setUserData] = useState("");
 
+  const [reservationTime, setReservationTime] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [isloggedIn, setIsLoggedIn] = useState(false);
   const [timeChecked, setTimeChecked] = useState(false);
@@ -120,6 +123,19 @@ export default function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8001/api/reservation/', {
+      customer_id: currentUser['customer_id'],
+      shop_id: shop_id,
+      booking_date: reservationTime.toISOString().slice(0, 16).replace('T', ' '),
+      // desciption: data.get("description"),
+    }).then(() => {
+      props.history.push("/");
+      window.location.reload();
+    });
+  }
 
 
   return (
@@ -167,7 +183,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} />
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} setReservationTime={setReservationTime} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -179,7 +195,7 @@ export default function Checkout(props) {
                   {activeStep === steps.length - 1 ?
                     <Button
                       variant="contained"
-                      onClick={handleNext}
+                      onClick={handleSubmit}
                       sx={{ mt: 3, ml: 1 }}
                     >Place reservation                  </Button>
 

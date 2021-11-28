@@ -32,7 +32,6 @@ function List() {
   useEffect(() => {
 
     navigator.geolocation.getCurrentPosition(function (position) {
-
       setUserLoc([position.coords.latitude, position.coords.longitude]);
     });
 

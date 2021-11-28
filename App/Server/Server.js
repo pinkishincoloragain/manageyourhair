@@ -191,6 +191,23 @@ app.get("/api/getReview/", (req, res) => {
     }
   );
 })
+
+app.post("/api/reservation", (req, res) => {
+  let numRow = 0;
+  connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
+    numRow = rows;
+  }
+  );
+
+  const param = [numRow + 1, req.body.customer_id, req.body.shop_id, req.body.booking_date,
+  req.body.comment, req.body.rating];
+  connection.query("INSERT INTO BOOKING (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
+    if (err) throw err;
+  });
+  res.send();
+})
+
+
 app.listen(8001, () => {
   console.log(`listening on port ${8001}`);
 })
