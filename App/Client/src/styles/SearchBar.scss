@@ -16,14 +16,23 @@
         transition: 0.1s;
         font-size: 3rem;
 
+        ::placeholder {
+            color: white;
+            &:focus {
+                color: black;
+            }
+        }
+
         &:focus {
             outline: none;
             border-bottom: 0.3rem solid #000;
             transition: 0.1s;
+            ::placeholder{
+                color: transparent;
+            }
         }
-    }
-    .searchInput::placeholder {
-        color: white;
+
+
     }
 
     .submitBtn {

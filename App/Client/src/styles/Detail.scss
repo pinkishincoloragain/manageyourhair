@@ -1,0 +1,117 @@
+.fullPage {
+    // background-color: gray;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // opacity: 0.4;
+    backdrop-filter: blur(2vh);
+    height: 100%;
+    overflow: hidden;
+}
+
+.nameLabel {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    z-index: 5;
+    top: 11vh;
+    left: 10vw;
+    width: 80vw;
+    font-size: 4vw;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.detail {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    z-index: 4;
+    width: 60vw;
+    height: 40vh;
+    top: 20vh;
+    left: 20vw;
+    overflow: hidden;
+    padding: 1vh;
+    box-shadow: 1vw 1vw 0.3vw rgb(68, 68, 68);
+    border: 1vh solid black;
+
+    border-radius: 10px;
+    transition: 0.5s;
+
+    .HeaderPara {
+        width: 100%;
+        height: 10%;
+        align-items: center;
+        text-align: center;
+        font-size: 2vw;
+        margin-top: 1vh;
+    }
+
+    .Image {
+        height: 100%;
+        border-radius: 0.5vw;
+    }
+}
+
+.buttons {
+    z-index: 4;
+    position: fixed;
+    border: transparent 1vh solid;
+    width: 60vw;
+    height: 20vh;
+    top: 63vh;
+    left: 20vw;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+
+    .btnHolder {
+        display: flex;
+        flex-direction: column;
+        border: 0.8vh solid black;
+        border-radius: 0.5vh;
+        width: 6vw;
+        margin: 2vh;
+        margin-left: 4vh;
+        margin-right: 4vh;
+        padding: 2vh;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 1vw 1vw 0.3vw rgb(68, 68, 68);
+
+        .Link {
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            flex-direction: column;
+            font-size: 1.2vw;
+        }
+    }
+}
+
+.daysWrapper {
+    margin-top: 5%;
+    .days {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: left;
+        padding-left: 3vh;
+
+        .dayDiv {
+            margin: 0.7vh;
+            text-align: left;
+            color: black;
+            font-size: 3vh;
+        }
+    }
+}
