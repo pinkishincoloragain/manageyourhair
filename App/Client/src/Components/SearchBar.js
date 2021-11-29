@@ -74,7 +74,7 @@ function SearchBar(props) {
                 placeholder={props.placeholder}
                 style={{ color: props.color }}
             />
-            <Link to={"./list/score"}>
+            <Link to={"./list"}>
                 <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
                     Search
                 </button>

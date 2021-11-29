@@ -77,7 +77,7 @@ function Home() {
               <h1>Do you need a haircut?</h1>
             </div>
             <div className="SearchWrapper">
-              <SearchBar listpage={false} placeholder="City Centre / Tallaght" color="white" />
+              <SearchBar listpage={false} placeholder="Drumcondra / Tallaght" color="white" />
             </div>
           </div>
         </div>

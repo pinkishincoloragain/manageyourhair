@@ -34,19 +34,9 @@ function List(props) {
     setSearchMode(props.match.params.mode);
     console.log(searchMode);
 
-    if (searchMode === "score") {
-      setApiLoc('http://localhost:8001/api/getListByScore');
-      fetchData();
-      // `./reservation/${props.shop_id}/${props.name.toString()}`
-    }
-    else if (searchMode === "name") {
-      setApiLoc('http://localhost:8001/api/getListByName');
-      fetchData();
-    }
-    else {
-      setApiLoc('http://localhost:8001/api/getListById');
-      fetchData();
-    }
+    setApiLoc('http://localhost:8001/api/getListByScore');
+    fetchData();
+
   }, [setSearchMode]);
 
   async function fetchData() {
@@ -129,7 +119,7 @@ function List(props) {
               return (
                 <Card className="Card"
                   image={inputData.photo_link}
-                  key={inputData.shop_id.toString() + Math.random()}
+                  key={inputData.shop_id.toString() + inputData.distance}
                   name={inputData.name}
                   shop_id={inputData.shop_id}
                   open_hour={inputData.open_hour}
@@ -152,6 +142,8 @@ function List(props) {
               // console.log(searchValue, inputData.name);
             }
 
+          }).sort(function (a, b) {
+            return a - b;
           })}
           {cnt === 0 && <div className="NoResult">
             <img src={Sad} style={{ width: "10vh", height: "10vh" }} />
