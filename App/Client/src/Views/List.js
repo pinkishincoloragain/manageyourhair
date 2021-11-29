@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import Sad from "assets/sad.png"
 import { convertDistance, getPreciseDistance } from 'geolib'
 
-function List() {
+function List(props) {
   const [shopData, setShopData] = useState([{
     shop_id: '',
     name: '',
@@ -27,7 +27,53 @@ function List() {
 
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
-  const [searchMode,  setSearchMode] = useState("score");
+  const [apiLoc, setApiLoc] = useState('http://localhost:8001/api/getListByScore');
+  const [searchMode, setSearchMode] = useState("score");
+
+  useEffect(() => {
+    setSearchMode(props.match.params.mode);
+    console.log(searchMode);
+
+    if (searchMode === "score") {
+      setApiLoc('http://localhost:8001/api/getListByScore');
+      fetchData();
+      // `./reservation/${props.shop_id}/${props.name.toString()}`
+    }
+    else if (searchMode === "name") {
+      setApiLoc('http://localhost:8001/api/getListByName');
+      fetchData();
+    }
+    else {
+      setApiLoc('http://localhost:8001/api/getListById');
+      fetchData();
+    }
+  }, [setSearchMode]);
+
+  async function fetchData() {
+    try {
+      const res = await axios.get(apiLoc)
+      const fetched = await res.data.map((rowData) => ({
+        shop_id: rowData.SHOP_ID,
+        name: rowData.NAME,
+        address: rowData.ADDRESS,
+        loc_x: rowData.LOC_X,
+        loc_y: rowData.LOC_Y,
+        distance: getPreciseDistance(
+          { latitude: userLoc[0], longitude: userLoc[1] },
+          { latitude: parseFloat(rowData.LOC_X), longitude: parseFloat(rowData.LOC_Y) }
+          , 1),
+        score: rowData.SCORE,
+        contact: rowData.CONTACT,
+        open_hour: rowData.OPEN_HOUR,
+        photo_link: rowData.PHOTO_LINK,
+        website: rowData.WEBSITE
+      })
+      )
+      setShopData(shopData.concat(fetched))
+    } catch (e) {
+      console.error("error!", e.message)
+    }
+  }
 
   useEffect(() => {
 
@@ -44,42 +90,15 @@ function List() {
 
     // console.log(distance);
 
-    async function fetchData() {
-      try {
-        const res = await axios.get('http://localhost:8001/api/getListByScore')
-        const fetched = await res.data.map((rowData) => ({
-          shop_id: rowData.SHOP_ID,
-          name: rowData.NAME,
-          address: rowData.ADDRESS,
-          loc_x: rowData.LOC_X,
-          loc_y: rowData.LOC_Y,
-          distance: getPreciseDistance(
-            { latitude: userLoc[0], longitude: userLoc[1] },
-            { latitude: parseFloat(rowData.LOC_X), longitude: parseFloat(rowData.LOC_Y) }
-            , 1),
-          score: rowData.SCORE,
-          contact: rowData.CONTACT,
-          open_hour: rowData.OPEN_HOUR,
-          photo_link: rowData.PHOTO_LINK,
-          website: rowData.WEBSITE
-        })
-        )
-        setShopData(shopData.concat(fetched))
-      } catch (e) {
-        console.error("error!", e.message)
-      }
-    }
     fetchData();
     if (searchValue != null)
       setSearchInput(searchValue);
     else
       setSearchInput("");
-  }, [setShopData])
+  }, [setShopData, apiLoc])
 
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [searchInput, setSearchInput] = useState(searchValue);
-  // const [list, setList] = useState([]);
-  // const [isHover, setHover] = useState(false);
 
   const placeHolderRef = useRef(searchValue);
   // console.log("searchVal in List", searchValue);
@@ -89,10 +108,10 @@ function List() {
     <div className="List">
       <div className="stickyHeader" >
         <div className="Bar">
-          <Link to={"./"} className="Logo">
+          <Link to={"../"} className="Logo">
             <div className="Logo">Manageyourhair</div>
           </Link>
-          <SearchBar placeholder={searchValue} className="SearchBar" callback={setSearchInput}
+          <SearchBar callback={setSearchMode} listpage={true} placeholder={searchValue} className="SearchBar" callback={setSearchInput}
             style={{ placeHolder: "black" }} />
           <div className="Blank"></div>
         </div>

@@ -65,15 +65,21 @@ export default function StickyFooter() {
       }}
     >
       <CssBaseline />
-      <Container component="main" sx={{ mt: 2, mb: 1 }} maxWidth="sm">
+      <Container component="main" sx={{ mt: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-          Manage your hair
+          Our services
         </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          {"Pin a footer to the bottom of the viewport."}
-          {"The footer will move as the main element of the page grows."}
-        </Typography>
-        <Typography variant="body1">Manage your hair.</Typography>
+        <div>
+          <Typography variant="h5" component="h2" gutterBottom>
+            {"We help people make reservation for haircut."}<br/>
+            {"Let me tell you how you can use our service."}<br/><br/>
+            {"1.Search hairshop."}<br/><br/>
+            {"2. Choose hairshop and make reservation."}<br/><br/>
+            {"3. Check your reservation on Mypage."}<br/><br/>
+            {"4. Get your haircut on the date!"}<br/><br/>
+            {"5. Watch other people's review."}<br/>
+          </Typography>
+        </div>
       </Container>
       <Box
         component="footer"

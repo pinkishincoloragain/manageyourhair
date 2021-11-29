@@ -132,7 +132,7 @@ export default function Card(props) {
             </div>
             <div className="CardButtons" onClick={() => handleReserve()}>
               {detailed ? null :
-                <Link to={`./reservation/${props.shop_id}/${props.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
+                <Link to={`../reservation/${props.shop_id}/${props.name.toString()}`} className="Reserve" style={{ textDecoration: "none", color: "black" }}>
                   <div className="Reserve">
                     <img src={Reservation} style={{ width: "2.3vw" }} className="icnBtn" />
                     {hover ? "Reservation" : null}

@@ -27,7 +27,7 @@ function App() {
           <Switch>
             <SearchContext.Provider value={{ searchValue, setSearchValue }}>
               <Route exact path="/" component={Home} />
-              <Route exact path="/list" component={List} />
+              <Route exact path="/list/:mode" component={List} />
               <Route exact path="/reservation/:shop_id/:name" component={Reservation} />
               <Route exact path="/review/:shop_id/:name" component={Review} />
               <Route exact path="/review_list/:shop_id/:name" component={ReviewList} />

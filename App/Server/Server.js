@@ -77,12 +77,12 @@ app.get("/api/getListByScore", (req, res) => {
   );
 });
 
-app.get("/api/getListByComment", (req, res) => {
+app.get("/api/getListByName", (req, res) => {
   // const list = ["item1", "item2", "item3"];
   // res.json(list);
 
   connection.query(
-    "SELECT * FROM hairshop order by COUNT(COMMENT) desc",
+    "SELECT * FROM hairshop order by name",
     function (err, rows, fields) {
       if (err) throw err;
       res.json(rows)
