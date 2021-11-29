@@ -28,7 +28,7 @@ function ReviewModify(props) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await axios.get('http://localhost:8001/api/getComment/', { params: { comment_id: comment_id } });
+                const res = await axios.get('http://localhost:8001/api/review/' + comment_id);
                 console.log(res.data)
                 const fetched = await res.data.map((rowData) => ({
                     booking_id: rowData.booking_id,
@@ -52,12 +52,11 @@ function ReviewModify(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        axios.put('http://localhost:8001/api/review/', {
-            comment_id: props.match.params.comment_id,
+        axios.put('http://localhost:8001/api/review/'+props.match.params.comment_id, {
             rating: data.get('rating'),
             comment: data.get('comment')
         }).then(() => {
-            props.history.push("/");
+            props.history.push("/review_list/"+reviewData.shop_id+"/"+reviewData.place);
             window.location.reload();
         });
     }

@@ -24,10 +24,17 @@ function ReviewList(props) {
         score: 5,
         comment: 'This is a really good hairshop. I strongly recommend it to you.',
         comment_date: '2021-11-27'
-    }])
-
-    console.log(reviewData[0].comment_date);
-
+    }]) 
+    
+    function clickBtn (comment_id) {
+        console.log('h')
+        axios.delete('http://localhost:8001/api/review/'+comment_id, {
+            comment_id: 1
+        }).then(() => {
+            props.history.push("/review_list/"+shop_id+"/"+shop_name);
+            window.location.reload();
+        });
+    } 
     useEffect(() => {
         async function fetchData() {
             try {
@@ -40,7 +47,6 @@ function ReviewList(props) {
                     comment_date: rowData.COMMENT_DATE
                 })
                 )
-                console.log(fetched);
                 setReviewData(reviewData.concat(fetched));
             } catch (e) {
                 console.error("error!", e.message);
@@ -48,10 +54,6 @@ function ReviewList(props) {
         }
         fetchData();
     }, [setReviewData])
-
-    async function deleteData(comment_id) {
-        await axios.delete('http://localhost:8001/api/review', { params: { comment_id, comment_id } });
-    }
 
     let width =
         window.innerWidth ||
@@ -185,6 +187,7 @@ function ReviewList(props) {
 
                                     />
                                     {currentUser['login_id'] == inputData.login_id && (
+                                        <div>
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                                             <Link to={`/review_modify/${inputData.comment_id}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
                                             <Button
@@ -195,7 +198,12 @@ function ReviewList(props) {
                                                 Modify
                                             </Button>
                                             </Link>
-                                            <Button onClick={deleteData(inputData.comment_id)}
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <Button onClick={() => {
+                                                clickBtn(inputData.comment_id);
+                                                }}
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{
@@ -204,6 +212,7 @@ function ReviewList(props) {
                                             >
                                                 Delete
                                             </Button>
+                                        </div>
                                         </div>
                                     )
                                     }

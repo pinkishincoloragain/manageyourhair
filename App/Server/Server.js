@@ -191,23 +191,23 @@ app.post("/api/review", (req, res) => {
   req.body.comment, req.body.rating];
   connection.query("INSERT INTO COMMENT (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `COMMENT_TEXT`, `SCORE`) VALUES (?, ?, ?, ?, ?, ?)", param, function (err, rows, fields) {
     if (err) throw err;
+    console.log(rows)
+    res.json(rows)
   });
-  res.send();
 })
 
-app.get("/api/getComment", (req, res) => {
+app.get("/api/review/:id", (req, res) => {
   connection.query(
-    "SELECT booking_id as booking_id, shop_id as shop_id, hairshop.name as name, comment.score as score, comment_text as comment_text FROM comment join hairshop using(shop_id) where COMMENT_ID=?", req.query.comment_id,
+    "SELECT booking_id as booking_id, shop_id as shop_id, hairshop.name as name, comment.score as score, comment_text as comment_text FROM comment join hairshop using(shop_id) where COMMENT_ID=?", req.params.id,
     function (err, rows, fields) {
       if (err) throw err;
-      console.log(rows);
       res.json(rows)
     }
   );
 })
 
-app.put('/api/review', (req, res) => {
-  const param = [req.body.rating, req.body.comment, req.body.comment_id];
+app.put('/api/review/:id', (req, res) => {
+  const param = [req.body.rating, req.body.comment, req.params.id];
   connection.query("UPDATE comment set score=?, comment_text=? where COMMENT_ID=?", param,
   function (err, rows, fields) {
     if (err) throw err;
@@ -215,8 +215,8 @@ app.put('/api/review', (req, res) => {
   });
 })
 
-app.delete('/api/review', (req, res) => {
-  connection.query("delete from comment where COMMENT_ID=?", req.query.comment_id,
+app.delete('/api/review/:id', (req, res) => {
+  connection.query("delete from comment where COMMENT_ID=?", req.params.id,
   function (err, rows, fields) {
     if (err) throw err;
     res.send();

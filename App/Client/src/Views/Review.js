@@ -32,7 +32,7 @@ function Review(props) {
             rating: data.get('rating'),
             comment: data.get('comment')
         }).then(() => {
-            props.history.push("/");
+            props.history.push("/review_list/"+shop_id+"/"+shop_name);
             window.location.reload();
         });
     }
