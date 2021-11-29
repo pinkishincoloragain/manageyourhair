@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  // password: "COLCTveCNfY8",
-  password: "root",
+  password: "COLCTveCNfY8",
+  //password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  socketPath: "/tmp/mysql.sock",
+  // socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -246,22 +246,46 @@ app.get("/api/getReview/", (req, res) => {
   );
 })
 
+app.get("/api/myBooking", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT customer_id from user where login_id=?", decoded.id, function(err, idValue, fields) {
+        if (err) throw err;
+        connection.query(
+          "SELECT * from BOOKING join HAIRSHOP using(shop_id) where customer_id=? order by -shop_id;", idValue[0].customer_id,
+          function (err, rows, fields) {
+            if (err) throw err;
+            console.log(rows);
+            res.json(rows)
+          }
+        );
+      }
+    )
+  })
+})
+
 app.post("/api/reservation", (req, res) => {
+  /*
   let numRow = 0;
   connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
     numRow = Object.values(JSON.parse(JSON.stringify(rows)));
     console.log(numRow);
   }
   );
+  */
+  connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function(err, rows, fields) {
 
   const temp = new Date().toISOString().slice(0, 10);
 
-  const param = [numRow + 2, req.body.customer_id, req.body.shop_id, req.body.booking_date, req.body.description];
-  connection.query("INSERT INTO BOOKING (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?,?)", param, function (err, rows, fields) {
+  const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date, req.body.description];
+  connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
     if (err) throw err;
-  });
+  })
   res.send();
 })
+});
+
 
 
 app.listen(8001, () => {
