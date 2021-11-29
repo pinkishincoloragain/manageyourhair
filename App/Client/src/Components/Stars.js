@@ -1,4 +1,5 @@
-import Star from "assets/star.png"
+// import Star from "assets/star.png"
+import Star from "assets/Star.png"
 
 export default function Stars(props) {
 

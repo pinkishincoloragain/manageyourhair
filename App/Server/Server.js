@@ -49,11 +49,11 @@ const { json } = require("body-parser");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "COLCTveCNfY8",
-  // password: "root",
+  // password: "COLCTveCNfY8",
+  password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  // socketPath: "/tmp/mysql.sock",
+  socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -223,18 +223,17 @@ app.get("/api/review/:id", (req, res) => {
 app.put('/api/review/:id', (req, res) => {
   const param = [req.body.rating, req.body.comment, req.params.id];
   connection.query("UPDATE comment set score=?, comment_text=? where COMMENT_ID=?", param,
-  function (err, rows, fields) {
-    if (err) throw err;
-    res.json(rows);
-  });
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows);
+    });
 })
-
 app.delete('/api/review/:id', (req, res) => {
   connection.query("delete from comment where COMMENT_ID=?", req.params.id,
-  function (err, rows, fields) {
-    if (err) throw err;
-    res.send();
-  });
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.send();
+    });
 })
 
 app.get("/api/getReview/", (req, res) => {
