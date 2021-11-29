@@ -10,7 +10,7 @@ function SearchBar(props) {
     const { user, setUser } = useContext(UserContext);
     const { searchValue, setSearchValue } = useContext(SearchContext);
     const inputRef = useRef();
-
+    const [listpage, setListpage] = useState(false);
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -25,17 +25,20 @@ function SearchBar(props) {
     const [mode, setMode] = useState("score");
     const handleModeChange = (e) => {
         setMode(e.target.value);
+        props.setSearchMode(e.target.value);
+        console.log(e.target.value);
     };
 
     useEffect(() => {
         // console.log(searchValue);
+
     }, [searchValue]);
 
     const handleSubmit = (e) => {
         // setTimeout(() => {
         //   setSearchValue(textInput);
         // }, 10);
-        console.log("textInput", textInput);
+        // console.log("textInput", textInput);
         if (textInput.length > 0)
             setSearchValue(textInput);
         else {
@@ -55,7 +58,6 @@ function SearchBar(props) {
             .addEventListener("keydown", function (event) {
                 if (event.code === "Enter" || event.code === "NumpadEnter") {
                     event.preventDefault();
-                    document.getElementById("submitBtnId").click();
                     document.getElementById("submitBtnId").click();
                 }
             });
@@ -78,19 +80,17 @@ function SearchBar(props) {
                     Search
                 </button>
             </Link>
-            <div style={{ marginLeft: "4vw", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {props.listpage ? <div style={{ marginLeft: "4vw", display: "flex", marginTop: "1vh", flexDirection: "column" }}>
+                <div>Sort by:</div>
                 <FormControl component="fieldset">
                     <RadioGroup row aria-label="mode" name="row-radio-buttons-group">
-                        <FormControlLabel value="score"
-                            control={<Radio onChange={props.handleModeChange} checked={mode === 'score'}
-
-                            />} label="score" />
-                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={props.handleModeChange} />} label="Male" />
-                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={props.handleModeChange} />} label="Other" />
+                        <FormControlLabel value="score" checked={mode === 'score'} control={<Radio onChange={handleModeChange} />} label="score" />
+                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={handleModeChange} />} label="name" />
+                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={handleModeChange} />} label="id" />
                     </RadioGroup>
                 </FormControl>
             </div>
-
+                : null}
         </div>
     );
 }

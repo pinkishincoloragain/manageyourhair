@@ -43,6 +43,9 @@
       }
     }
   }
+  .searchBar {
+    width: 100%;
+  }
 
   .stickyHeader {
     position: sticky;
@@ -70,7 +73,7 @@
         top: 0;
         z-index: 1;
         position: sticky;
-        margin-right: 10vw;
+        margin-right: 1vw;
       }
     }
   }

@@ -39,8 +39,6 @@ export default function Detail(props) {
                 <div className="detail">
                     <img src={props.card.image} alt={props.card.name} className="Image" />
                     <div>
-                        <div className="detailHeader">
-                        </div>
                         <div className="daysWrapper">
                             {props.hours.length > 10 ? null : props.hours}
                         </div>

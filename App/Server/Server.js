@@ -50,7 +50,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "COLCTveCNfY8",
-  // password: "root",
+  //password: "root",
   database: "manager",
   //  socketPath may differ from the default path
   // socketPath: "/tmp/mysql.sock",
@@ -77,12 +77,26 @@ app.get("/api/getListByScore", (req, res) => {
   );
 });
 
-app.get("/api/getListByComment", (req, res) => {
+app.get("/api/getListByName", (req, res) => {
   // const list = ["item1", "item2", "item3"];
   // res.json(list);
 
   connection.query(
-    "SELECT * FROM hairshop order by COUNT(COMMENT) desc",
+    "SELECT * FROM hairshop order by name",
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows)
+    }
+  );
+});
+
+
+app.get("/api/getListById", (req, res) => {
+  // const list = ["item1", "item2", "item3"];
+  // res.json(list);
+
+  connection.query(
+    "SELECT * FROM hairshop order by name",
     function (err, rows, fields) {
       if (err) throw err;
       res.json(rows)
@@ -209,18 +223,17 @@ app.get("/api/review/:id", (req, res) => {
 app.put('/api/review/:id', (req, res) => {
   const param = [req.body.rating, req.body.comment, req.params.id];
   connection.query("UPDATE comment set score=?, comment_text=? where COMMENT_ID=?", param,
-  function (err, rows, fields) {
-    if (err) throw err;
-    res.json(rows);
-  });
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows);
+    });
 })
-
 app.delete('/api/review/:id', (req, res) => {
   connection.query("delete from comment where COMMENT_ID=?", req.params.id,
-  function (err, rows, fields) {
-    if (err) throw err;
-    res.send();
-  });
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.send();
+    });
 })
 
 app.get("/api/getReview/", (req, res) => {
@@ -233,23 +246,46 @@ app.get("/api/getReview/", (req, res) => {
   );
 })
 
+app.get("/api/myBooking", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT customer_id from user where login_id=?", decoded.id, function(err, idValue, fields) {
+        if (err) throw err;
+        connection.query(
+          "SELECT * from BOOKING join HAIRSHOP using(shop_id) where customer_id=? order by -shop_id;", idValue[0].customer_id,
+          function (err, rows, fields) {
+            if (err) throw err;
+            console.log(rows);
+            res.json(rows)
+          }
+        );
+      }
+    )
+  })
+})
+
 app.post("/api/reservation", (req, res) => {
   /*
   let numRow = 0;
   connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
-    numRow = rows;
+    numRow = Object.values(JSON.parse(JSON.stringify(rows)));
+    console.log(numRow);
   }
   );
   */
   connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function(err, rows, fields) {
+
+  const temp = new Date().toISOString().slice(0, 10);
+
+  const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date, req.body.description];
+  connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
     if (err) throw err;
-    const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date];
-    connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`) VALUES (?, ?, ?)", param, function (err, rows, fields) {
-      if (err) throw err;
-    });
   })
   res.send();
 })
+});
+
 
 
 app.listen(8001, () => {
