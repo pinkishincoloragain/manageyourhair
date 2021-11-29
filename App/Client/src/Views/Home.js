@@ -100,6 +100,7 @@ function Home() {
             <div
               className="Curly"
               style={{
+                borderRadius: "1vh",
                 transform: `translateX(
                   ${Math.max((-position / 2) * 1.8 + height, 150)}px
                   )`,
@@ -112,6 +113,7 @@ function Home() {
                 opacity: `${((position - 800) * 3) / 500}`,
                 marginTop: `-200px`,
                 marginBottom: `200px`,
+
               }}
             >
               We help you find closest hairshop. <br />
@@ -122,6 +124,7 @@ function Home() {
             <div
               className="Pink"
               style={{
+                borderRadius: "1vh",
                 transform: `translateX(${Math.min(
                   (position / 2.4 - 300) * 2,
                   540

@@ -27,12 +27,10 @@
             outline: none;
             border-bottom: 0.3rem solid #000;
             transition: 0.1s;
-            ::placeholder{
+            ::placeholder {
                 color: transparent;
             }
         }
-
-
     }
 
     .submitBtn {
