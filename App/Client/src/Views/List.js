@@ -28,16 +28,9 @@ function List(props) {
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
   const [apiLoc, setApiLoc] = useState('http://localhost:8001/api/getListByScore');
-  const [searchMode, setSearchMode] = useState("score");
-
-  useEffect(() => {
-    setSearchMode(props.match.params.mode);
-    console.log(searchMode);
-
-    setApiLoc('http://localhost:8001/api/getListByScore');
-    fetchData();
-
-  }, [setSearchMode]);
+  const [searchMode, setSearchMode] = useState("id");
+  console.log(searchMode);
+  // score, id , name
 
   async function fetchData() {
     try {
@@ -94,6 +87,47 @@ function List(props) {
   // console.log("searchVal in List", searchValue);
   let cnt = 0;
 
+
+
+  const showCard = (inputData) => {
+    if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
+      && (inputData.name.toLowerCase().includes(searchInput.toLowerCase())
+        || inputData.address.toLowerCase().includes(searchInput.toLowerCase()))) {
+      cnt++;
+      // console.log(cnt);
+      return (
+        <Card className="Card"
+          image={inputData.photo_link}
+          key={inputData.shop_id.toString() + inputData.distance}
+          name={inputData.name}
+          shop_id={inputData.shop_id}
+          open_hour={inputData.open_hour}
+          contact={inputData.contact}
+          score={inputData.score}
+          website={inputData.website}
+          address={inputData.address}
+          dist={inputData.distance}
+          loc_x={inputData.loc_x}
+          loc_y={inputData.loc_y}
+          distance={inputData.distance}
+        />
+      );
+    }
+  }
+
+  const showModeResult = () => {
+    if (searchMode === "name") {
+      return (shopData.map(showCard).sort((a, b) => { return a.props.name[0].charCodeAt(0) - b.props.name[0].charCodeAt(0); }));
+    }
+    else if (searchMode === "id") {
+      return (shopData.map(showCard).sort((a, b) => { return a.props.shop_id - b.props.shop_id; }));
+    }
+    else {
+      return (shopData.map(showCard));
+    }
+  }
+
+
   return (
     <div className="List">
       <div className="stickyHeader" >
@@ -110,41 +144,7 @@ function List(props) {
       <div className="ListWrap">
         <div className="CurrentSearch">Search using keyword "{searchValue}"</div>
         <div className="CardList">
-          {shopData.map((inputData) => {
-            if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
-              && (inputData.name.toLowerCase().includes(searchInput.toLowerCase())
-                || inputData.address.toLowerCase().includes(searchInput.toLowerCase()))) {
-              cnt++;
-              // console.log(cnt);
-              return (
-                <Card className="Card"
-                  image={inputData.photo_link}
-                  key={inputData.shop_id.toString() + inputData.distance}
-                  name={inputData.name}
-                  shop_id={inputData.shop_id}
-                  open_hour={inputData.open_hour}
-                  contact={inputData.contact}
-                  score={inputData.score}
-                  website={inputData.website}
-                  address={inputData.address}
-                  dist={inputData.distance}
-                  loc_x={inputData.loc_x}
-                  loc_y={inputData.loc_y}
-                  distance={inputData.distance}
-                >
-                </Card>
-              );
-            }
-            else {
-              if (searchValue === null) {
-                // setSearchValue(" ");
-              }
-              // console.log(searchValue, inputData.name);
-            }
-
-          }).sort(function (a, b) {
-            return a - b;
-          })}
+          {showModeResult()}
           {cnt === 0 && <div className="NoResult">
             <img src={Sad} style={{ width: "10vh", height: "10vh" }} />
             No result found</div>}
