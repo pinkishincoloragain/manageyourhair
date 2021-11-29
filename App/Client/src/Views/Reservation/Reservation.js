@@ -69,7 +69,7 @@ function GetStepContent(props) {
 
   switch (props.step) {
     case 0:
-      return <AddressForm setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
+      return <AddressForm callback={props.callback} setCutInfo={setCutInfo} cutInfo={cutInfo} setSelfCut={setSelfCut} />;
     case 1:
       return <DatePick setTimeChecked={props.setTimeChecked} reservationTime={reservationTime} setReservationTime={setReservationTime} />;
     case 2:
@@ -93,7 +93,7 @@ export default function Checkout(props) {
 
   const shop_id = props.match.params.shop_id;
   const shop_name = props.match.params.name;
-  const [userData, setUserData] = useState("");
+  const [cutInfo, setCutInfo] = useState("");
 
   const [reservationTime, setReservationTime] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -131,10 +131,8 @@ export default function Checkout(props) {
       shop_id: shop_id,
       booking_date: reservationTime.toISOString().slice(0, 16).replace('T', ' '),
       // desciption: data.get("description"),
-    }).then(() => {
-      props.history.push("/");
-      window.location.reload();
-    });
+    })
+    handleNext();
   }
 
 
@@ -183,7 +181,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} setReservationTime={setReservationTime} />
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} setReservationTime={setReservationTime} callback={setCutInfo} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

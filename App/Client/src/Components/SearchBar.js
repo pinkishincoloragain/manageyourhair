@@ -25,8 +25,8 @@ function SearchBar(props) {
     const [mode, setMode] = useState("score");
     const handleModeChange = (e) => {
         setMode(e.target.value);
-        props.callback(mode);
-        console.log(mode);
+        props.setSearchMode(e.target.value);
+        console.log(e.target.value);
     };
 
     useEffect(() => {

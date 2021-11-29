@@ -25,6 +25,7 @@ export default function AddressForm(props) {
   }, []);
 
   const handleChange = () => {
+    props.callback([firstName, lastName, gender, description]);
     props.setCutInfo([firstName, lastName, gender, description]);
   }
 

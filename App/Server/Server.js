@@ -90,6 +90,20 @@ app.get("/api/getListByName", (req, res) => {
   );
 });
 
+
+app.get("/api/getListById", (req, res) => {
+  // const list = ["item1", "item2", "item3"];
+  // res.json(list);
+
+  connection.query(
+    "SELECT * FROM hairshop order by name",
+    function (err, rows, fields) {
+      if (err) throw err;
+      res.json(rows)
+    }
+  );
+});
+
 // app.post("/api/getList", (req, res) => {
 //   let sql = "SELECT * FROM reple_ ";
 
@@ -208,13 +222,15 @@ app.get("/api/getReview/", (req, res) => {
 app.post("/api/reservation", (req, res) => {
   let numRow = 0;
   connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
-    numRow = rows;
+    numRow = Object.values(JSON.parse(JSON.stringify(rows)));
+    console.log(numRow);
   }
   );
 
-  const param = [numRow + 1, req.body.customer_id, req.body.shop_id, req.body.booking_date,
-  req.body.comment, req.body.rating];
-  connection.query("INSERT INTO BOOKING (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
+  const temp = new Date().toISOString().slice(0, 10);
+
+  const param = [numRow + 2, req.body.customer_id, req.body.shop_id, req.body.booking_date, req.body.description];
+  connection.query("INSERT INTO BOOKING (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?,?)", param, function (err, rows, fields) {
     if (err) throw err;
   });
   res.send();

@@ -83,11 +83,8 @@ function List(props) {
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [searchInput, setSearchInput] = useState(searchValue);
 
-  const placeHolderRef = useRef(searchValue);
   // console.log("searchVal in List", searchValue);
   let cnt = 0;
-
-
 
   const showCard = (inputData) => {
     if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
@@ -135,7 +132,7 @@ function List(props) {
           <Link to={"../"} className="Logo">
             <div className="Logo">Manageyourhair</div>
           </Link>
-          <SearchBar callback={setSearchMode} listpage={true} placeholder={searchValue} className="SearchBar" callback={setSearchInput}
+          <SearchBar setSearchMode={setSearchMode} listpage={true} placeholder={searchValue} className="SearchBar" callback={setSearchInput}
             style={{ placeHolder: "black" }} />
           <div className="Blank"></div>
         </div>
