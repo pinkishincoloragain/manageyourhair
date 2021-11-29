@@ -17,31 +17,24 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
 
 
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/pinkishincoloragain/manageyourhair">
+    <img src="assets/mainPage.png" alt="mainPage" width="100%" >
   </a>
 
-<h3 align="center">project_title</h3>
+<h2 align="center">Manageyourhair</h2>
 
   <p align="center">
-    project_description
-    <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    Manageyourhair helps clients find nearest hairshop, and help making reservation.
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
-  </p>
+    <a href="https://github.com/pinkishincoloragain/manageyourhaur">View Demo</a>
+    </p>
 </div>
 
 
@@ -65,10 +58,8 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -77,12 +68,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+<img src="assets/Logo.png" alt="mainPage" width="100%" >
 
 
 ### Built With
@@ -94,8 +80,6 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 * [Mysql](https://www.mysql.com/)
 * [Material UI](https://mui.com/)
 
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
@@ -111,6 +95,7 @@ To get a local copy up and running follow these simple example steps.
   ```sh
   npm install npm@latest -g
   ```
+  
 
 ### Installation
 
@@ -123,7 +108,6 @@ To get a local copy up and running follow these simple example steps.
    npm install
    ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
@@ -140,23 +124,60 @@ This is how to set and run the local server and client.
    ```sh
    npm install
    ```
+3. Create Mysql table and load data. (Use configuration in [DB configuration](https://github.com/pinkishincoloragain/manageyourhair/tree/main/DB))
+
+4. Connect Database with Server. You should modify [Server.js](https://github.com/pinkishincoloragain/manageyourhair/blob/main/App/Server/Server.js)
+   ```sh
+   
+   var connection = mysql.createConnection({
+    host: "localhost", // put your database hostname here
+    user: "root", // put your database user here
+    password: "root", // put your database password here
+    database: "manager", 
+    socketPath: "/tmp/mysql.sock", // socketPath may differ from the default path
+   });
+   
+   ```
+5. Start your local express server on port 8001
+   ```sh
+   cd App/Server
+   node Server.js
+   ```
+6. Start your local client on port 3000
+   ```sh
+   cd App/Client
+   npm start
+   ```
 
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<!-- Main features -->
+## Main features
 
+* Signup
+  * Signup new account
 
-<!-- ROADMAP -->
-## Roadmap
+* Login
+  * session login
 
-- [] Feature 1
-- [] Feature 2
-- [] Feature 3
-    - [] Nested Feature
+* Mypage
+  * Check reservation
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+* List page
+  * Search hairshop
+  * Sort by score, name or id
+  * Make call
+  * Get detail about the shop
+  * Read reviews
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+* Make reservation
+  * Input form validation check
+  * Commit change
+
+* Server
+  * Manage CRUD API
+  * Protection from SQL injection
+
 
 
 
@@ -165,35 +186,22 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 Distributed under the MIT License. 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - D21125194@mytudublin.ie
+Myungbin Son: D21125194@mytudublin.ie <p/>
+Jieun Oh : D21125193@mytudublin.ie
 
 Project Link: [https://github.com/pinkishincoloragain/manageyourhair](https://github.com/pinkishincoloragain/manageyourhair)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right"><a href="#top">back to top</a></p>
 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/pinkishincoloragain/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
 [forks-url]: https://github.com/github_username/repo_name/network/members
