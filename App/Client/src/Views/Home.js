@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "styles/Home.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 import StickyFooter from "../Components/Footer";
-import { UserContext, SearchContext } from "utils/UserContext";
 import SearchBar from "Components/SearchBar";
 
 function Home() {

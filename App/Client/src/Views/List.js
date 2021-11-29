@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useContext, useState } from "react";
 import { SearchContext } from "utils/UserContext";
 import Card from "Components/Card";
 import "styles/List.scss";
 import SearchBar from "Components/SearchBar";
-import Curly from "assets/Curly.jpg"
-import { json } from "body-parser";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Sad from "assets/sad.png"
@@ -28,23 +26,23 @@ function List(props) {
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
   const [apiLoc, setApiLoc] = useState('http://localhost:8001/api/getListByScore');
-  const [searchMode, setSearchMode] = useState("id");
+  const [searchMode, setSearchMode] = useState("score");
   console.log(searchMode);
   // score, id , name
 
   async function fetchData() {
     try {
-      const res = await axios.get(apiLoc)
+      const res = await axios.get('http://localhost:8001/api/getListByScore')
       const fetched = await res.data.map((rowData) => ({
         shop_id: rowData.SHOP_ID,
         name: rowData.NAME,
         address: rowData.ADDRESS,
         loc_x: rowData.LOC_X,
         loc_y: rowData.LOC_Y,
-        distance: getPreciseDistance(
+        distance: convertDistance(getPreciseDistance(
           { latitude: userLoc[0], longitude: userLoc[1] },
           { latitude: parseFloat(rowData.LOC_X), longitude: parseFloat(rowData.LOC_Y) }
-          , 1),
+          , 1), "km"),
         score: rowData.SCORE,
         contact: rowData.CONTACT,
         open_hour: rowData.OPEN_HOUR,
@@ -118,6 +116,9 @@ function List(props) {
     }
     else if (searchMode === "id") {
       return (shopData.map(showCard).sort((a, b) => { return a.props.shop_id - b.props.shop_id; }));
+    }
+    else if (searchMode === "distance") {
+      return (shopData.map(showCard).sort((a, b) => { return a.props.distance - b.props.distance; }));
     }
     else {
       return (shopData.map(showCard));

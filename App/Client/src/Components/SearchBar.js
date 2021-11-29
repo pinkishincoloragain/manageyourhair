@@ -1,22 +1,19 @@
 import React, { useContext } from "react";
-import { useState, useEffect, useRef } from "react";
-import { UserContext, SearchContext } from "utils/UserContext";
+import { useState, useEffect } from "react";
+import { SearchContext } from "utils/UserContext";
 import { Link } from "react-router-dom";
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import { FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 
 function SearchBar(props) {
     const [textInput, setTextInput] = useState("");
-    const { user, setUser } = useContext(UserContext);
     const { searchValue, setSearchValue } = useContext(SearchContext);
-    const inputRef = useRef();
-    const [listpage, setListpage] = useState(false);
 
     const handleChange = (e) => {
         e.preventDefault();
         handleSubmit();
         setTextInput(e.target.value);
-        if (props.callback != undefined)
+        if (props.callback !== undefined)
             props.callback(e.target.value);
         setSearchValue(e.target.value);
         // console.log("searchInput", textInput);
@@ -84,9 +81,10 @@ function SearchBar(props) {
                 <div>Sort by:</div>
                 <FormControl component="fieldset">
                     <RadioGroup row aria-label="mode" name="row-radio-buttons-group">
-                        <FormControlLabel value="score" checked={mode === 'score'} control={<Radio onChange={handleModeChange} />} label="score" />
-                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={handleModeChange} />} label="name" />
-                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={handleModeChange} />} label="id" />
+                        <FormControlLabel value="score" checked={mode === 'score'} control={<Radio onChange={handleModeChange} />} label="Score" />
+                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={handleModeChange} />} label="Name" />
+                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={handleModeChange} />} label="Shop ID" />
+                        <FormControlLabel value="distance" checked={mode === 'distance'} control={<Radio onChange={handleModeChange} />} label="Distance" />
                     </RadioGroup>
                 </FormControl>
             </div>
