@@ -49,6 +49,10 @@ function ReviewList(props) {
         fetchData();
     }, [setReviewData])
 
+    async function deleteData(comment_id) {
+        await axios.delete('http://localhost:8001/api/review', { params: { comment_id, comment_id } });
+    }
+
     let width =
         window.innerWidth ||
         document.documentElement.clientWidth ||
@@ -182,14 +186,16 @@ function ReviewList(props) {
                                     />
                                     {currentUser['login_id'] == inputData.login_id && (
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
+                                            <Link to={`/review_modify/${inputData.comment_id}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
                                             <Button
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ ml: 7 }}
-                                            >
+                                            >  
                                                 Modify
                                             </Button>
-                                            <Button
+                                            </Link>
+                                            <Button onClick={deleteData(inputData.comment_id)}
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{
