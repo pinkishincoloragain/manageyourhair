@@ -14,6 +14,7 @@ function SearchBar(props) {
 
     const handleChange = (e) => {
         e.preventDefault();
+        handleSubmit();
         setTextInput(e.target.value);
         if (props.callback != undefined)
             props.callback(e.target.value);
@@ -72,15 +73,20 @@ function SearchBar(props) {
                 placeholder={props.placeholder}
                 style={{ color: props.color }}
             />
+            <Link to={"./list"}>
+                <button id="submitBtnId" className="submitBtn" onClick={handleSubmit}>
+                    Search
+                </button>
+            </Link>
             <div style={{ marginLeft: "4vw", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <FormControl component="fieldset">
                     <RadioGroup row aria-label="mode" name="row-radio-buttons-group">
                         <FormControlLabel value="score"
-                            control={<Radio onChange={handleModeChange} checked={mode === 'score'}
+                            control={<Radio onChange={props.handleModeChange} checked={mode === 'score'}
 
                             />} label="score" />
-                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={handleModeChange} />} label="Male" />
-                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={handleModeChange} />} label="Other" />
+                        <FormControlLabel value="name" checked={mode === 'name'} control={<Radio onChange={props.handleModeChange} />} label="Male" />
+                        <FormControlLabel value="id" checked={mode === 'id'} control={<Radio onChange={props.handleModeChange} />} label="Other" />
                     </RadioGroup>
                 </FormControl>
             </div>
