@@ -234,17 +234,20 @@ app.get("/api/getReview/", (req, res) => {
 })
 
 app.post("/api/reservation", (req, res) => {
+  /*
   let numRow = 0;
   connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
     numRow = rows;
   }
   );
-
-  const param = [numRow + 1, req.body.customer_id, req.body.shop_id, req.body.booking_date,
-  req.body.comment, req.body.rating];
-  connection.query("INSERT INTO BOOKING (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
+  */
+  connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function(err, rows, fields) {
     if (err) throw err;
-  });
+    const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date];
+    connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`) VALUES (?, ?, ?)", param, function (err, rows, fields) {
+      if (err) throw err;
+    });
+  })
   res.send();
 })
 

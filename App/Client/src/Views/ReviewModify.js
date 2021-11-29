@@ -17,6 +17,8 @@ function ReviewModify(props) {
     const dispatch = useDispatch();
     const [value, setValue] = useState(0);
     const comment_id = props.match.params.comment_id;
+    const date = new Date();
+    const today = date.getFullYear() + "-" + parseInt(date.getMonth()+1) + "-" + date.getDate();
     const [reviewData, setReviewData] = useState([{
         booking_id: 0,
         shop_id: 0,
@@ -155,7 +157,7 @@ function ReviewModify(props) {
                             id="filled-read-only-input"
                             name="booking_date"
                             label="Visited Date"
-                            defaultValue="2021-11-28"
+                            defaultValue={today}
                             InputProps={{
                                 readOnly: true,
                             }}

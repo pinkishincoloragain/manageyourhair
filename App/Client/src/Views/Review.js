@@ -19,6 +19,8 @@ function Review(props) {
     const [position, setPosition] = useState(0);
     const shop_id = props.match.params.shop_id;
     const shop_name = props.match.params.name;
+    const date = new Date();
+    const today = date.getFullYear() + "-" + parseInt(date.getMonth()+1) + "-" + date.getDate();
     const booking_id = 1;
 
     const handleSubmit = (e) => {
@@ -158,7 +160,7 @@ function Review(props) {
                             id="filled-read-only-input"
                             name="booking_date"
                             label="Visited Date"
-                            defaultValue="2021-11-28"
+                            defaultValue={today}
                             InputProps={{
                                 readOnly: true,
                             }}

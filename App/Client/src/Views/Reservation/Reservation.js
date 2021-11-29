@@ -124,10 +124,11 @@ export default function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
 
+  console.log(currentUser);
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8001/api/reservation/', {
-      customer_id: currentUser['customer_id'],
+      id: currentUser['id'],
       shop_id: shop_id,
       booking_date: reservationTime.toISOString().slice(0, 16).replace('T', ' '),
       // desciption: data.get("description"),
