@@ -127,12 +127,11 @@ export default function Checkout(props) {
   console.log(currentUser);
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8001/api/reservation/', {
-      id: currentUser['id'],
+    axios.post('http://localhost:8001/api/reservation', {
       shop_id: shop_id,
       booking_date: reservationTime.toISOString().slice(0, 16).replace('T', ' '),
       // desciption: data.get("description"),
-    })
+    }, {headers: authHeader()})
     handleNext();
   }
 
@@ -173,7 +172,7 @@ export default function Checkout(props) {
                   Thank you for making reservation with us.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539.
+                  Check your booking ID.
                 </Typography>
                 <p></p>
                 <RLink to="/" >

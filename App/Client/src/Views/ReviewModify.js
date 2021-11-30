@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "styles/Home.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/auth";
-import StickyFooter from "../Components/Footer";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -14,7 +12,6 @@ import Typography from "@mui/material/Typography";
 
 function ReviewModify(props) {
     const { user: currentUser } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
     const [value, setValue] = useState(0);
     const comment_id = props.match.params.comment_id;
     const date = new Date();
@@ -49,7 +46,6 @@ function ReviewModify(props) {
         }
         fetchData();
     }, [setReviewData])
-    console.log(value);
 
     const handleSubmit = (e) => {
         e.preventDefault();

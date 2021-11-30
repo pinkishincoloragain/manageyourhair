@@ -16,7 +16,6 @@ import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../actions/auth";
 import { Redirect } from "react-router-dom";
-import { isEmail } from "validator";
 
 function Copyright(props) {
   return (

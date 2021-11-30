@@ -16,8 +16,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/auth";
 import { Redirect } from "react-router-dom";
-import { isEmail } from "validator";
-// import { useLogin } from "utils/Hooks";
 
 function Copyright(props) {
   return (
@@ -42,7 +40,6 @@ const theme = createTheme();
 export default function Login(props) {
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector(state => state.auth);
-  const { email: validEmail } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
 
   const dispatch = useDispatch();

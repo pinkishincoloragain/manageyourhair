@@ -119,7 +119,8 @@ app.get("/api/getListById", (req, res) => {
 // });
 
 
-// An api endpoint for authentication
+// An api endpoint for authentication 
+// sign-up
 app.post("/api/signup", [body('firstName').not().isEmpty().trim().escape(), body('lastName').not().isEmpty().trim().escape(),
 body('contact').not().isEmpty().trim().escape(), body('id').not().isEmpty().isEmail().normalizeEmail(),
 body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().escape()], (req, res) => {
@@ -149,7 +150,7 @@ body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().e
           });
           res.status(200).send({
             accessToken: token,
-            id: param[3]
+            id: param[3],
           });
         });
         console.log('sign up new user');
@@ -160,6 +161,7 @@ body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().e
     }
   });
 });
+// sign-in
 app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().isEmpty().trim().escape()], (req, res) => {
   const validation_error = validationResult(req);
   if (!validation_error.isEmpty())
@@ -188,7 +190,9 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
     }
   });
 })
+// my page (user detail)
 app.get("/api/mypage", (req, res) => {
+  // token verification
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
     if (err) throw err;
     connection.query("SELECT * FROM user where LOGIN_ID=?", decoded.id, function (err, rows) {
@@ -200,16 +204,20 @@ app.get("/api/mypage", (req, res) => {
   })
 });
 
-app.post("/api/review", (req, res) => {
-  const param = [req.body.booking_id, req.body.customer_id, req.body.shop_id, req.body.booking_date,
-  req.body.comment, req.body.rating];
-  connection.query("INSERT INTO COMMENT (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `COMMENT_TEXT`, `SCORE`) VALUES (?, ?, ?, ?, ?, ?)", param, function (err, rows, fields) {
+// An api endpoint for review CRUD
+// Create
+app.post("/api/review", [body('comment').trim().escape()], (req, res) => {
+  connection.query("SELECT customer_id from USER where LOGIN_ID=?", req.body.id, function (err, rows, fields){
     if (err) throw err;
-    console.log(rows)
-    res.json(rows)
-  });
+    const param = [req.body.booking_id, rows[0].customer_id, req.body.shop_id, req.body.booking_date, req.body.comment, req.body.rating];
+    connection.query("INSERT INTO COMMENT (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `COMMENT_TEXT`, `SCORE`) VALUES (?, ?, ?, ?, ?, ?)", param, function (err, rows, fields) {
+      if (err) throw err;
+      console.log(rows)
+      res.json(rows)
+    });
+  })
 })
-
+// Read
 app.get("/api/review/:id", (req, res) => {
   connection.query(
     "SELECT booking_id as booking_id, shop_id as shop_id, hairshop.name as name, comment.score as score, comment_text as comment_text FROM comment join hairshop using(shop_id) where COMMENT_ID=?", req.params.id,
@@ -219,7 +227,7 @@ app.get("/api/review/:id", (req, res) => {
     }
   );
 })
-
+// Update
 app.put('/api/review/:id', (req, res) => {
   const param = [req.body.rating, req.body.comment, req.params.id];
   connection.query("UPDATE comment set score=?, comment_text=? where COMMENT_ID=?", param,
@@ -228,6 +236,7 @@ app.put('/api/review/:id', (req, res) => {
       res.json(rows);
     });
 })
+// Delete
 app.delete('/api/review/:id', (req, res) => {
   connection.query("delete from comment where COMMENT_ID=?", req.params.id,
     function (err, rows, fields) {
@@ -236,6 +245,7 @@ app.delete('/api/review/:id', (req, res) => {
     });
 })
 
+// An api endpoint for getting all Review for each Shop
 app.get("/api/getReview/", (req, res) => {
   connection.query(
     "SELECT * FROM comment join user using(customer_id) where SHOP_ID=?", req.query.shop_id,
@@ -246,6 +256,7 @@ app.get("/api/getReview/", (req, res) => {
   );
 })
 
+// An api endpoint for user Booking
 app.get("/api/myBooking", (req, res) => {
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
     if (err) throw err;
@@ -256,7 +267,24 @@ app.get("/api/myBooking", (req, res) => {
           "SELECT * from BOOKING join HAIRSHOP using(shop_id) where customer_id=? order by -shop_id;", idValue[0].customer_id,
           function (err, rows, fields) {
             if (err) throw err;
-            console.log(rows);
+            res.json(rows)
+          }
+        );
+      }
+    )
+  })
+})
+// An api endpoint for user Review
+app.get("/api/myReview", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query(
+      "SELECT customer_id from user where login_id=?", decoded.id, function(err, idValue, fields) {
+        if (err) throw err;
+        connection.query(
+          "SELECT * from COMMENT join HAIRSHOP using(shop_id) where customer_id=? order by -comment_id;", idValue[0].customer_id,
+          function (err, rows, fields) {
+            if (err) throw err;
             res.json(rows)
           }
         );
@@ -265,28 +293,50 @@ app.get("/api/myBooking", (req, res) => {
   })
 })
 
-app.post("/api/reservation", (req, res) => {
-  /*
-  let numRow = 0;
-  connection.query("SELECT COUNT(*) FROM BOOKING", function (err, rows, fields) {
-    numRow = Object.values(JSON.parse(JSON.stringify(rows)));
-    console.log(numRow);
-  }
-  );
-  */
-  connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function(err, rows, fields) {
-
-  const temp = new Date().toISOString().slice(0, 10);
-
-  const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date, req.body.description];
-  connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
+// An api endpoint for verification
+// check whether booking exists
+app.get("/api/checkBooking/:shop_id", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
     if (err) throw err;
+    connection.query(
+      "SELECT customer_id from user where login_id=?", decoded.id, function(err, idValue, fields) {
+        if (err) throw err;
+        const param = [idValue[0].customer_id, req.params.shop_id]
+        connection.query(
+          "SELECT booking_id from BOOKING where customer_id=? and shop_id=?", param,
+          function (err, rows, fields) {
+            if (err) throw err;
+            res.json(rows)
+          }
+        );
+      }
+    )
   })
-  res.send();
+})
+// check duplication of review
+app.get("/api/checkComment/:booking_id", (req, res) => {
+  connection.query("SELECT count(*) as count from COMMENT where booking_id=?", req.params.booking_id,
+  function (err, rows, field) {
+    if (err) throw err;
+    res.json(rows)
+  })
+})
+
+// An api endpoint for Reservation
+// Create
+app.post("/api/reservation", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query("SELECT customer_id from user where login_id=?", decoded.id, function(err, row, fields){
+      if (err) throw err;
+      const param = [row[0].customer_id, req.body.shop_id, req.body.booking_date, req.body.description];
+      connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, row, fields) {
+        if (err) throw err;
+        res.send(row);
+  })
+    })
 })
 });
-
-
 
 app.listen(8001, () => {
   console.log(`listening on port ${8001}`);

@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "styles/Home.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/auth";
-import StickyFooter from "../Components/Footer";
+import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -14,17 +12,9 @@ import Typography from "@mui/material/Typography";
 
 function ReviewList(props) {
     const { user: currentUser } = useSelector((state) => state.auth);
-    const [value, setValue] = useState(0);
-    const dispatch = useDispatch();
     const shop_id = props.match.params.shop_id;
     const shop_name = props.match.params.name;
-    const [reviewData, setReviewData] = useState([{
-        login_id: 'admin',
-        comment_id: '0',
-        score: 5,
-        comment: 'This is a really good hairshop. I strongly recommend it to you.',
-        comment_date: '2021-11-27'
-    }]) 
+    const [reviewData, setReviewData] = useState([]) 
     
     function clickBtn (comment_id) {
         console.log('h')
@@ -186,7 +176,7 @@ function ReviewList(props) {
                                         rows={2}
 
                                     />
-                                    {currentUser['login_id'] == inputData.login_id && (
+                                    {currentUser['id'] == inputData.login_id && (
                                         <div>
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                                             <Link to={`/review_modify/${inputData.comment_id}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
