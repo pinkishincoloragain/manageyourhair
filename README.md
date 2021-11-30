@@ -125,7 +125,7 @@ This is how to set and run the local server and client.
    npm install
    ```
 3. Create Mysql table and load data. (Use configuration in [DB configuration](https://github.com/pinkishincoloragain/manageyourhair/tree/main/DB))
-* Make Secrets.json file
+* Make Secrets.json file (same path as `csv_to_python.py`)
     ```sh
     {
         "mysqlPassword": "root" // put your database password here
