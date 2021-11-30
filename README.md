@@ -169,15 +169,18 @@ This is how to set and run the local server and client.
 
 * Login
   * session login
+  * Input check
 
 * Mypage
   * Check reservation
+  * Update user photo
 
 * List page
   * Search hairshop
   * Sort by score, name or id
-  * Make call
-  * Get detail about the shop
+  * Make call to the shop
+  * Get detail(Opening hours) about the shop
+  * Write reviews
   * Read reviews
 
 * Make reservation
