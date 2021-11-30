@@ -189,7 +189,7 @@ function Mypage() {
                                         label="ID"
                                         value={userData[0].id}
                                         InputProps={{
-                                            readOnly: false,
+                                            readOnly: true,
                                         }}
                                         sx={{
                                             width: "90%",
