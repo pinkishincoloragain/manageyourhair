@@ -11,9 +11,16 @@ import Typography from "@mui/material/Typography";
 import UserPhoto from "assets/userTemp.png";
 import { borderRadius } from "@mui/material/node_modules/@mui/system";
 import { Input } from "@mui/material";
-import usecase from "assets/usecase.png"
+
+// const express = require('express');
+// const app = express();
+// app.use(express.static('public'));
+
 
 function Mypage() {
+
+    var fs = require('fs');
+
     const [userData, setUserData] = useState([{
         customer_id: '',
         id: '',
@@ -25,13 +32,10 @@ function Mypage() {
     }])
     const [bookData, setBookData] = useState([]);
     const [photoData, setPhotoData] = useState(UserPhoto);
-    console.log(photoData);
 
     const [photoValid, setPhotoValid] = useState(false);
     const [photo, setPhoto] = useState('');
     const validFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-
-    console.log(userData);
 
     const fileTypeValid = (file, fileTypes) => {
         return fileTypes.some((fileType) => fileType === file.type);
@@ -58,6 +62,21 @@ function Mypage() {
 
         console.log(photo);
         axios.post('http://localhost:8001/api/user_upload', formdata)
+        setPhotoData(photo);
+    }
+
+    function decodeBase64Image(dataString) {
+        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+            response = {};
+
+        if (matches.length !== 3) {
+            return new Error('Invalid input string');
+        }
+
+        response.type = matches[1];
+        response.data = Buffer.from(matches[2], 'base64');
+
+        return response;
     }
 
     useEffect(() => {
@@ -67,8 +86,13 @@ function Mypage() {
                     { headers: authHeader() })
                 console.log(res.data);
 
-                const fetched = await res.data
-                setPhotoData(fetched[0].PHOTO_LINK);
+                // const fetched = await res.data.map((rowData) => ({
+                //     photo: rowData.PHOTO_LINK
+                // })
+                // )
+
+                setPhotoData(res.data);
+                console.log(res.data);
             } catch (e) {
                 console.error("error!", e.message)
             }
@@ -154,12 +178,15 @@ function Mypage() {
                             </div>
                             <div style={{ display: "flex", flexDirection: "row", width: "70%" }}>
                                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                    {console.log("assets/" + photoData)}
                                     {userData[0].photo === null ?
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             <img src={photoData} alt="userPhoto" style={{ width: "40%", border: "solid black 1px", borderRadius: "100%" }} />
                                         </div>
                                         :
-                                        <img src={userData[0].photo} style={{ width: "10vh", height: "10vh" }} />
+                                        <div>
+                                            <img src={userData[0].photo} style={{ width: "10vh", height: "10vh" }} />
+                                        </div>
                                     }
                                     <div style={{ width: "70%" }}>
                                         <Input type="file" onChange={onFileChange} sx={{ width: "90%" }} />

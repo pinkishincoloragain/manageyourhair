@@ -192,7 +192,6 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
     }
   });
 })
-app.use(express.static(__dirname+'/user')) // 1번 미들웨어
 
 app.get("/api/myphoto", (req, res) => {
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
@@ -200,13 +199,12 @@ app.get("/api/myphoto", (req, res) => {
     connection.query("SELECT PHOTO_LINK FROM user where LOGIN_ID=?", decoded.id, function (err, rows) {
       if (err) throw err;
       else {
-        let filepath = `user_photos/${rows[0].PHOTO_LINK}`
-        // let filepath = '../user/user_photos/1638230380850-use case.png';
-        // console.log("img", img);
-        res.contentType('image/jpeg');
-        // res.send(Buffer.from(filepath, 'binary'))
-        res.sendFile(path.join(__dirname, filepath));
-        console.log(path.join(__dirname, filepath));
+
+        const image = `user_photos/${rows[0].PHOTO_LINK}`;
+        res.send(image);
+        console.log(typeof (image), image);
+        // console.log(path.join(__dirname, filepath));
+
       }
     });
   })
@@ -225,6 +223,7 @@ app.get("/api/mypage", (req, res) => {
   })
 });
 
+
 app.post("/api/review", (req, res) => {
   const param = [req.body.booking_id, req.body.customer_id, req.body.shop_id, req.body.booking_date,
   req.body.comment, req.body.rating];
@@ -235,8 +234,9 @@ app.post("/api/review", (req, res) => {
   });
 })
 
+
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, './user_photos/'),
+  destination: path.join(__dirname, '../Client/src/assets/user_photos'),
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname)
   }
