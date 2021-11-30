@@ -31,7 +31,7 @@ function Mypage() {
         contact: '',
     }])
     const [bookData, setBookData] = useState([]);
-    const [photoData, setPhotoData] = useState(UserPhoto);
+    const [photoLink, setPhotoLink] = useState(UserPhoto);
 
     const [photoValid, setPhotoValid] = useState(false);
     const [photo, setPhoto] = useState('');
@@ -62,7 +62,7 @@ function Mypage() {
 
         console.log(photo);
         axios.post('http://localhost:8001/api/user_upload', formdata)
-        setPhotoData(photo);
+        setPhotoLink(photo);
     }
 
     function decodeBase64Image(dataString) {
@@ -91,7 +91,7 @@ function Mypage() {
                 // })
                 // )
 
-                setPhotoData(res.data);
+                setPhotoLink(res.data);
                 console.log(res.data);
             } catch (e) {
                 console.error("error!", e.message)
@@ -135,7 +135,7 @@ function Mypage() {
             }
         }
         fetchData();
-    }, [setUserData, setBookData, setPhotoData])
+    }, [setUserData, setBookData, setPhotoLink])
     return (
         <div>
             <div className="Review">
@@ -178,14 +178,14 @@ function Mypage() {
                             </div>
                             <div style={{ display: "flex", flexDirection: "row", width: "70%" }}>
                                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                                    {console.log("assets/" + photoData)}
-                                    {userData[0].photo === null ?
+                                    {console.log("assets/" + photoLink.toString())}
+                                    {(userData[0].photo).length < 1 ?
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                            <img src={photoData} alt="userPhoto" style={{ width: "40%", border: "solid black 1px", borderRadius: "100%" }} />
+                                            <img src={require(`assets/user_photos/userTemp.png`).default} alt="userPhoto" style={{ width: "40%", border: "solid black 1px", borderRadius: "100%" }} />
                                         </div>
                                         :
                                         <div>
-                                            <img src={userData[0].photo} style={{ width: "10vh", height: "10vh" }} />
+                                            <img src={require("assets/" + photoLink.toString()).default} style={{ width: "10vh", height: "10vh" }} />
                                         </div>
                                     }
                                     <div style={{ width: "70%" }}>

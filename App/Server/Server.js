@@ -200,6 +200,7 @@ app.get("/api/myphoto", (req, res) => {
       if (err) throw err;
       else {
 
+
         const image = `user_photos/${rows[0].PHOTO_LINK}`;
         res.send(image);
         console.log(typeof (image), image);
@@ -238,7 +239,7 @@ app.post("/api/review", (req, res) => {
 const storage = multer.diskStorage({
   destination: path.join(__dirname, '../Client/src/assets/user_photos'),
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
+    cb(null,file.originalname)
   }
 })
 
