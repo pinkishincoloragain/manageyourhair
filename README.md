@@ -125,6 +125,16 @@ This is how to set and run the local server and client.
    npm install
    ```
 3. Create Mysql table and load data. (Use configuration in [DB configuration](https://github.com/pinkishincoloragain/manageyourhair/tree/main/DB))
+* Make Secrets.json file
+    ```sh
+    {
+        "mysqlPassword": "root" // put your database password here
+    }
+    ```
+* Execute csv_to_python file
+    ```sh
+    python csv_to_python.py
+    ```
 
 4. Connect Database with Server. You should modify [Server.js](https://github.com/pinkishincoloragain/manageyourhair/blob/main/App/Server/Server.js)
    ```sh
