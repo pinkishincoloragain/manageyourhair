@@ -176,7 +176,7 @@ function ReviewList(props) {
                                         rows={2}
 
                                     />
-                                    {currentUser['id'] == inputData.login_id && (
+                                    {currentUser['id'] === inputData.login_id && (
                                         <div>
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                                             <Link to={`/review_modify/${inputData.comment_id}`} className="Link" style={{ textDecoration: "none", color: "black" }}>
