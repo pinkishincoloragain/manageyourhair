@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "styles/Home.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -31,7 +31,7 @@ function Review(props) {
                     })
                 )
 
-                if (fetched.length==0){
+                if (fetched.length===0){
                     alert("Make a reservation at '" + shop_name + "' first!");
                     props.history.push('/')
                 }
@@ -43,7 +43,7 @@ function Review(props) {
                 })
                 )
                 console.log(fetched2)
-                if (fetched2[0].count!=0){
+                if (fetched2[0].count!==0){
                     alert("You already wrote a review!");
                     props.history.push('/')
                 }

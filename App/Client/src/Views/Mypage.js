@@ -161,7 +161,7 @@ function Mypage() {
                             <div style={{ display: "flex", flexDirection: "row", width: "70%" }}>
                                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                                     {console.log("assets/" + photoLink.toString())}
-                                    {(userData[0].photo).length < 1 ?
+                                    { userData[0].photo === null || (userData[0].photo).length < 2 ?
                                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             <img src={require(`assets/user_photos/userTemp.png`).default} alt="userPhoto" style={{ width: "40%", border: "solid black 1px", borderRadius: "100%" }} />
                                         </div>

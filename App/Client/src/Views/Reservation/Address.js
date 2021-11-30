@@ -21,22 +21,21 @@ export default function AddressForm(props) {
     setLastName(props.cutInfo[1]);
     setGender(props.cutInfo[2]);
     setDescription(props.cutInfo[3]);
-  }, [props.cutInfo]);
+  }, []);
 
   const handleChange = () => {
-    props.callback([firstName, lastName, gender, description]);
     props.setCutInfo([firstName, lastName, gender, description]);
   }
 
   const handleControl = () => {
     setSelf(!self);
-    props.setSelfCut(!self);
+    props.setSelf(!self)
     setHairCutLabel(!self ? "I will get a haircut." : "I am making reservation for someone else.");
   };
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutter Bottom>
         User information
       </Typography>
       <Grid item xs={12}>

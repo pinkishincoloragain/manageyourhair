@@ -90,11 +90,9 @@ export default function Checkout(props) {
 
   const shop_id = props.match.params.shop_id;
   const shop_name = props.match.params.name;
-  const [cutInfo, setCutInfo] = useState("");
 
   const [reservationTime, setReservationTime] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [isloggedIn, setIsLoggedIn] = useState(false);
   const [timeChecked, setTimeChecked] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -178,7 +176,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} setReservationTime={setReservationTime} callback={setCutInfo} />
+                <GetStepContent step={activeStep} shop_id={shop_id} shop_name={shop_name} setTimeChecked={setTimeChecked} setReservationTime={setReservationTime} />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

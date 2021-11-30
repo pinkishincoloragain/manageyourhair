@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "styles/Home.scss";
@@ -45,15 +45,15 @@ function ReviewList(props) {
         fetchData();
     }, [setReviewData])
 
-    let width =
-        window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
+    // let width =
+    //     window.innerWidth ||
+    //     document.documentElement.clientWidth ||
+    //     document.body.clientWidth;
 
-    let height =
-        window.innerHeight ||
-        document.documentElement.clientHeight ||
-        document.body.clientHeight;
+    // let height =
+    //     window.innerHeight ||
+    //     document.documentElement.clientHeight ||
+    //     document.body.clientHeight;
 
     // reviewData
     return (
