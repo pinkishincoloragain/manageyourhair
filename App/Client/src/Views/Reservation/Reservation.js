@@ -173,7 +173,7 @@ export default function Checkout(props) {
                   Thank you for making reservation with us.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539.
+                  Your order number is successfully placed.
                 </Typography>
                 <p></p>
                 <RLink to="/" >

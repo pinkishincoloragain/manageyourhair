@@ -8,6 +8,10 @@ const { body, validationResult } = require("express-validator");
 const salt = 10;
 
 const app = express();
+const multer = require('multer')
+const path = require('path');
+
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -43,17 +47,17 @@ app.use(function (req, res, next) {
   next();
 });
 
-var mysql = require("mysql");
+let mysql = require("mysql");
 const { json } = require("body-parser");
 //const { isColString } = require("sequelize/types/lib/utils");
-var connection = mysql.createConnection({
+let connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "COLCTveCNfY8",
-  //password: "root",
+  // password: "COLCTveCNfY8",
+  password: "root",
   database: "manager",
   //  socketPath may differ from the default path
-  // socketPath: "/tmp/mysql.sock",
+  socketPath: "/tmp/mysql.sock",
 });
 
 //connection.connect();
@@ -144,7 +148,7 @@ body('pw').not().isEmpty().trim().escape(), body('pw2').not().isEmpty().trim().e
         param[4] = hash;
         connection.query("INSERT INTO USER (`CUSTOMER_FIRST_NAME`, `CUSTOMER_LAST_NAME`, `CONTACT_NO`, `LOGIN_ID`, `LOGIN_PW`) VALUES (?, ?, ?, ?, ?)", param, function (err, rows, fields) {
           if (err) throw err;
-          var token = jwt.sign({ id: param[3] }, 'secret-key', {
+          let token = jwt.sign({ id: param[3] }, 'secret-key', {
             expiresIn: 86400
           });
           res.status(200).send({
@@ -172,7 +176,7 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
       bcrypt.compare(param[1], rows[0].LOGIN_PW, (error, result) => {
         if (result) {
           console.log('Login success');
-          var token = jwt.sign({ id: param[0] }, 'secret-key', {
+          let token = jwt.sign({ id: param[0] }, 'secret-key', {
             expiresIn: 86400
           });
           res.status(200).send({
@@ -188,6 +192,26 @@ app.post('/api/login', [body('id').isEmail().normalizeEmail(), body('pw').not().
     }
   });
 })
+app.use(express.static(__dirname+'/user')) // 1번 미들웨어
+
+app.get("/api/myphoto", (req, res) => {
+  jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
+    if (err) throw err;
+    connection.query("SELECT PHOTO_LINK FROM user where LOGIN_ID=?", decoded.id, function (err, rows) {
+      if (err) throw err;
+      else {
+        let filepath = `user_photos/${rows[0].PHOTO_LINK}`
+        // let filepath = '../user/user_photos/1638230380850-use case.png';
+        // console.log("img", img);
+        res.contentType('image/jpeg');
+        // res.send(Buffer.from(filepath, 'binary'))
+        res.sendFile(path.join(__dirname, filepath));
+        console.log(path.join(__dirname, filepath));
+      }
+    });
+  })
+});
+
 app.get("/api/mypage", (req, res) => {
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
     if (err) throw err;
@@ -195,6 +219,7 @@ app.get("/api/mypage", (req, res) => {
       if (err) throw err;
       else {
         res.send(rows);
+        // console.log("rows", rows);
       }
     });
   })
@@ -205,10 +230,68 @@ app.post("/api/review", (req, res) => {
   req.body.comment, req.body.rating];
   connection.query("INSERT INTO COMMENT (`BOOKING_ID`, `CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `COMMENT_TEXT`, `SCORE`) VALUES (?, ?, ?, ?, ?, ?)", param, function (err, rows, fields) {
     if (err) throw err;
-    console.log(rows)
+    // console.log(rows)
     res.json(rows)
   });
 })
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, './user_photos/'),
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+
+app.post('/api/user_upload', async (req, res) => {
+  try {
+    // 'avatar' is the name of our file input field in the HTML form
+
+    let upload = multer({ storage: storage }).single('photo');
+
+    upload(req, res, function (err) {
+      // req.file contains information of uploaded file
+      // req.body contains information of text fields
+
+      if (!req.file) {
+        console.log('Please select an image to upload');
+        return res.send('Please select an image to upload');
+      }
+      else if (err instanceof multer.MulterError) {
+        console.log('multererror');
+        return res.send(err);
+      }
+      else if (err) {
+        console.log('error');
+        return res.send(err);
+      }
+      console.log("req.body: ", req.body.id);
+      const param = [
+        req.file.filename,
+        req.body.id
+      ];
+
+      const sql = "UPDATE USER SET PHOTO_LINK= ? WHERE CUSTOMER_ID = ?";
+      console.log(param);
+      connection.query(sql, param, (err, rows, results) => {
+        if (err) throw err;
+        console.log(rows);
+        res.json({ success: 1 })
+      });
+    });
+
+  } catch (err) { console.log(err) }
+})
+
+// app.post("/api/user_upload", (req, res) => {
+//   const query = "UPDATE USER SET PHOTO_LINK= ? WHERE CUSTOMER_ID = ?";
+//   const photo = req.body.photo;
+//   const param = [readImageFile(photo), req.body.user_id];
+//   connection.query(query, param, function (err, rows, fields) {
+//     if (err) throw err;
+//     console.log(rows)
+//     res.json(rows)
+//   });
+// })
 
 app.get("/api/review/:id", (req, res) => {
   connection.query(
@@ -250,7 +333,7 @@ app.get("/api/myBooking", (req, res) => {
   jwt.verify(req.headers['x-access-token'], 'secret-key', (err, decoded) => {
     if (err) throw err;
     connection.query(
-      "SELECT customer_id from user where login_id=?", decoded.id, function(err, idValue, fields) {
+      "SELECT customer_id from user where login_id=?", decoded.id, function (err, idValue, fields) {
         if (err) throw err;
         connection.query(
           "SELECT * from BOOKING join HAIRSHOP using(shop_id) where customer_id=? order by -shop_id;", idValue[0].customer_id,
@@ -274,16 +357,16 @@ app.post("/api/reservation", (req, res) => {
   }
   );
   */
-  connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function(err, rows, fields) {
+  connection.query("SELECT CUSTOMER_ID from USER where LOGIN_ID=?", req.body.id, function (err, rows, fields) {
 
-  const temp = new Date().toISOString().slice(0, 10);
+    const temp = new Date().toISOString().slice(0, 10);
 
-  const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date, req.body.description];
-  connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
-    if (err) throw err;
+    const param = [rows[0].CUSTOMER_ID, req.body.shop_id, req.body.booking_date, req.body.description];
+    connection.query("INSERT INTO BOOKING (`CUSTOMER_ID`, `SHOP_ID`, `BOOKING_DATE`, `DESCRIPTION`) VALUES (?, ?, ?, ?)", param, function (err, rows, fields) {
+      if (err) throw err;
+    })
+    res.send();
   })
-  res.send();
-})
 });
 
 
