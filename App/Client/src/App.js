@@ -11,7 +11,6 @@ import Reservation from "Views/Reservation/Reservation";
 import Review from "Views/Review";
 import ReviewList from "Views/ReviewList";
 import ReviewModify from "Views/ReviewModify";
-import { useDispatch, useSelector } from "react-redux";
 import { SearchContext, UserContext } from "utils/UserContext";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';

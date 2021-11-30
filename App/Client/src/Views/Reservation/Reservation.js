@@ -1,9 +1,7 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -19,7 +17,6 @@ import { useState, useEffect } from "react";
 import { Link as RLink } from "react-router-dom";
 import axios from "axios";
 import authHeader from "services/auth-header";
-import { textAlign } from "@mui/material/node_modules/@mui/system";
 import { useSelector } from "react-redux";
 
 
@@ -42,7 +39,7 @@ function GetStepContent(props) {
 
   useEffect(() => {
     props.setReservationTime(reservationTime);
-  }, [reservationTime]);
+  }, [props, reservationTime]);
 
   useEffect(() => {
     async function fetchData() {
@@ -131,7 +128,7 @@ export default function Checkout(props) {
       shop_id: shop_id,
       booking_date: reservationTime.toISOString().slice(0, 16).replace('T', ' '),
       // desciption: data.get("description"),
-    }, {headers: authHeader()})
+    }, { headers: authHeader() })
     handleNext();
   }
 

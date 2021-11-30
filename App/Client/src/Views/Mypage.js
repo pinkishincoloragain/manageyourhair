@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import UserPhoto from "assets/userTemp.png";
-import { borderRadius } from "@mui/material/node_modules/@mui/system";
 import { Input } from "@mui/material";
 import Button from "@mui/material/Button";
 
@@ -16,8 +15,6 @@ import Button from "@mui/material/Button";
 
 
 function Mypage() {
-
-    var fs = require('fs');
 
     const [userData, setUserData] = useState([{
         customer_id: '',
@@ -63,19 +60,6 @@ function Mypage() {
         setPhotoLink(photo);
     }
 
-    function decodeBase64Image(dataString) {
-        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-            response = {};
-
-        if (matches.length !== 3) {
-            return new Error('Invalid input string');
-        }
-
-        response.type = matches[1];
-        response.data = Buffer.from(matches[2], 'base64');
-
-        return response;
-    }
 
     useEffect(() => {
         async function fetchData() {
@@ -183,7 +167,7 @@ function Mypage() {
                                         </div>
                                         :
                                         <div>
-                                            <img src={require("assets/" + photoLink.toString()).default} style={{ width: "10vh", height: "10vh" }} />
+                                            <img src={require("assets/" + photoLink.toString()).default} alt="userphoto" style={{ width: "10vh", height: "10vh" }} />
                                         </div>
                                     }
                                     <div style={{ width: "70%" }}>

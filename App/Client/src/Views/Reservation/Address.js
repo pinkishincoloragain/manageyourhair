@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { Switch } from "@mui/material";
 
 export default function AddressForm(props) {
@@ -22,7 +21,7 @@ export default function AddressForm(props) {
     setLastName(props.cutInfo[1]);
     setGender(props.cutInfo[2]);
     setDescription(props.cutInfo[3]);
-  }, []);
+  }, [props.cutInfo]);
 
   const handleChange = () => {
     props.callback([firstName, lastName, gender, description]);

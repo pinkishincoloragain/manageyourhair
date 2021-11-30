@@ -25,7 +25,7 @@ function List(props) {
 
   const [userLoc, setUserLoc] = useState([53.3429, -6.26099]);
 
-  const [apiLoc, setApiLoc] = useState('http://localhost:8001/api/getListByScore');
+  // const [apiLoc, setApiLoc] = useState('http://localhost:8001/api/getListByScore');
   const [searchMode, setSearchMode] = useState("score");
   console.log(searchMode);
   // score, id , name
@@ -76,7 +76,7 @@ function List(props) {
       setSearchInput(searchValue);
     else
       setSearchInput("");
-  }, [setShopData, apiLoc])
+  }, [])
 
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [searchInput, setSearchInput] = useState(searchValue);
@@ -85,7 +85,7 @@ function List(props) {
   let cnt = 0;
 
   const showCard = (inputData) => {
-    if (inputData.shop_id != 0 && (inputData.open_hour).length > 3
+    if (inputData.shop_id !== 0 && (inputData.open_hour).length > 3
       && (inputData.name.toLowerCase().includes(searchInput.toLowerCase())
         || inputData.address.toLowerCase().includes(searchInput.toLowerCase()))) {
       cnt++;
@@ -144,7 +144,7 @@ function List(props) {
         <div className="CardList">
           {showModeResult()}
           {cnt === 0 && <div className="NoResult">
-            <img src={Sad} style={{ width: "10vh", height: "10vh" }} />
+            <img src={Sad} alt="sad emoji" style={{ width: "10vh", height: "10vh" }} />
             No result found</div>}
           <div className="Card"></div>
         </div>
